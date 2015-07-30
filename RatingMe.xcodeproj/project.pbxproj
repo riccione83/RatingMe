@@ -7,12 +7,20 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		937FCCC21B4577CF00DC141C /* StarRating.swift in Sources */ = {isa = PBXBuildFile; fileRef = 937FCCC11B4577CF00DC141C /* StarRating.swift */; };
+		93AB02161B45305900358705 /* RateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93AB02151B45305900358705 /* RateViewController.swift */; };
+		93B1C6BB1B628F7D002044A3 /* RateCustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93B1C6BA1B628F7D002044A3 /* RateCustomCell.swift */; };
+		93B1C6BD1B629227002044A3 /* ShowReviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93B1C6BC1B629227002044A3 /* ShowReviewViewController.swift */; };
+		93D95BEB1B442B73002D5C53 /* ReviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D95BEA1B442B73002D5C53 /* ReviewViewController.swift */; };
 		93FC5BE51B3C4CB00010A94D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93FC5BE41B3C4CB00010A94D /* AppDelegate.swift */; };
 		93FC5BE71B3C4CB00010A94D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93FC5BE61B3C4CB00010A94D /* ViewController.swift */; };
 		93FC5BEA1B3C4CB00010A94D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 93FC5BE81B3C4CB00010A94D /* Main.storyboard */; };
 		93FC5BEC1B3C4CB00010A94D /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 93FC5BEB1B3C4CB00010A94D /* Images.xcassets */; };
 		93FC5BEF1B3C4CB00010A94D /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 93FC5BED1B3C4CB00010A94D /* LaunchScreen.xib */; };
 		93FC5BFB1B3C4CB00010A94D /* RatingMeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93FC5BFA1B3C4CB00010A94D /* RatingMeTests.swift */; };
+		93FC5C051B3C4CC80010A94D /* JSonHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93FC5C041B3C4CC80010A94D /* JSonHelper.swift */; };
+		93FC5C081B3C4CD70010A94D /* PinAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93FC5C061B3C4CD70010A94D /* PinAnnotation.swift */; };
+		93FC5C091B3C4CD70010A94D /* PinAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93FC5C071B3C4CD70010A94D /* PinAnnotationView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -26,6 +34,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		937FCCC11B4577CF00DC141C /* StarRating.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StarRating.swift; sourceTree = "<group>"; };
+		93AB02151B45305900358705 /* RateViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RateViewController.swift; sourceTree = "<group>"; };
+		93B1C6BA1B628F7D002044A3 /* RateCustomCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RateCustomCell.swift; sourceTree = "<group>"; };
+		93B1C6BC1B629227002044A3 /* ShowReviewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ShowReviewViewController.swift; path = ../ShowReviewViewController.swift; sourceTree = "<group>"; };
+		93D95BEA1B442B73002D5C53 /* ReviewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReviewViewController.swift; sourceTree = "<group>"; };
 		93FC5BDF1B3C4CB00010A94D /* RatingMe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RatingMe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		93FC5BE31B3C4CB00010A94D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		93FC5BE41B3C4CB00010A94D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -36,6 +49,9 @@
 		93FC5BF41B3C4CB00010A94D /* RatingMeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RatingMeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		93FC5BF91B3C4CB00010A94D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		93FC5BFA1B3C4CB00010A94D /* RatingMeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingMeTests.swift; sourceTree = "<group>"; };
+		93FC5C041B3C4CC80010A94D /* JSonHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSonHelper.swift; sourceTree = "<group>"; };
+		93FC5C061B3C4CD70010A94D /* PinAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinAnnotation.swift; sourceTree = "<group>"; };
+		93FC5C071B3C4CD70010A94D /* PinAnnotationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinAnnotationView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,8 +94,16 @@
 			isa = PBXGroup;
 			children = (
 				93FC5BE41B3C4CB00010A94D /* AppDelegate.swift */,
+				93B1C6BC1B629227002044A3 /* ShowReviewViewController.swift */,
+				93FC5C041B3C4CC80010A94D /* JSonHelper.swift */,
 				93FC5BE61B3C4CB00010A94D /* ViewController.swift */,
+				93AB02151B45305900358705 /* RateViewController.swift */,
+				93FC5C061B3C4CD70010A94D /* PinAnnotation.swift */,
+				93FC5C071B3C4CD70010A94D /* PinAnnotationView.swift */,
 				93FC5BE81B3C4CB00010A94D /* Main.storyboard */,
+				93B1C6BA1B628F7D002044A3 /* RateCustomCell.swift */,
+				937FCCC11B4577CF00DC141C /* StarRating.swift */,
+				93D95BEA1B442B73002D5C53 /* ReviewViewController.swift */,
 				93FC5BEB1B3C4CB00010A94D /* Images.xcassets */,
 				93FC5BED1B3C4CB00010A94D /* LaunchScreen.xib */,
 				93FC5BE21B3C4CB00010A94D /* Supporting Files */,
@@ -161,6 +185,7 @@
 				TargetAttributes = {
 					93FC5BDE1B3C4CB00010A94D = {
 						CreatedOnToolsVersion = 6.3.2;
+						DevelopmentTeam = RKD82WWETR;
 					};
 					93FC5BF31B3C4CB00010A94D = {
 						CreatedOnToolsVersion = 6.3.2;
@@ -212,8 +237,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				93FC5C091B3C4CD70010A94D /* PinAnnotationView.swift in Sources */,
+				93FC5C081B3C4CD70010A94D /* PinAnnotation.swift in Sources */,
+				937FCCC21B4577CF00DC141C /* StarRating.swift in Sources */,
+				93B1C6BD1B629227002044A3 /* ShowReviewViewController.swift in Sources */,
+				93D95BEB1B442B73002D5C53 /* ReviewViewController.swift in Sources */,
+				93B1C6BB1B628F7D002044A3 /* RateCustomCell.swift in Sources */,
+				93FC5C051B3C4CC80010A94D /* JSonHelper.swift in Sources */,
 				93FC5BE71B3C4CB00010A94D /* ViewController.swift in Sources */,
 				93FC5BE51B3C4CB00010A94D /* AppDelegate.swift in Sources */,
+				93AB02161B45305900358705 /* RateViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -342,6 +375,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = RatingMe/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -352,6 +386,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = RatingMe/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -411,6 +446,7 @@
 				93FC5C001B3C4CB00010A94D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		93FC5C011B3C4CB00010A94D /* Build configuration list for PBXNativeTarget "RatingMeTests" */ = {
 			isa = XCConfigurationList;
@@ -419,6 +455,7 @@
 				93FC5C031B3C4CB00010A94D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

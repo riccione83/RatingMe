@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VariablesViewState
+   version = "1.0">
+   <ContextStates>
+      <ContextState
+         contextName = "RatingMe.StarRating.handleTouchAtLocation (RatingMe.StarRating)(C.CGPoint, animate : Swift.Bool) -&gt; ():StarRating.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "currentRating">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "RatingMe.ReviewViewController.sendNewReview (RatingMe.ReviewViewController)(ObjectiveC.UIButton) -&gt; ():ReviewViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "reviewText.text">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "RatingMe.RateViewController.viewDidLoad (RatingMe.RateViewController)() -&gt; ():RateViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "currentTitle">
+            </PersistentString>
+            <PersistentString
+               value = "currentDescription">
+            </PersistentString>
+            <PersistentString
+               value = "labelTitle.text">
+            </PersistentString>
+            <PersistentString
+               value = "imageLink">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "RatingMe.RateViewController.(analyzeImageLink (RatingMe.RateViewController) -&gt; (Swift.String) -&gt; ()).(closure #1):RateViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "linkArr">
+            </PersistentString>
+            <PersistentString
+               value = "link">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "RatingMe.ViewController.showReviewButtonClick (RatingMe.ViewController)(ObjectiveC.UIButton) -&gt; ():ViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "locationManager.location">
+            </PersistentString>
+            <PersistentString
+               value = "mainMap.annotations">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "RatingMe.RateViewController.swipeImage (RatingMe.RateViewController)(ObjectiveC.UISwipeGestureRecognizer) -&gt; ():RateViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "sender.direction">
+            </PersistentString>
+            <PersistentString
+               value = "imageLink">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+   </ContextStates>
+</VariablesViewState>
