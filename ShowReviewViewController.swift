@@ -7,8 +7,10 @@
 //
 
 import UIKit
+import RatingMeFramework
 
 class ShowReviewViewController: UIViewController {
+
     
     //let url = "http://localhost:8888/rating/"
     let url = "http://www.riccardorizzo.eu/rating/"
@@ -27,6 +29,10 @@ class ShowReviewViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        
+        
+            var Rat = RatingMeFramework()
+            Rat.test()
     }
 
     override func didReceiveMemoryWarning() {
@@ -96,7 +102,7 @@ extension ShowReviewViewController:UITableViewDelegate, UITableViewDataSource {
         myCell.labelNote.text = Descriptions.objectAtIndex(indexPath.row) as? String
         
         myCell.progressQuestion1.progress = Rates1.objectAtIndex(indexPath.row) as! Float
-        NSLog("\(Rates1.objectAtIndex(indexPath.row)"
+      //  NSLog("\(Rates1.objectAtIndex(indexPath.row)")
         
        // myCell.progressQuestion1.setProgress(Rates1.objectAtIndex(indexPath.row) as! Float, animated: true)
         myCell.progressQuestion2.setProgress(Rates2.objectAtIndex(indexPath.row) as! Float, animated: true)

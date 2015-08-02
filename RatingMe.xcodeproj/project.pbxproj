@@ -12,6 +12,7 @@
 		93B1C6BB1B628F7D002044A3 /* RateCustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93B1C6BA1B628F7D002044A3 /* RateCustomCell.swift */; };
 		93B1C6BD1B629227002044A3 /* ShowReviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93B1C6BC1B629227002044A3 /* ShowReviewViewController.swift */; };
 		93D95BEB1B442B73002D5C53 /* ReviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D95BEA1B442B73002D5C53 /* ReviewViewController.swift */; };
+		93DA04271B6DF4570049272A /* RatingMeFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93DA04221B6DF3B70049272A /* RatingMeFramework.framework */; };
 		93FC5BE51B3C4CB00010A94D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93FC5BE41B3C4CB00010A94D /* AppDelegate.swift */; };
 		93FC5BE71B3C4CB00010A94D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93FC5BE61B3C4CB00010A94D /* ViewController.swift */; };
 		93FC5BEA1B3C4CB00010A94D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 93FC5BE81B3C4CB00010A94D /* Main.storyboard */; };
@@ -24,6 +25,20 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		93DA04211B6DF3B70049272A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 93DA041C1B6DF3B60049272A /* RatingMeFramework.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 93DA04001B6DF3B60049272A;
+			remoteInfo = RatingMeFramework;
+		};
+		93DA04231B6DF3B70049272A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 93DA041C1B6DF3B60049272A /* RatingMeFramework.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 93DA040B1B6DF3B60049272A;
+			remoteInfo = RatingMeFrameworkTests;
+		};
 		93FC5BF51B3C4CB00010A94D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 93FC5BD71B3C4CB00010A94D /* Project object */;
@@ -39,6 +54,7 @@
 		93B1C6BA1B628F7D002044A3 /* RateCustomCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RateCustomCell.swift; sourceTree = "<group>"; };
 		93B1C6BC1B629227002044A3 /* ShowReviewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ShowReviewViewController.swift; path = ../ShowReviewViewController.swift; sourceTree = "<group>"; };
 		93D95BEA1B442B73002D5C53 /* ReviewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReviewViewController.swift; sourceTree = "<group>"; };
+		93DA041C1B6DF3B60049272A /* RatingMeFramework.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RatingMeFramework.xcodeproj; path = RatingMeFramework/RatingMeFramework.xcodeproj; sourceTree = "<group>"; };
 		93FC5BDF1B3C4CB00010A94D /* RatingMe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RatingMe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		93FC5BE31B3C4CB00010A94D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		93FC5BE41B3C4CB00010A94D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -59,6 +75,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				93DA04271B6DF4570049272A /* RatingMeFramework.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -72,12 +89,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		93DA041D1B6DF3B60049272A /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				93DA04221B6DF3B70049272A /* RatingMeFramework.framework */,
+				93DA04241B6DF3B70049272A /* RatingMeFrameworkTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		93FC5BD61B3C4CB00010A94D = {
 			isa = PBXGroup;
 			children = (
 				93FC5BE11B3C4CB00010A94D /* RatingMe */,
 				93FC5BF71B3C4CB00010A94D /* RatingMeTests */,
 				93FC5BE01B3C4CB00010A94D /* Products */,
+				93DA041C1B6DF3B60049272A /* RatingMeFramework.xcodeproj */,
 			);
 			sourceTree = "<group>";
 		};
@@ -204,6 +231,12 @@
 			mainGroup = 93FC5BD61B3C4CB00010A94D;
 			productRefGroup = 93FC5BE01B3C4CB00010A94D /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 93DA041D1B6DF3B60049272A /* Products */;
+					ProjectRef = 93DA041C1B6DF3B60049272A /* RatingMeFramework.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				93FC5BDE1B3C4CB00010A94D /* RatingMe */,
@@ -211,6 +244,23 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		93DA04221B6DF3B70049272A /* RatingMeFramework.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = RatingMeFramework.framework;
+			remoteRef = 93DA04211B6DF3B70049272A /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		93DA04241B6DF3B70049272A /* RatingMeFrameworkTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = RatingMeFrameworkTests.xctest;
+			remoteRef = 93DA04231B6DF3B70049272A /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		93FC5BDD1B3C4CB00010A94D /* Resources */ = {
@@ -377,6 +427,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = RatingMe/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -388,6 +439,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = RatingMe/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
