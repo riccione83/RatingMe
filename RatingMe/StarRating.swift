@@ -26,16 +26,18 @@ class StarRating: UIView {
 
     }
     
-    func initUI(rating: Int) {
+    func initUI(rating: Int, spacing: CGFloat, imageSize:CGFloat) {
         self.backgroundColor = UIColor.clearColor() //UIColor.blueColor()
         self.userInteractionEnabled = true
         self.layer.cornerRadius = 10
         self.layer.shadowOpacity = 0.8;
         self.layer.shadowOffset = CGSizeMake(0.5, 0.5)
         currentRating = rating
+        
         for var i=0; i<5; i++ {
             let imageView:UIImageView = UIImageView(image: UIImage(named: "deselect_star"))
-            let imageFrame = CGRectMake(CGFloat(i*45), 1, 40, 40)
+            //let imageFrame = CGRectMake(CGFloat(i*45), 1, 40, 40)
+            let imageFrame = CGRectMake( (CGFloat(i)*spacing), 1, imageSize, imageSize)
             imageView.frame = imageFrame
             imageView.tag = i+300
             starRating.addObject(imageView)

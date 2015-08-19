@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import RatingMeFramework
 
 class ShowReviewViewController: UIViewController {
 
@@ -29,10 +28,6 @@ class ShowReviewViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        
-        
-            var Rat = RatingMeFramework()
-            Rat.test()
     }
 
     override func didReceiveMemoryWarning() {
@@ -41,8 +36,39 @@ class ShowReviewViewController: UIViewController {
     }
     
     override func viewDidAppear(animated: Bool) {
+        Descriptions.removeAllObjects()
+        Users.removeAllObjects()
+        Rates1.removeAllObjects()
+        Rates2.removeAllObjects()
+        Rates3.removeAllObjects()
         loadData()
     }
+    
+    @IBAction func returnButtonClick(sender: UIButton) {
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    @IBAction func newReviewButtonClick(sender: UIButton) {
+        var vc = self.storyboard?.instantiateViewControllerWithIdentifier("rateViewController") as! RateViewController
+       let index = pin?.Tag
+        NSLog("New Review for: \(index)")
+        
+        vc.currentTitle = pin!.title
+        vc.currentDescription = pin!.subtitle
+        vc.imageLink = pin!.ImageLink
+        vc.currentRating = pin!.Rating
+        vc.currentReviewID = pin!.ReviewID
+        vc.Q1 = pin!.Question1
+        vc.Q2 = pin!.Question2
+        vc.Q3 = pin!.Question3
+     /*   if(locationManager.location != nil) {
+            vc.lastLatitude = locationManager.location.coordinate.latitude
+            vc.lastLongitude = locationManager.location.coordinate.longitude
+        }*/
+        //vc.delegate = self
+        self.presentViewController(vc, animated: true, completion: nil)
+    }
+    
 
     func loadData() {
         
@@ -101,13 +127,10 @@ extension ShowReviewViewController:UITableViewDelegate, UITableViewDataSource {
         
         myCell.labelNote.text = Descriptions.objectAtIndex(indexPath.row) as? String
         
-        myCell.progressQuestion1.progress = Rates1.objectAtIndex(indexPath.row) as! Float
-      //  NSLog("\(Rates1.objectAtIndex(indexPath.row)")
-        
-       // myCell.progressQuestion1.setProgress(Rates1.objectAtIndex(indexPath.row) as! Float, animated: true)
-        myCell.progressQuestion2.setProgress(Rates2.objectAtIndex(indexPath.row) as! Float, animated: true)
-        myCell.progressQuesiton3.setProgress(Rates3.objectAtIndex(indexPath.row) as! Float, animated: true)
-        
+        myCell.progressQuestion1.progress = (Rates1.objectAtIndex(indexPath.row) as! Float)/5
+        myCell.progressQuestion2.progress = (Rates2.objectAtIndex(indexPath.row) as! Float)/5
+        myCell.progressQuesiton3.progress = (Rates3.objectAtIndex(indexPath.row) as! Float)/5
+    
         return myCell
     }
     

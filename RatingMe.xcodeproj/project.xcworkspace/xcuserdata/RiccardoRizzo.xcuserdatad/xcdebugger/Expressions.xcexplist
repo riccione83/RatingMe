@@ -3,18 +3,43 @@
    version = "1.0">
    <ContextStates>
       <ContextState
-         contextName = "RatingMe.StarRating.handleTouchAtLocation (RatingMe.StarRating)(C.CGPoint, animate : Swift.Bool) -&gt; ():StarRating.swift">
+         contextName = "RatingMe.ViewController.showReviewButtonClick (RatingMe.ViewController)(ObjectiveC.UIButton) -&gt; ():ViewController.swift">
          <PersistentStrings>
             <PersistentString
-               value = "currentRating">
+               value = "locationManager.location">
+            </PersistentString>
+            <PersistentString
+               value = "mainMap.annotations">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "RatingMe.ReviewViewController.sendNewReview (RatingMe.ReviewViewController)(ObjectiveC.UIButton) -&gt; ():ReviewViewController.swift">
+         contextName = "RatingMe.RateViewController.(analyzeImageLink (RatingMe.RateViewController) -&gt; (Swift.String) -&gt; ()).(closure #1):RateViewController.swift">
          <PersistentStrings>
             <PersistentString
-               value = "reviewText.text">
+               value = "linkArr">
+            </PersistentString>
+            <PersistentString
+               value = "link">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "RatingMe.RateViewController.swipeImage (RatingMe.RateViewController)(ObjectiveC.UISwipeGestureRecognizer) -&gt; ():RateViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "sender.direction">
+            </PersistentString>
+            <PersistentString
+               value = "imageLink">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "RatingMe.StarRating.handleTouchAtLocation (RatingMe.StarRating)(C.CGPoint, animate : Swift.Bool) -&gt; ():StarRating.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "currentRating">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -33,38 +58,27 @@
             <PersistentString
                value = "imageLink">
             </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "RatingMe.RateViewController.(analyzeImageLink (RatingMe.RateViewController) -&gt; (Swift.String) -&gt; ()).(closure #1):RateViewController.swift">
-         <PersistentStrings>
             <PersistentString
-               value = "linkArr">
-            </PersistentString>
-            <PersistentString
-               value = "link">
+               value = "starRatingView1">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "RatingMe.ViewController.showReviewButtonClick (RatingMe.ViewController)(ObjectiveC.UIButton) -&gt; ():ViewController.swift">
+         contextName = "RatingMe.ReviewViewController.sendNewReview (RatingMe.ReviewViewController)(ObjectiveC.UIButton) -&gt; ():ReviewViewController.swift">
          <PersistentStrings>
             <PersistentString
-               value = "locationManager.location">
-            </PersistentString>
-            <PersistentString
-               value = "mainMap.annotations">
+               value = "reviewText.text">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "RatingMe.RateViewController.swipeImage (RatingMe.RateViewController)(ObjectiveC.UISwipeGestureRecognizer) -&gt; ():RateViewController.swift">
+         contextName = "RatingMe.StarRating.initUI (RatingMe.StarRating)(Swift.Int) -&gt; ():StarRating.swift">
          <PersistentStrings>
             <PersistentString
-               value = "sender.direction">
+               value = "self.frame.size.height">
             </PersistentString>
             <PersistentString
-               value = "imageLink">
+               value = "self.frame.size.width">
             </PersistentString>
          </PersistentStrings>
       </ContextState>

@@ -23,6 +23,7 @@ class ViewController: UIViewController, ReviewControllerProtocol,RateControllerP
     let locationManager:CLLocationManager = CLLocationManager.new()
     var ThisImage:UIImageView = UIImageView.new()
     var pin:NSMutableArray?
+    var currentAnnotation:PinAnnotation?
     
     //let url = "http://localhost:8888/rating/"
     let url = "http://www.riccardorizzo.eu/rating/"
@@ -41,6 +42,11 @@ class ViewController: UIViewController, ReviewControllerProtocol,RateControllerP
             let reviewView = segue.destinationViewController as! ReviewViewController
             reviewView.delegate = self
         }
+    /*    else if(segue.identifier == "showReview") {
+            let formReview = segue.destinationViewController as! ShowReviewViewController
+            formReview.pin = currentAnnotation
+        }
+*/
     }
     
     @IBAction func searchByUserLocationButton(sender: UIBarButtonItem) {
@@ -185,7 +191,7 @@ class ViewController: UIViewController, ReviewControllerProtocol,RateControllerP
     func showInfoPanel(annotation: PinAnnotation) {
         
         var vc = self.storyboard?.instantiateViewControllerWithIdentifier("ShowReviews") as! ShowReviewViewController
-        NSLog("Visualizzo: \(index)")
+        NSLog("Visualizzo: \(annotation.Tag)")
         
         let pinArray: NSArray = mainMap.annotations as NSArray
         
@@ -206,7 +212,8 @@ class ViewController: UIViewController, ReviewControllerProtocol,RateControllerP
                         vc.lastLongitude = locationManager.location.coordinate.longitude
                     }*/
                     vc.pin = annotation
-                   //vc.delegate = self
+                   // currentAnnotation = annotation
+                   // self.performSegueWithIdentifier("showReview", sender: self)
                     self.presentViewController(vc, animated: true, completion: nil)
             }
         }
@@ -251,7 +258,7 @@ class ViewController: UIViewController, ReviewControllerProtocol,RateControllerP
         }
         */
     }
-    
+
     
     func sendLongText() {
         
@@ -303,6 +310,7 @@ class ViewController: UIViewController, ReviewControllerProtocol,RateControllerP
     override func viewDidAppear(animated: Bool) {
        // testImage.image = getScreenImage()
        // rippleView(testImage)
+        currentAnnotation = nil
         
         if (locationManager.location != nil) {
             searchByUserLocation(locationManager.location.coordinate.latitude, lon: locationManager.location.coordinate.longitude, center: true)

@@ -37,7 +37,7 @@ class RateViewController: UIViewController {
     var currentDescription:String = ""
     var imageLink:String = ""
     var currentRating:String = ""
-    var currentUserID:String = "1"
+    var currentUserID:String = "2"
     var currentReviewID:String = ""
     var lastLatitude:Double = 0.0;
     var lastLongitude:Double = 0.0;
@@ -65,7 +65,6 @@ class RateViewController: UIViewController {
     
         let rating = String(format: "\(rate)")
         var sUrl:String = url + "review.php"
-        
         
         let q1 = "\(rate_q1)"
         let q2 = "\(rate_q2)"
@@ -154,36 +153,56 @@ class RateViewController: UIViewController {
     }
     
     func selectThumb(sender: UITapGestureRecognizer) {
-            NSLog("Touble tap")
+        NSLog("Touble tap")
+        UIView.beginAnimations(nil, context: nil)
+        UIView.setAnimationDuration(0.5)
+        UIView.setAnimationDelay(0.0)
+        UIView.setAnimationCurve(UIViewAnimationCurve.EaseOut)
         if(!isFullscreen) {
             oldFrame = thumbImage.frame
             thumbImage.frame = self.view.frame
             isFullscreen = true
-            labelTitle.backgroundColor = UIColor.whiteColor()
-            labelTitle.alpha = 0.6
-            labelTitle.layer.cornerRadius = 10
             textDescription.backgroundColor = UIColor.whiteColor()
-            textDescription.alpha = 0.6
-            textDescription.layer.cornerRadius = 10
+            textDescription.alpha = 0.0
+            starRatingView1.alpha = 0.0
+            starRatingView2.alpha = 0.0
+            starRatingView3.alpha = 0.0
+            txtRateDescription.alpha = 0.0
         }
         else {
             thumbImage.frame = oldFrame
             isFullscreen = false
-            labelTitle.backgroundColor = UIColor.clearColor()
-            labelTitle.alpha = 1
-            labelTitle.layer.cornerRadius = 0
             textDescription.layer.cornerRadius = 0
             textDescription.backgroundColor = UIColor.clearColor()
             textDescription.alpha = 1
+            starRatingView1.alpha = 1
+            starRatingView2.alpha = 1
+            starRatingView3.alpha = 1
+            txtRateDescription.alpha = 1
         }
+        UIView.commitAnimations()
     }
     
     override func viewDidAppear(animated: Bool) {
     }
     
+    override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
+        txtRateDescription.resignFirstResponder()
+    }
+    
+    func keyboardWillShow(sender: NSNotification) {
+        self.view.frame.origin.y -= 150
+    }
+    
+    func keyboardWillHide(sender: NSNotification) {
+        self.view.frame.origin.y += 150
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillShow:"), name:UIKeyboardWillShowNotification, object: nil);
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillHide:"), name:UIKeyboardWillHideNotification, object: nil);
         
         let rightScroll:UISwipeGestureRecognizer = UISwipeGestureRecognizer()
         rightScroll.addTarget(self, action: "swipeImage:")
@@ -202,10 +221,10 @@ class RateViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         textDescription.text = currentTitle + "\r\n" + currentDescription
-        starRatingView1.initUI(0)
-        starRatingView2.initUI(0)
-        starRatingView3.initUI(0)
-        //starRatingView.initUI(0) //currentRating.toInt()!)
+        starRatingView1.initUI(0,spacing: 45.0,imageSize: 40.0)
+        starRatingView2.initUI(0,spacing: 45.0,imageSize: 40.0)
+        starRatingView3.initUI(0,spacing: 45.0,imageSize: 40.0)
+       
         
         labelQuestion1.text = Q1
         labelQuestion2.text = Q2
