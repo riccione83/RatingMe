@@ -1,6 +1,6 @@
 # RatingMe
 
-![alt tag](https://cloud.githubusercontent.com/assets/7590117/9406768/b0f075a2-4803-11e5-8d98-4d9691d58b8c.png)
+![alt tag](https://cloud.githubusercontent.com/assets/7590117/9406794/e387c43e-4803-11e5-9441-7a3367ae3fd5.png)
 
 Introduction
 ------------
