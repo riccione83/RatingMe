@@ -26,12 +26,14 @@ class StarRating: UIView {
 
     }
     
-    func initUI(rating: Int, spacing: CGFloat, imageSize:CGFloat) {
-        self.backgroundColor = UIColor.clearColor() //UIColor.blueColor()
+    func initUI(rating: Int, spacing: CGFloat, imageSize:CGFloat, withOpacity:Bool) {
+        self.backgroundColor = UIColor.clearColor()
         self.userInteractionEnabled = true
-        self.layer.cornerRadius = 10
-        self.layer.shadowOpacity = 0.8;
-        self.layer.shadowOffset = CGSizeMake(0.5, 0.5)
+        if withOpacity {
+            self.layer.cornerRadius = 10
+            self.layer.shadowOpacity = 0.8;
+            self.layer.shadowOffset = CGSizeMake(0.5, 0.5)
+        }
         currentRating = rating
         
         for var i=0; i<5; i++ {

@@ -14,12 +14,12 @@ class RateCustomCell: UITableViewCell {
     @IBOutlet var lblQuestion2: UILabel!
     @IBOutlet var lblQuestion3: UILabel!
     
-    @IBOutlet var progressQuestion1: UIProgressView!
-    @IBOutlet var progressQuestion2: UIProgressView!
-    @IBOutlet var progressQuesiton3: UIProgressView!
-    
     @IBOutlet var labelNote: UILabel!
+    @IBOutlet var labelNoteTitle: UILabel!
     
+    @IBOutlet var starRatingQuestion1: StarRating!
+    @IBOutlet var starRatingQuestion2: StarRating!
+    @IBOutlet var starRatingQuestion3: StarRating!
     
     override func awakeFromNib() {
         super.awakeFromNib()

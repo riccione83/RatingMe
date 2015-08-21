@@ -31,7 +31,7 @@ class JSonHelper: NSObject {
         let body = NSMutableData()
         
         for (value,key) in dict {
-            NSLog("Value for \(value) = \(key)")
+            //NSLog("Value for \(value) = \(key)")
             body.appendData(String(format:"\r\n--\(boundary)\r\n").dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)!)
             let str = "Content-Disposition: form-data; name=\"\(value)\"\r\n\r\n"
             
@@ -63,47 +63,13 @@ class JSonHelper: NSObject {
         return NSMutableArray.new()
     }
     
- /*   func getJson(urlBase:String,post_params:String) -> AnyObject {  //NSMutableArray
-        
-        let post:String = post_params
-        NSLog(post);
-        let url:NSURL = NSURL(string: urlBase)!
-        
-        let postData:NSData = post.dataUsingEncoding(NSASCIIStringEncoding, allowLossyConversion: true)!;
-        let postLength:NSString = NSString(format: "%lu", postData.length)
-        let request:NSMutableURLRequest = NSMutableURLRequest();
-        request.URL = url
-        request.HTTPMethod="POST"
-        request.setValue(postLength as String, forHTTPHeaderField: "Content-Length")
-        request.setValue("application/json", forHTTPHeaderField: "Accept")
-        request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
-        request.HTTPBody = postData
-        
-        var response: NSURLResponse?
-        var error: NSError?
-        
-        let urlData = NSURLConnection.sendSynchronousRequest(request, returningResponse: &response, error: &error)
-        
-        if let httpResponse = response as? NSHTTPURLResponse {
-            println("Response: \(httpResponse.statusCode)")
-            
-            if httpResponse.statusCode >= 200 && httpResponse.statusCode<300
-            {
-                let responseData = NSString(data: urlData!, encoding: NSUTF8StringEncoding)
-                let jsonData = parseJSON(urlData!)
-                return jsonData
-            }
-        }
-        return NSMutableArray.new()
-    }*/
     
     func parseJSON(inputData: NSData) -> AnyObject{
         var error: NSError?
-        //var boardsDictionary: NSMutableArray = NSJSONSerialization.JSONObjectWithData(inputData, options: NSJSONReadingOptions.MutableContainers, error: &error) as! NSMutableArray
         
-        var boardsDictionary = NSJSONSerialization.JSONObjectWithData(inputData, options: NSJSONReadingOptions.MutableContainers, error: &error)
+        var boardsDictionary: AnyObject = NSJSONSerialization.JSONObjectWithData(inputData, options: NSJSONReadingOptions.MutableContainers, error: &error)!
         
-        return boardsDictionary!
+        return boardsDictionary
     }
     
     func getJsonData(getUrl: String, completion:(NSDictionary -> Void)) {

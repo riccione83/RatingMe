@@ -13,11 +13,10 @@ protocol RateControllerProtocol {
 }
 
 class RateViewController: UIViewController {
-    
-    //let url = "http://localhost:8888/rating/"
+
     let url = "http://www.riccardorizzo.eu/rating/"
     
-     var delegate:RateControllerProtocol? = nil
+    var delegate:RateControllerProtocol? = nil
     
     var isFullscreen = false
     var oldFrame: CGRect = CGRectMake(0, 0, 0, 0)
@@ -33,11 +32,11 @@ class RateViewController: UIViewController {
     @IBOutlet var labelQuestion3: UILabel!
     @IBOutlet var txtRateDescription: UITextField!
     
+    var userInfos:User?
     var currentTitle:String = ""
     var currentDescription:String = ""
     var imageLink:String = ""
     var currentRating:String = ""
-    var currentUserID:String = "2"
     var currentReviewID:String = ""
     var lastLatitude:Double = 0.0;
     var lastLongitude:Double = 0.0;
@@ -46,22 +45,52 @@ class RateViewController: UIViewController {
     var Q2:String = ""
     var Q3:String = ""
     
-    @IBAction func feedbackClick(sender: UIButton) {
+    @IBAction func feedbackClick(sender: AnyObject) {
         
-        var rating = currentRating.toInt()
-        rating = (starRatingView1.currentRating + starRatingView2.currentRating + starRatingView3.currentRating) / 3
-        
-        newRating(currentReviewID, user_id: currentUserID, rate: rating!, description: txtRateDescription.text, rate_q1: starRatingView1.currentRating,rate_q2: starRatingView2.currentRating, rate_q3: starRatingView3.currentRating)
+        if !isFullscreen {
+            var rating = currentRating.toInt()
+            
+            var divisor = 1
+            let rate1 = starRatingView1.currentRating
+            var rate2 = 0
+            var rate3 = 0
+            
+            if starRatingView2 != nil && !starRatingView2.hidden {
+                rate2 = starRatingView2.currentRating
+                divisor++
+            }
+            
+            if starRatingView3 != nil && !starRatingView3.hidden {
+                rate3 = starRatingView3.currentRating
+                divisor++
+            }
+            
+            rating = (starRatingView1.currentRating + starRatingView2.currentRating + starRatingView3.currentRating) / divisor
+            
+            newRating(currentReviewID, user_id: userInfos!.userID,user_name: userInfos!.userName, rate: rating!, description: txtRateDescription.text, rate_q1: starRatingView1.currentRating,rate_q2: starRatingView2.currentRating, rate_q3: starRatingView3.currentRating)
+        }
+        else {
+            thumbImage.frame = oldFrame
+            isFullscreen = false
+            textDescription.layer.cornerRadius = 0
+            textDescription.backgroundColor = UIColor.clearColor()
+            textDescription.alpha = 1
+            starRatingView1.alpha = 1
+            starRatingView2.alpha = 1
+            starRatingView3.alpha = 1
+            txtRateDescription.alpha = 1
+        }
     }
     
-    @IBAction func returnClick(sender: UIButton) {
+    @IBAction func returnClick(sender: AnyObject) {
         self.dismissViewControllerAnimated(true, completion: nil)
     }
+
     
 
     
     
-    func newRating(review_id:String, user_id:String, rate:Int, description:String, rate_q1:Int, rate_q2:Int, rate_q3:Int) {
+    func newRating(review_id:String, user_id:String,user_name:String, rate:Int, description:String, rate_q1:Int, rate_q2:Int, rate_q3:Int) {
     
         let rating = String(format: "\(rate)")
         var sUrl:String = url + "review.php"
@@ -74,6 +103,7 @@ class RateViewController: UIViewController {
         params.setValue("set_rating", forKey: "command")
         params.setValue(review_id, forKey: "review_id")
         params.setValue(user_id, forKey: "user_id")
+        params.setValue(user_name, forKey: "user_name")
         params.setValue(rating, forKey: "rate")
         params.setValue(description, forKey: "rate_description")
         params.setValue(q1, forKey: "rate_q1")
@@ -221,14 +251,31 @@ class RateViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         textDescription.text = currentTitle + "\r\n" + currentDescription
-        starRatingView1.initUI(0,spacing: 45.0,imageSize: 40.0)
-        starRatingView2.initUI(0,spacing: 45.0,imageSize: 40.0)
-        starRatingView3.initUI(0,spacing: 45.0,imageSize: 40.0)
-       
+        
         
         labelQuestion1.text = Q1
-        labelQuestion2.text = Q2
-        labelQuestion3.text = Q3
+        starRatingView1.initUI(0,spacing: 45.0,imageSize: 40.0, withOpacity: false)
+        
+        if  Q2 != "" {
+            labelQuestion2.text = Q2
+            starRatingView2.initUI(0,spacing: 45.0,imageSize: 40.0, withOpacity: false)
+        }
+        else
+        {
+            labelQuestion2.hidden = true
+            starRatingView2.hidden = true
+        }
+        
+        
+        if Q3 != "" {
+            labelQuestion3.text = Q3
+            starRatingView3.initUI(0,spacing: 45.0,imageSize: 40.0, withOpacity: false)
+        }
+        else
+        {
+            labelQuestion3.hidden = true
+            starRatingView3.hidden = true
+        }
         
         if let checkedUrl = NSURL(string:imageLink) {
             downloadImage(checkedUrl,frame: thumbImage)

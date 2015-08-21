@@ -72,13 +72,22 @@ class ReviewViewController: UIViewController {
         let lat = "\(locationManager.location.coordinate.latitude)"
         let lon = "\(locationManager.location.coordinate.longitude)"
         
-        if(reviewTitle.text != "" && reviewText.text != "" && reviewText.text != "Enter a description") {
+        if(textQuestion1.text != "" && reviewTitle.text != "" && reviewText.text != "" && reviewText.text != "Enter a description") {
             newReview(reviewTitle.text, description: reviewText.text, latitude: lat, longitude: lon, question1: textQuestion1.text, question2: textQuestion2.text, question3: textQuestion3.text)
+        }
+        else {
+            showMessage("Impossibile inviare la recensione. E' necessario compilare tutti i campi e almeno una domanda.")
         }
     }
     
     @IBAction func cancelClickButton(sender: UIButton) {
             self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func showMessage(message:String) {
+        var alert = UIAlertController(title: "RateMe", message:message, preferredStyle: UIAlertControllerStyle.Alert)
+        alert.addAction(UIAlertAction(title: "Close", style: UIAlertActionStyle.Default, handler: nil))
+        self.presentViewController(alert, animated: true, completion: nil)
     }
     
     override func viewDidLoad() {

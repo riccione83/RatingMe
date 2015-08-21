@@ -18,16 +18,31 @@ extension String {
 class ViewController: UIViewController, ReviewControllerProtocol,RateControllerProtocol {
     @IBOutlet var mainMap: MKMapView!
     @IBOutlet var searchBar: UISearchBar!
-  //  @IBOutlet var testImage: UIImageView!
     
     let locationManager:CLLocationManager = CLLocationManager.new()
     var ThisImage:UIImageView = UIImageView.new()
     var pin:NSMutableArray?
     var currentAnnotation:PinAnnotation?
-    
-    //let url = "http://localhost:8888/rating/"
+    var userInfos:User?
+    var lastRegion:MKCoordinateRegion?
+    var loginHappened:Bool = false
     let url = "http://www.riccardorizzo.eu/rating/"
     
+    
+    
+    
+    @IBAction func logoutClick(sender: AnyObject) {
+        NSUserDefaults.standardUserDefaults().setObject(nil, forKey: "loginDataUserID")
+        NSUserDefaults.standardUserDefaults().setObject(nil, forKey: "loginDataUserName")
+        NSUserDefaults.standardUserDefaults().synchronize()
+        
+        userInfos = nil
+        
+        var vc = self.storyboard?.instantiateViewControllerWithIdentifier("loginViewController") as! LoginViewController
+        vc.delegate = self
+        self.presentViewController(vc, animated: true, completion: nil)
+
+    }
     
     @IBAction func showReview(sender: UIButton) {
     
@@ -42,11 +57,6 @@ class ViewController: UIViewController, ReviewControllerProtocol,RateControllerP
             let reviewView = segue.destinationViewController as! ReviewViewController
             reviewView.delegate = self
         }
-    /*    else if(segue.identifier == "showReview") {
-            let formReview = segue.destinationViewController as! ShowReviewViewController
-            formReview.pin = currentAnnotation
-        }
-*/
     }
     
     @IBAction func searchByUserLocationButton(sender: UIBarButtonItem) {
@@ -106,32 +116,13 @@ class ViewController: UIViewController, ReviewControllerProtocol,RateControllerP
     
     func getCoordinatesByLocation(location:String) {
         
-        var locationQuery = location.stringByReplacingOccurrencesOfString(" ", withString: "+", options: NSStringCompareOptions.LiteralSearch, range: nil)
+        let geocoder:CLGeocoder = CLGeocoder()
         
-        /*var searchUrl = "http://maps.google.com/maps/api/geocode/json?address="+locationQuery
-        searchUrl = searchUrl + "&sensor=false&region=$region"
-        */
-        
-        var searchUrl = "http://maps.google.com/maps/api/geocode/json";
-        var postParams = "?address="+locationQuery + "&sensor=false&region=$region"
-        
-        var params:NSMutableDictionary = NSMutableDictionary()
-        
-       /* params.setValue(locationQuery, forKey: "address")
-        params.setValue("false", forKey: "sensor")
-        params.setValue("$region", forKey: "region")*/
-        
-        let jsonRequest = JSonHelper.new()
-        let jsonData = jsonRequest.getJson(searchUrl+postParams,dict: params) as!  NSMutableDictionary
-        
-        let resultData = jsonData.valueForKey("results") as! NSMutableArray
-        let result2 = resultData[0].valueForKey("geometry") as! NSMutableDictionary
-        let result3 = result2.valueForKey("location") as! NSMutableDictionary
-        
-        let lat:Double = result3.valueForKey("lat") as! Double
-        let lon:Double = result3.valueForKey("lng") as! Double
-        
-        centerMap(lat, withLon: lon)
+        geocoder.geocodeAddressString(location, completionHandler: {(placemarks: [AnyObject]!, error: NSError!) -> Void in
+            if let placemark = placemarks?[0] as? CLPlacemark {
+                self.centerMap(placemark.location.coordinate.latitude, withLon: placemark.location.coordinate.longitude)
+            }
+        })
     }
     
     func centerMap(lat: Double, withLon lon: Double) {
@@ -154,8 +145,6 @@ class ViewController: UIViewController, ReviewControllerProtocol,RateControllerP
         
         return Double(currentDistWideInMeters)/1000  //In KM
     }
-    
-    
     
     func showReviewButtonClick(sender:UIButton) {
         var vc = self.storyboard?.instantiateViewControllerWithIdentifier("rateViewController") as! RateViewController
@@ -189,74 +178,11 @@ class ViewController: UIViewController, ReviewControllerProtocol,RateControllerP
     }
     
     func showInfoPanel(annotation: PinAnnotation) {
-        
         var vc = self.storyboard?.instantiateViewControllerWithIdentifier("ShowReviews") as! ShowReviewViewController
         NSLog("Visualizzo: \(annotation.Tag)")
-        
-        let pinArray: NSArray = mainMap.annotations as NSArray
-        
-        for item in pinArray {
-            if( item is PinAnnotation) {
-                let itm: PinAnnotation = item as! PinAnnotation
-
-                    /*vc.currentTitle = itm.title
-                    vc.currentDescription = itm.subtitle
-                    vc.imageLink = itm.ImageLink
-                    vc.currentRating = itm.Rating
-                    vc.currentReviewID = itm.ReviewID
-                    vc.Q1 = itm.Question1
-                    vc.Q2 = itm.Question2
-                    vc.Q3 = itm.Question3
-                    if(locationManager.location != nil) {
-                        vc.lastLatitude = locationManager.location.coordinate.latitude
-                        vc.lastLongitude = locationManager.location.coordinate.longitude
-                    }*/
-                    vc.pin = annotation
-                   // currentAnnotation = annotation
-                   // self.performSegueWithIdentifier("showReview", sender: self)
-                    self.presentViewController(vc, animated: true, completion: nil)
-            }
-        }
-
-        
-      /*  let infoPanel:UIView = UIView(frame: CGRectMake(136, 8, 400, 200))
-        let backImage:UIImageView = UIImageView(frame: infoPanel.bounds)
-        let imageInfo:UIImageView = UIImageView(frame: CGRectMake(8, 8, 120, 120))
-        let titleLabel:UILabel = UILabel(frame:CGRectMake(136, 8, 256, 20))
-        let description:UITextView = UITextView(frame: CGRectMake(136, 37, 255, 99))
-        let buttonAddReview:UIButton = UIButton(frame: CGRectMake(8, 144, 108, 46))
-        let buttonShowReview:UIButton = UIButton(frame: CGRectMake(280, 144, 112, 46))
-        
-        buttonAddReview.setTitle("Add Review", forState: UIControlState.Normal)
-        buttonShowReview.setTitle("Show Refview", forState: UIControlState.Normal)
-        buttonAddReview.titleLabel?.textColor = UIColor.blackColor()
-        buttonShowReview.titleLabel?.textColor = UIColor.blackColor()
-        buttonAddReview.addTarget(self, action: "showReviewButtonClick:", forControlEvents: UIControlEvents.TouchUpInside)
-        buttonAddReview.tag = Int(annotation.Tag)
-        
-        imageInfo.layer.cornerRadius = 10
-        backImage.image = UIImage(named: "infoBox")
-        titleLabel.text = annotation.title
-        description.text = annotation.subtitle
-        description.backgroundColor = UIColor.clearColor()
-        infoPanel.backgroundColor = UIColor.grayColor()
-        infoPanel.layer.cornerRadius = 12
-        
-        infoPanel.addSubview(backImage)
-        infoPanel.addSubview(buttonShowReview)
-        infoPanel.addSubview(buttonAddReview)
-        infoPanel.addSubview(description)
-        infoPanel.addSubview(imageInfo)
-        infoPanel.addSubview(titleLabel)
-        infoPanel.center = self.view.center
-        infoPanel.tag = 999
-        self.view.addSubview(infoPanel)
-        
-        ThisImage.contentMode = UIViewContentMode.ScaleAspectFit
-        if let checkedUrl = NSURL(string:annotation.ImageLink) {
-            downloadImage(checkedUrl,frame: imageInfo)
-        }
-        */
+        vc.userInfos = userInfos!
+        vc.pin = annotation
+        self.presentViewController(vc, animated: true, completion: nil)
     }
 
     
@@ -308,23 +234,35 @@ class ViewController: UIViewController, ReviewControllerProtocol,RateControllerP
     }
     
     override func viewDidAppear(animated: Bool) {
-       // testImage.image = getScreenImage()
-       // rippleView(testImage)
-        currentAnnotation = nil
         
-        if (locationManager.location != nil) {
-            searchByUserLocation(locationManager.location.coordinate.latitude, lon: locationManager.location.coordinate.longitude, center: true)
+        userInfos = loadLoginData()
+        
+        if userInfos == nil {
+            var vc = self.storyboard?.instantiateViewControllerWithIdentifier("loginViewController") as! LoginViewController
+            vc.delegate = self
+            self.presentViewController(vc, animated: true, completion: nil)
         }
         else {
-            searchForLocation("Italia", withRadius: 100.0, center: true)
+            
+            if !loginHappened {
+                loginHappened = true
+                saveLoginData(userInfos!)
+                //currentAnnotation = nil
+                
+                if (locationManager.location != nil) {
+                    searchByUserLocation(locationManager.location.coordinate.latitude, lon: locationManager.location.coordinate.longitude, center: true)
+                }
+                else {
+                    searchForLocation("Italia", withRadius: 100.0, center: true)
+                }
+                
+                mainMap.showsUserLocation = true
+            }
         }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-       // searchByUserLocation(locationManager.location.coordinate.latitude, lon: locationManager.location.coordinate.longitude, center: true)
-        
-       // searchForLocation("Catania", withRadius: zoomLevelForMap(), center: true)
         
         setupUI()
     }
@@ -334,7 +272,27 @@ class ViewController: UIViewController, ReviewControllerProtocol,RateControllerP
         // Dispose of any resources that can be recreated.
     }
 
+    func saveLoginData(userData: User) {
+        NSUserDefaults.standardUserDefaults().setObject(userData.userID, forKey: "loginDataUserID")
+        NSUserDefaults.standardUserDefaults().setObject(userData.userName, forKey: "loginDataUserName")
+        NSUserDefaults.standardUserDefaults().synchronize()
+    }
     
+    func loadLoginData() -> User? {
+        if userInfos == nil {
+            if let userID =  NSUserDefaults.standardUserDefaults().objectForKey("loginDataUserID") as? String {
+                let userName = NSUserDefaults.standardUserDefaults().objectForKey("loginDataUserName") as! String
+                let data:User = User()
+                data.userID = userID
+                data.userName = userName
+                return data
+            }
+            else {
+                return nil
+            }
+        }
+        return userInfos
+    }
     
     func setupUI(){
         let tapMapRecognizer:UITapGestureRecognizer = UITapGestureRecognizer()
@@ -366,9 +324,10 @@ class ViewController: UIViewController, ReviewControllerProtocol,RateControllerP
     func mapTap(tap:UIGestureRecognizer) {
        // NSLog("Tapped on map")
         
-        if let popupView = self.view.viewWithTag(999) {
+       /* if let popupView = self.view.viewWithTag(999) {
             popupView.removeFromSuperview()
         }
+        */
     }
     
     func searchForLocation(location:String, withRadius radius_:Double, latitude_:Double=0.0, longitude_:Double=0.0, center:Bool) {
@@ -418,6 +377,9 @@ class ViewController: UIViewController, ReviewControllerProtocol,RateControllerP
             let question1:String = dict.valueForKey("question1") as! String
             let question2:String = dict.valueForKey("question2") as! String
             let question3:String = dict.valueForKey("question3") as! String
+            let isAdvertisement = dict.valueForKey("is_advertisement") as! String
+            let advertisementImageLink = dict.valueForKey("ad_image_link") as! String
+            
             var _lat:String = String(format:"{%f,%f}", lat,lon)
             let point = CGPointFromString(_lat)
             let coordinate = CLLocationCoordinate2DMake(CLLocationDegrees(point.x), CLLocationDegrees(point.y))
@@ -429,7 +391,8 @@ class ViewController: UIViewController, ReviewControllerProtocol,RateControllerP
                 var fullNameArr = rating?.componentsSeparatedByString(".")[0]
                 rating = fullNameArr
             }
-            let pinPoint = PinAnnotation(coordinate: coordinate, title:title!, subtitle: description!, tag: i,rating: rating!, link: image!, ID: reviewID, Q1: question1, Q2: question2, Q3: question3)
+            
+            let pinPoint = PinAnnotation(coordinate: coordinate, title:title!, subtitle: description!, tag: i,rating: rating!, link: image!, ID: reviewID, Q1: question1, Q2: question2, Q3: question3, isAdv: isAdvertisement, advImgLink: advertisementImageLink)
             
             Pins.addObject(pinPoint)
             i = i + 1
@@ -488,24 +451,26 @@ class ViewController: UIViewController, ReviewControllerProtocol,RateControllerP
 
 extension ViewController:MKMapViewDelegate {
     
-    
     func mapView(mapView: MKMapView!, regionDidChangeAnimated animated: Bool) {
-        if let popupView = self.view.viewWithTag(999) {
-            popupView.removeFromSuperview()
+        
+        if lastRegion?.center.latitude != mainMap.region.center.latitude {
+            lastRegion = mainMap.region
+            if let popupView = self.view.viewWithTag(999) {
+                popupView.removeFromSuperview()
+            }
+            var region:MKCoordinateRegion = mainMap.region  // get the current region
+            searchByUserLocation(region.center.latitude, lon: region.center.longitude, center: false)
         }
-       // zoomLevelForMap()
-        var region:MKCoordinateRegion = mainMap.region  // get the current region
-        searchByUserLocation(region.center.latitude, lon: region.center.longitude, center: false)
     }
     
     
     func mapView(mapView: MKMapView!, viewForAnnotation annotation: MKAnnotation!) -> MKAnnotationView! {
-
-        let pinAnnotationView = PinAnnotationView(annotation: annotation, reuseIdentifier: "Points")
-        pinAnnotationView.canShowCallout = true
-        if (pinAnnotationView.annotation is PinAnnotation) {
-            let currAnnotation:PinAnnotation = pinAnnotationView.annotation as! PinAnnotation
         
+        let pinAnnotationView = PinAnnotationView(annotation: annotation, reuseIdentifier: "Points")
+        pinAnnotationView.canShowCallout = false
+        if (pinAnnotationView.annotation is PinAnnotation)
+        {
+            let currAnnotation:PinAnnotation = pinAnnotationView.annotation as! PinAnnotation
             pinAnnotationView.disclosureBlock = { NSLog("selected Pin"); self.showInfoPanel(currAnnotation) }
         }
         return pinAnnotationView
@@ -519,8 +484,9 @@ extension ViewController:MKMapViewDelegate {
     
     func mapView(mapView: MKMapView!, didSelectAnnotationView view: MKAnnotationView!) {
         
-        mapView.deselectAnnotation(view.annotation, animated: true)
+        //mapView.deselectAnnotation(view.annotation, animated: true)
         if let rr:PinAnnotationView = view as? PinAnnotationView {
+            rr.canShowCallout = false
             rr.expand()
             if let annotation = view.annotation as? PinAnnotation {
                 NSLog("Le tre domande: \(annotation.Question1) - \(annotation.Question2) - \(annotation.Question3)")
@@ -531,9 +497,6 @@ extension ViewController:MKMapViewDelegate {
     
     func mapView(mapView: MKMapView!, annotationView view: MKAnnotationView!, calloutAccessoryControlTapped control: UIControl!) {
         
-        //if let annotation = view.annotation as? PinAnnotation {
-        //    NSLog("Clicked: \(annotation.Tag)")
-        //}
     }
     
 }
@@ -545,8 +508,7 @@ extension ViewController:CLLocationManagerDelegate {
     }
     
     func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
-        //    NSLog("User Position: \(locationManager.location.coordinate.latitude)")
-        mainMap.showsUserLocation = true
+    
     }
     
 }

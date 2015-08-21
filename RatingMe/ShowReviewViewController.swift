@@ -9,15 +9,17 @@
 import UIKit
 
 class ShowReviewViewController: UIViewController {
-
     
-    //let url = "http://localhost:8888/rating/"
+    @IBOutlet var rateTableView: UITableView!
+    @IBOutlet var navigationBar: UINavigationBar!
+    @IBOutlet var textDescription: UITextView!
+    @IBOutlet var viewNoReview: UIView!
+    
     let url = "http://www.riccardorizzo.eu/rating/"
     
     var pin:PinAnnotation?
     var currentReviewID:String?
-    @IBOutlet var rateTableView: UITableView!
-    
+    var userInfos:User?
     var Descriptions:NSMutableArray = NSMutableArray.new()
     var Users:NSMutableArray = NSMutableArray.new()
     var Rates1:NSMutableArray = NSMutableArray.new()
@@ -28,6 +30,9 @@ class ShowReviewViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        
+        navigationBar.topItem?.title = pin?.title
+        textDescription.text = pin?.subtitle
     }
 
     override func didReceiveMemoryWarning() {
@@ -36,6 +41,7 @@ class ShowReviewViewController: UIViewController {
     }
     
     override func viewDidAppear(animated: Bool) {
+        viewNoReview.hidden = true
         Descriptions.removeAllObjects()
         Users.removeAllObjects()
         Rates1.removeAllObjects()
@@ -50,9 +56,10 @@ class ShowReviewViewController: UIViewController {
     
     @IBAction func newReviewButtonClick(sender: UIButton) {
         var vc = self.storyboard?.instantiateViewControllerWithIdentifier("rateViewController") as! RateViewController
-       let index = pin?.Tag
+        let index = pin?.Tag
         NSLog("New Review for: \(index)")
         
+        vc.userInfos = userInfos!
         vc.currentTitle = pin!.title
         vc.currentDescription = pin!.subtitle
         vc.imageLink = pin!.ImageLink
@@ -61,11 +68,6 @@ class ShowReviewViewController: UIViewController {
         vc.Q1 = pin!.Question1
         vc.Q2 = pin!.Question2
         vc.Q3 = pin!.Question3
-     /*   if(locationManager.location != nil) {
-            vc.lastLatitude = locationManager.location.coordinate.latitude
-            vc.lastLongitude = locationManager.location.coordinate.longitude
-        }*/
-        //vc.delegate = self
         self.presentViewController(vc, animated: true, completion: nil)
     }
     
@@ -99,17 +101,11 @@ class ShowReviewViewController: UIViewController {
             }
             rateTableView.reloadData()
         }
+        if Descriptions.count == 0 {
+            viewNoReview.hidden = false
+        }
     }
     
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 }
 
 extension ShowReviewViewController:UITableViewDelegate, UITableViewDataSource {
@@ -122,15 +118,38 @@ extension ShowReviewViewController:UITableViewDelegate, UITableViewDataSource {
         let myCell:RateCustomCell = rateTableView.dequeueReusableCellWithIdentifier("CustomCell") as! RateCustomCell
         
         myCell.lblQuestion1.text = pin?.Question1
-        myCell.lblQuestion2.text = pin?.Question2
-        myCell.lblQuestion3.text = pin?.Question3
+        
+        if pin?.Question2 != nil && pin?.Question2 != "" {
+            myCell.lblQuestion2.text = pin?.Question2
+        }
+        else
+        {
+            myCell.lblQuestion2.hidden = true
+            myCell.starRatingQuestion2.hidden = true
+        }
+        
+        if pin?.Question3 != nil && pin?.Question3 != "" {
+            myCell.lblQuestion3.text = pin?.Question3
+        }
+        else {
+            myCell.lblQuestion3.hidden = true
+            myCell.starRatingQuestion3.hidden = true
+        }
+        
+        let userName = Users.objectAtIndex(indexPath.row) as! String
+        
+        myCell.labelNoteTitle.text = String(format: "Note by \(userName)")
         
         myCell.labelNote.text = Descriptions.objectAtIndex(indexPath.row) as? String
         
-        myCell.progressQuestion1.progress = (Rates1.objectAtIndex(indexPath.row) as! Float)/5
-        myCell.progressQuestion2.progress = (Rates2.objectAtIndex(indexPath.row) as! Float)/5
-        myCell.progressQuesiton3.progress = (Rates3.objectAtIndex(indexPath.row) as! Float)/5
-    
+        myCell.starRatingQuestion1.initUI(Rates1.objectAtIndex(indexPath.row) as! Int, spacing: 22, imageSize: 20, withOpacity: false)
+        myCell.starRatingQuestion2.initUI(Rates2.objectAtIndex(indexPath.row) as! Int, spacing: 22, imageSize: 20, withOpacity: false)
+        myCell.starRatingQuestion3.initUI(Rates3.objectAtIndex(indexPath.row) as! Int, spacing: 22, imageSize: 20, withOpacity: false)
+        
+        myCell.starRatingQuestion1.userInteractionEnabled = false
+        myCell.starRatingQuestion2.userInteractionEnabled = false
+        myCell.starRatingQuestion3.userInteractionEnabled = false
+        
         return myCell
     }
     

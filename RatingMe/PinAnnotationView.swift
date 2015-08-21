@@ -39,7 +39,6 @@ class PinAnnotationView: MKAnnotationView,MKMapViewDelegate {
     
     var state: JPSThumbnailAnnotationViewState = JPSThumbnailAnnotationViewState.JPSThumbnailAnnotationViewStateCollapsed
     
-    
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
@@ -149,35 +148,70 @@ class PinAnnotationView: MKAnnotationView,MKMapViewDelegate {
         self.subtitleLabel.text = thumbnail.subtitle;
         var image:UIImage = UIImage()
         
-        switch(thumbnail.Rating)
-        {
-            case "0":
-                image = UIImage(named: "baloon_no_star")!
-                break
-            case "1":
-                image = UIImage(named: "baloon_1_star")!
-                break
-            case "2":
-                image = UIImage(named: "baloon_2_star")!
-                break
-            case "3":
-                image = UIImage(named: "baloon_3_star")!
-                break
-            case "4":
-                image = UIImage(named: "baloon_4_star")!
-                break
-            case "5":
-                image = UIImage(named: "baloon_5_star")!
-                break
-            default:
-                image = UIImage(named: "baloon_no_star")!
-                break
+        if !thumbnail.isAdvertisement {
+                switch(thumbnail.Rating)
+                {
+                    case "0":
+                        image = UIImage(named: "baloon_no_star")!
+                        break
+                    case "1":
+                        image = UIImage(named: "baloon_1_star")!
+                        break
+                    case "2":
+                        image = UIImage(named: "baloon_2_star")!
+                        break
+                    case "3":
+                        image = UIImage(named: "baloon_3_star")!
+                        break
+                    case "4":
+                        image = UIImage(named: "baloon_4_star")!
+                        break
+                    case "5":
+                        image = UIImage(named: "baloon_5_star")!
+                        break
+                    default:
+                        image = UIImage(named: "baloon_no_star")!
+                        break
+                }
+                self.imageView.image = image
         }
-            
-        self.imageView.image = image //thumbnail.image;
-      //  self.disclosureBlock = thumbnail.disclosureBlock;
+        else {
+            if let checkedUrl = NSURL(string:thumbnail.advertisementImageLink) {
+
+                downloadImage(checkedUrl,frame: self.imageView)
+            }
+
+        }
     }
     
+    func getDataFromUrl(urL:NSURL, completion: ((data: NSData?) -> Void)) {
+        NSURLSession.sharedSession().dataTaskWithURL(urL) { (data, response, error) in
+            completion(data: data)
+            }.resume()
+    }
+    
+    func downloadImage(url:NSURL, frame:UIImageView){
+        println("Started downloading \"\(url.lastPathComponent!.stringByDeletingPathExtension)\".")
+        getDataFromUrl(url) { data in
+            dispatch_async(dispatch_get_main_queue()) {
+                println("Finished downloading \"\(url.lastPathComponent!.stringByDeletingPathExtension)\".")
+               // let img = self.imageResize(UIImage(data: data!)!, sizeChange: CGSizeMake(50, 47)) as! UIImage
+                frame.image = UIImage(data: data!)
+            }
+        }
+    }
+    
+    func imageResize (imageObj:UIImage, sizeChange:CGSize)-> UIImage{
+        
+        let hasAlpha = false
+        let scale: CGFloat = 0.0 // Automatically use scale factor of main screen
+        
+        UIGraphicsBeginImageContextWithOptions(sizeChange, !hasAlpha, scale)
+        imageObj.drawInRect(CGRect(origin: CGPointZero, size: sizeChange))
+        
+        let scaledImage = UIGraphicsGetImageFromCurrentImageContext()
+        return scaledImage
+    }
     
     func didSelectAnnotationViewInMap(mapView:MKMapView) {
         mapView.setCenterCoordinate(self.coordinate, animated:true)
@@ -220,19 +254,19 @@ class PinAnnotationView: MKAnnotationView,MKMapViewDelegate {
                                 CGFloat(self.frame.size.width - CGFloat(kJPSThumbnailAnnotationViewExpandOffset)),
                                 self.frame.size.height)
     
-    UIView.animateWithDuration(kJPSThumbnailAnnotationViewAnimationDuration/2.0, delay: 0.0, options: UIViewAnimationOptions.CurveEaseInOut, animations: { () -> Void in
-        self.setDetailGroupAlpha(0.0)
-    }) { (completion) -> Void in
-            self.animateBubbleWithDirection(.JPSThumbnailAnnotationViewAnimationDirectionShrink)
-            self.centerOffset = CGPointMake(0, -self.kJPSThumbnailAnnotationViewVerticalOffset)
-        }
+        UIView.animateWithDuration(kJPSThumbnailAnnotationViewAnimationDuration/2.0, delay: 0.0, options: UIViewAnimationOptions.CurveEaseInOut, animations: { () -> Void in
+            self.setDetailGroupAlpha(0.0)
+        }) { (completion) -> Void in
+                self.animateBubbleWithDirection(.JPSThumbnailAnnotationViewAnimationDirectionShrink)
+                self.centerOffset = CGPointMake(0, -self.kJPSThumbnailAnnotationViewVerticalOffset)
+            }
 
     }
     
     func animateBubbleWithDirection(animationDirection:JPSThumbnailAnnotationViewAnimationDirection) {
     
         let growing:Bool = (animationDirection == .JPSThumbnailAnnotationViewAnimationDirectionGrow)
-        // Image
+    // Image
         UIView.animateWithDuration(kJPSThumbnailAnnotationViewAnimationDuration, animations: { () -> Void in
             let xOffset:CGFloat = (growing ? -1 : 1) * CGFloat(self.kJPSThumbnailAnnotationViewExpandOffset/2.0);
             self.imageView.frame = CGRectOffset(self.imageView.frame, xOffset, 0.0);
@@ -244,24 +278,18 @@ class PinAnnotationView: MKAnnotationView,MKMapViewDelegate {
     
     // Bubble
         let animation:CABasicAnimation =  CABasicAnimation(keyPath: "path")
-    
         animation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
-        animation.repeatCount = 1;
-        animation.removedOnCompletion = false;
-        animation.fillMode = kCAFillModeForwards;
-        animation.duration = kJPSThumbnailAnnotationViewAnimationDuration;
+        animation.repeatCount = 1
+        animation.removedOnCompletion = false
+        animation.fillMode = kCAFillModeForwards
+        animation.duration = kJPSThumbnailAnnotationViewAnimationDuration
     
     // Stroke & Shadow From/To Values
-        let largeRect:CGRect = CGRectInset(self.bounds, CGFloat(-kJPSThumbnailAnnotationViewExpandOffset/2.0), CGFloat(0.0));
-    
+        let largeRect:CGRect = CGRectInset(self.bounds, CGFloat(-kJPSThumbnailAnnotationViewExpandOffset/2.0), CGFloat(0.0))
         let fromPath:CGPathRef = newBubbleWithRect(growing ? self.bounds : largeRect)
         animation.fromValue = fromPath;
-       //CGPathRelease(fromPath);
-    
         let toPath:CGPathRef = newBubbleWithRect(growing ? largeRect : self.bounds)
         animation.toValue = toPath;
-        //CGPathRelease(toPath);
-    
         self.bgLayer.addAnimation(animation, forKey: animation.keyPath)
     }
     
@@ -282,34 +310,6 @@ class PinAnnotationView: MKAnnotationView,MKMapViewDelegate {
             setupView()
             updateWithThumbnail(pinAnnotation)
         }
-        
-       /* if annotation is PinAnnotation {
-            let parkAnnotation = self.annotation as! PinAnnotation
-            switch(parkAnnotation.Rating)
-            {
-            case "0":
-                image = UIImage(named: "baloon_no_star")!
-                break
-            case "1":
-                image = UIImage(named: "baloon_1_star")!
-                break
-            case "2":
-                image = UIImage(named: "baloon_2_star")!
-                break
-            case "3":
-                image = UIImage(named: "baloon_3_star")!
-                break
-            case "4":
-                image = UIImage(named: "baloon_4_star")!
-                break
-            case "5":
-                image = UIImage(named: "baloon_5_star")!
-                break
-            default:
-                image = UIImage(named: "baloon_no_star")!
-                break
-            }
-        }*/
     }
     
     func newBubbleWithRect(rect_in:CGRect) -> CGPathRef {
