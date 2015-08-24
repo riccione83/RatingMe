@@ -45,7 +45,7 @@ public class User{
                 
             }
             else {
-                println("Access denied to twitter account")
+                println("Access denied to Twitter account")
                 onComplete(false)
             }
         }
@@ -82,7 +82,7 @@ public class User{
                 
             }
             else {
-                println("Access denied to twitter account")
+                println("Access denied to Facebook account")
                 onComplete(false)
             }
         }
