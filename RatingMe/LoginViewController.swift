@@ -48,6 +48,8 @@ class LoginViewController: UIViewController {
             }
             else
             {
+                self.activityIndicator.stopAnimating()
+                self.activityIndicator.hidden = true
                 println("Errore. Non posso accedere a Twitter")
                 self.showMessage("Non posso accedere al tuo account Twitter. Verifica le impostazioni.")
             }
@@ -68,6 +70,8 @@ class LoginViewController: UIViewController {
             }
             else
             {
+                self.activityIndicator.stopAnimating()
+                self.activityIndicator.hidden = true
                 println("Errore. Non posso accedere a Facebook")
                  self.showMessage("Non posso accedere al tuo account Facebook. Verifica le impostazioni.")
             }
