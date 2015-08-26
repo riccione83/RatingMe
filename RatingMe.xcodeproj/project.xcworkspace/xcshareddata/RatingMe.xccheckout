@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>64C79EC6-1FDE-4DDA-9674-E316CCB4CD23</string>
+	<key>IDESourceControlProjectName</key>
+	<string>RatingMe</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>46CB2735A2697F421410B7666D9B03BF360FA51C</key>
+		<string>https://github.com/riccione83/RatingMe.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>RatingMe.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>46CB2735A2697F421410B7666D9B03BF360FA51C</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/riccione83/RatingMe.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>46CB2735A2697F421410B7666D9B03BF360FA51C</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>46CB2735A2697F421410B7666D9B03BF360FA51C</string>
+			<key>IDESourceControlWCCName</key>
+			<string>RatingMe</string>
+		</dict>
+	</array>
+</dict>
+</plist>
