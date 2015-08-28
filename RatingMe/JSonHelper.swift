@@ -1,6 +1,6 @@
 //
 //  JSonHelper.swift
-//  JustParkTechnicalTest
+//  RatingMe
 //
 //  Created by Riccardo Rizzo on 19/06/15.
 //  Copyright (c) 2015 Riccardo Rizzo. All rights reserved.
@@ -8,15 +8,51 @@
 
 import UIKit
 
-class JSonHelper: NSObject {
+class JSonHelper {
     
-    
-    override init() {
-       
+    /*
+    * Use this to get a Json from a url.
+    * Return the Dictionary with Json data and a null NSError or an empty NSDictionary with a NSError filled
+    */
+    func getJsonData(getUrl: String, completion:(NSDictionary,NSError?) -> ()) {
+        
+        // Now escape anything else that isn't URL-friendly
+        if let escapedSearchTerm = getUrl.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding) {
+            let urlPath = getUrl
+            let url = NSURL(string: urlPath)
+            let session = NSURLSession.sharedSession()
+            let task = session.dataTaskWithURL(url!, completionHandler: {data, response, error -> Void in
+                //Task is complete. Let's check is there is some error
+                if(error != nil) {
+                    // If there is an error in the web request, print it to the console
+                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                        completion(NSDictionary.new(), error)
+                    })
+                }
+                var err: NSError?
+                
+                if let jsonResult:NSDictionary = (NSJSONSerialization.JSONObjectWithData(data, options:NSJSONReadingOptions.AllowFragments , error: &err) as? NSDictionary) {
+                    
+                    if(err != nil) {
+                        // If there is an error parsing JSON, return the error state
+                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                            completion(NSDictionary.new(), err)
+                        })
+                    }
+                    let results: NSDictionary = jsonResult as NSDictionary
+                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                        completion(jsonResult as NSDictionary, nil)
+                    })
+                }
+            })
+            // The task is just an object with all these properties set
+            // In order to actually make the web request, we need to "resume"
+            task.resume()
+        }
     }
     
     
-    /* 
+    /*
      * This function is used when we need to pass parameters for example in a PHP page
      * you can pass those parameters via the 'dict' Dictionary use key for data name and value for the object
      */
@@ -75,45 +111,5 @@ class JSonHelper: NSObject {
     }
     
     
-    /*
-     * Use this to get a Json from a url.
-     * Return the Dictionary with Json data and a null NSError or an empty NSDictionary with a NSError filled
-     */
-    func getJsonData(getUrl: String, completion:(NSDictionary,NSError?) -> ()) {
-        
-        // Now escape anything else that isn't URL-friendly
-        if let escapedSearchTerm = getUrl.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding) {
-            let urlPath = getUrl
-            let url = NSURL(string: urlPath)
-            let session = NSURLSession.sharedSession()
-            let task = session.dataTaskWithURL(url!, completionHandler: {data, response, error -> Void in
-                if(error != nil) {
-                    // If there is an error in the web request, print it to the console
-                    println(error.localizedDescription)
-                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                        completion(NSDictionary.new(), error)
-                    })
-                }
-                var err: NSError?
-                
-                if let jsonResult:NSDictionary = (NSJSONSerialization.JSONObjectWithData(data, options:NSJSONReadingOptions.AllowFragments , error: &err) as? NSDictionary) {
-            
-                        if(err != nil) {
-                            // If there is an error parsing JSON, print it to the console
-                            println("JSON Error \(err!.localizedDescription)")
-                            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                                completion(NSDictionary.new(), err)
-                            })
-                        }
-                        let results: NSDictionary = jsonResult as NSDictionary
-                         dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                            completion(jsonResult as NSDictionary, nil)
-                         })
-                    }
-            }) 
-            // The task is just an object with all these properties set
-            // In order to actually make the web request, we need to "resume"
-            task.resume()
-        }
-    }
+
 }
