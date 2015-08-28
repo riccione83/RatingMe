@@ -136,25 +136,25 @@
                                         <exclude reference="dOy-1e-7ji"/>
                                         <exclude reference="Di6-8e-VFi"/>
                                         <exclude reference="ywc-6d-ZqD"/>
-                                        <exclude reference="4u2-HQ-XlH"/>
-                                        <exclude reference="aTp-hf-ya1"/>
+                                        <exclude reference="2cY-XH-liP"/>
+                                        <exclude reference="dpE-8U-DtT"/>
+                                        <exclude reference="3tv-uW-QM7"/>
+                                        <exclude reference="UNt-7E-6ut"/>
+                                        <exclude reference="8pV-Fh-Zqp"/>
+                                        <exclude reference="IW9-s8-jZ6"/>
+                                        <exclude reference="dpX-u3-E53"/>
+                                        <exclude reference="z7f-fw-DPe"/>
                                         <exclude reference="5WK-n6-xSj"/>
                                         <exclude reference="FLY-eY-dtG"/>
                                         <exclude reference="LKs-cV-vAI"/>
                                         <exclude reference="mdG-1V-8JW"/>
                                         <exclude reference="pXh-cd-UfV"/>
-                                        <exclude reference="3tv-uW-QM7"/>
-                                        <exclude reference="UNt-7E-6ut"/>
+                                        <exclude reference="4u2-HQ-XlH"/>
+                                        <exclude reference="aTp-hf-ya1"/>
                                         <exclude reference="PqC-Xw-ZDO"/>
                                         <exclude reference="Vdy-5f-Ili"/>
                                         <exclude reference="e7g-2U-mm2"/>
                                         <exclude reference="q2Z-3d-3Bv"/>
-                                        <exclude reference="8pV-Fh-Zqp"/>
-                                        <exclude reference="IW9-s8-jZ6"/>
-                                        <exclude reference="dpX-u3-E53"/>
-                                        <exclude reference="z7f-fw-DPe"/>
-                                        <exclude reference="2cY-XH-liP"/>
-                                        <exclude reference="dpE-8U-DtT"/>
                                     </mask>
                                 </variation>
                                 <variation key="heightClass=regular-widthClass=compact">
@@ -173,25 +173,25 @@
                                         <include reference="dOy-1e-7ji"/>
                                         <include reference="Di6-8e-VFi"/>
                                         <include reference="ywc-6d-ZqD"/>
-                                        <include reference="4u2-HQ-XlH"/>
-                                        <include reference="aTp-hf-ya1"/>
+                                        <include reference="2cY-XH-liP"/>
+                                        <include reference="dpE-8U-DtT"/>
+                                        <include reference="3tv-uW-QM7"/>
+                                        <include reference="UNt-7E-6ut"/>
+                                        <include reference="8pV-Fh-Zqp"/>
+                                        <include reference="IW9-s8-jZ6"/>
+                                        <include reference="dpX-u3-E53"/>
+                                        <exclude reference="z7f-fw-DPe"/>
                                         <include reference="5WK-n6-xSj"/>
                                         <include reference="FLY-eY-dtG"/>
                                         <include reference="LKs-cV-vAI"/>
                                         <include reference="mdG-1V-8JW"/>
                                         <exclude reference="pXh-cd-UfV"/>
-                                        <include reference="3tv-uW-QM7"/>
-                                        <include reference="UNt-7E-6ut"/>
+                                        <include reference="4u2-HQ-XlH"/>
+                                        <include reference="aTp-hf-ya1"/>
                                         <include reference="PqC-Xw-ZDO"/>
                                         <include reference="Vdy-5f-Ili"/>
                                         <exclude reference="e7g-2U-mm2"/>
                                         <include reference="q2Z-3d-3Bv"/>
-                                        <include reference="8pV-Fh-Zqp"/>
-                                        <include reference="IW9-s8-jZ6"/>
-                                        <include reference="dpX-u3-E53"/>
-                                        <exclude reference="z7f-fw-DPe"/>
-                                        <include reference="2cY-XH-liP"/>
-                                        <include reference="dpE-8U-DtT"/>
                                     </mask>
                                 </variation>
                             </view>
