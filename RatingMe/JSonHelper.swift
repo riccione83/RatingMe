@@ -15,6 +15,11 @@ class JSonHelper: NSObject {
        
     }
     
+    
+    /* 
+     * This function is used when we need to pass parameters for example in a PHP page
+     * you can pass those parameters via the 'dict' Dictionary use key for data name and value for the object
+     */
     func getJson(url:String, dict:NSMutableDictionary) -> AnyObject {
         
         let urlString = url
@@ -55,7 +60,6 @@ class JSonHelper: NSObject {
             if httpResponse.statusCode >= 200 && httpResponse.statusCode<300
             {
                 let responseData = NSString(data: urlData!, encoding: NSUTF8StringEncoding)
-             //   NSLog("\(responseData)")
                 let jsonData: AnyObject = parseJSON(urlData!)
                 return jsonData
             }
@@ -66,12 +70,15 @@ class JSonHelper: NSObject {
     
     func parseJSON(inputData: NSData) -> AnyObject{
         var error: NSError?
-        
         var boardsDictionary: AnyObject = NSJSONSerialization.JSONObjectWithData(inputData, options: NSJSONReadingOptions.MutableContainers, error: &error)!
-        
         return boardsDictionary
     }
     
+    
+    /*
+     * Use this to get a Json from a url.
+     * Return the Dictionary with Json data and a null NSError or an empty NSDictionary with a NSError filled
+     */
     func getJsonData(getUrl: String, completion:(NSDictionary,NSError?) -> ()) {
         
         // Now escape anything else that isn't URL-friendly
