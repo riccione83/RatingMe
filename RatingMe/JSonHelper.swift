@@ -17,7 +17,7 @@ class JSonHelper {
     func getJsonData(getUrl: String, completion:(NSDictionary,NSError?) -> ()) {
         
         // Now escape anything else that isn't URL-friendly
-        if let escapedSearchTerm = getUrl.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding) {
+        if let _ = getUrl.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding) {
             let urlPath = getUrl
             let url = NSURL(string: urlPath)
             let session = NSURLSession.sharedSession()
@@ -26,23 +26,30 @@ class JSonHelper {
                 if(error != nil) {
                     // If there is an error in the web request, print it to the console
                     dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                        completion(NSDictionary.new(), error)
+                        completion(NSDictionary(), error)
                     })
                 }
-                var err: NSError?
+
+                do {
                 
-                if let jsonResult:NSDictionary = (NSJSONSerialization.JSONObjectWithData(data, options:NSJSONReadingOptions.AllowFragments , error: &err) as? NSDictionary) {
+                    let err: NSError? = nil
                     
-                    if(err != nil) {
+                    if let jsonResult:NSDictionary = try (NSJSONSerialization.JSONObjectWithData(data!, options:NSJSONReadingOptions.AllowFragments ) as? NSDictionary) {
+                    
+                        if(err != nil) {
                         // If there is an error parsing JSON, return the error state
+                            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                                completion(NSDictionary(), err)
+                            })
+                        }
+                        let results: NSDictionary = jsonResult as NSDictionary
                         dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                            completion(NSDictionary.new(), err)
+                            completion(jsonResult as NSDictionary, nil)
                         })
                     }
-                    let results: NSDictionary = jsonResult as NSDictionary
-                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                        completion(jsonResult as NSDictionary, nil)
-                    })
+                }
+                catch _ {
+                    
                 }
             })
             // The task is just an object with all these properties set
@@ -56,7 +63,7 @@ class JSonHelper {
      * This function is used when we need to pass parameters for example in a PHP page
      * you can pass those parameters via the 'dict' Dictionary use key for data name and value for the object
      */
-    func getJson(url:String, dict:NSMutableDictionary) -> AnyObject {
+    func getJson(url:String, dict:NSMutableDictionary) throws -> AnyObject {
         
         let urlString = url
         
@@ -85,28 +92,35 @@ class JSonHelper {
         request.HTTPBody = body
         
         var response: NSURLResponse?
-        var error: NSError?
         
-        let urlData = NSURLConnection.sendSynchronousRequest(request, returningResponse: &response, error: &error)
+        let urlData: NSData?
+      //  do
+      //  {
+           urlData = try NSURLConnection.sendSynchronousRequest(request, returningResponse: &response)
+      /*  }
+        catch _ {
+            urlData = nil
+        }
+        */
         
         if let httpResponse = response as? NSHTTPURLResponse
         {
-            println("Response: \(httpResponse.statusCode)")
+            print("Response: \(httpResponse.statusCode)")
             
             if httpResponse.statusCode >= 200 && httpResponse.statusCode<300
             {
-                let responseData = NSString(data: urlData!, encoding: NSUTF8StringEncoding)
+              //  let responseData = NSString(data: urlData!, encoding: NSUTF8StringEncoding)
                 let jsonData: AnyObject = parseJSON(urlData!)
                 return jsonData
             }
         }
-        return NSMutableArray.new()
+        return NSMutableArray()
     }
     
     
     func parseJSON(inputData: NSData) -> AnyObject{
         var error: NSError?
-        var boardsDictionary: AnyObject = NSJSONSerialization.JSONObjectWithData(inputData, options: NSJSONReadingOptions.MutableContainers, error: &error)!
+        let boardsDictionary: AnyObject = try! NSJSONSerialization.JSONObjectWithData(inputData, options: NSJSONReadingOptions.MutableContainers)
         return boardsDictionary
     }
     

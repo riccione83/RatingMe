@@ -48,7 +48,7 @@ class RateViewController: UIViewController {
     @IBAction func feedbackClick(sender: AnyObject) {
         
         if !isFullscreen {
-            var rating = currentRating.toInt()
+            var rating = Int(currentRating)
             
             var divisor = 1
             let rate1 = starRatingView1.currentRating
@@ -67,7 +67,7 @@ class RateViewController: UIViewController {
             
             rating = (starRatingView1.currentRating + starRatingView2.currentRating + starRatingView3.currentRating) / divisor
             
-            newRating(currentReviewID, user_id: userInfos!.userID,user_name: userInfos!.userName, rate: rating!, description: txtRateDescription.text, rate_q1: starRatingView1.currentRating,rate_q2: starRatingView2.currentRating, rate_q3: starRatingView3.currentRating)
+            newRating(currentReviewID, user_id: userInfos!.userID,user_name: userInfos!.userName, rate: rating!, description: txtRateDescription.text!, rate_q1: starRatingView1.currentRating,rate_q2: starRatingView2.currentRating, rate_q3: starRatingView3.currentRating)
         }
         else {
             thumbImage.frame = oldFrame
@@ -93,13 +93,13 @@ class RateViewController: UIViewController {
     func newRating(review_id:String, user_id:String,user_name:String, rate:Int, description:String, rate_q1:Int, rate_q2:Int, rate_q3:Int) {
     
         let rating = String(format: "\(rate)")
-        var sUrl:String = url + "review.php"
+        let sUrl:String = url + "review.php"
         
         let q1 = "\(rate_q1)"
         let q2 = "\(rate_q2)"
         let q3 = "\(rate_q3)"
 
-        var params:NSMutableDictionary = NSMutableDictionary()
+        let params:NSMutableDictionary = NSMutableDictionary()
         params.setValue("set_rating", forKey: "command")
         params.setValue(review_id, forKey: "review_id")
         params.setValue(user_id, forKey: "user_id")
@@ -110,9 +110,14 @@ class RateViewController: UIViewController {
         params.setValue(q2, forKey: "rate_q2")
         params.setValue(q3, forKey: "rate_q3")
         
-        
-        let jsonRequest = JSonHelper.new()
-        let jsonData = jsonRequest.getJson(sUrl,dict: params) as! NSMutableDictionary
+        var jsonData:NSMutableDictionary = NSMutableDictionary()
+        do {
+            let jsonRequest = JSonHelper()
+            jsonData = try jsonRequest.getJson(sUrl,dict: params) as! NSMutableDictionary
+        }
+        catch{
+            print(error)
+        }
         
         if (jsonData.valueForKey("message") != nil) {
             NSLog("\(jsonData)")
@@ -140,14 +145,14 @@ class RateViewController: UIViewController {
     }
     
     func analyzeImageLink(link:String, increment:Int) {
-        var linkArr = split(link) {$0 == "&"}
-        var temp = split(linkArr[3]) {$0 == "="}
-        var currHeading = temp[1]
+        var linkArr = link.characters.split {$0 == "&"}.map { String($0) }
+        var temp = linkArr[3].characters.split {$0 == "="}.map { String($0) }
+        let currHeading = temp[1]
         var new_Link:String = ""
         var i = 0
 
         if (incrementValue == 0) {
-            incrementValue = currHeading.toInt()! + increment
+            incrementValue = Int(currHeading)! + increment
         }
         else {
             incrementValue = incrementValue + increment
@@ -216,7 +221,7 @@ class RateViewController: UIViewController {
     override func viewDidAppear(animated: Bool) {
     }
     
-    override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         txtRateDescription.resignFirstResponder()
     }
     
@@ -294,10 +299,10 @@ class RateViewController: UIViewController {
     }
     
     func downloadImage(url:NSURL, frame:UIImageView){
-        println("Started downloading \"\(url.lastPathComponent!.stringByDeletingPathExtension)\".")
+        //print("Started downloading \"\(url.lastPathComponent!.stringByDeletingPathExtension)\".")
         getDataFromUrl(url) { data in
             dispatch_async(dispatch_get_main_queue()) {
-                println("Finished downloading \"\(url.lastPathComponent!.stringByDeletingPathExtension)\".")
+             //   print("Finished downloading \"\(url.lastPathComponent!.stringByDeletingPathExtension)\".")
                 frame.image = UIImage(data: data!)
             }
         }

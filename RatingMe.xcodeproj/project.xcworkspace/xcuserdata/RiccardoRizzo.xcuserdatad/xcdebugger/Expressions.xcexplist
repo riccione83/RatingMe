@@ -19,6 +19,17 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
+         contextName = "RatingMe.ViewController.tableView (RatingMe.ViewController)(ObjectiveC.UITableView, cellForRowAtIndexPath : ObjectiveC.NSIndexPath) -&gt; ObjectiveC.UITableViewCell:ViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "newRecordAddress.title">
+            </PersistentString>
+            <PersistentString
+               value = "newRecordAddress.name">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "RatingMe.ViewController.showReviewButtonClick (RatingMe.ViewController)(ObjectiveC.UIButton) -&gt; ():ViewController.swift">
          <PersistentStrings>
             <PersistentString
@@ -107,10 +118,10 @@
          contextName = "RatingMe.StarRating.initUI (RatingMe.StarRating)(Swift.Int) -&gt; ():StarRating.swift">
          <PersistentStrings>
             <PersistentString
-               value = "self.frame.size.width">
+               value = "self.frame.size.height">
             </PersistentString>
             <PersistentString
-               value = "self.frame.size.height">
+               value = "self.frame.size.width">
             </PersistentString>
          </PersistentStrings>
       </ContextState>

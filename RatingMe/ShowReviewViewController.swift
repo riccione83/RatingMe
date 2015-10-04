@@ -14,17 +14,18 @@ class ShowReviewViewController: UIViewController {
     @IBOutlet var navigationBar: UINavigationBar!
     @IBOutlet var textDescription: UITextView!
     @IBOutlet var viewNoReview: UIView!
+    @IBOutlet var imageThumb: UIImageView!
     
     let url = "http://www.riccardorizzo.eu/rating/"
     
     var pin:PinAnnotation?
     var currentReviewID:String?
     var userInfos:User?
-    var Descriptions:NSMutableArray = NSMutableArray.new()
-    var Users:NSMutableArray = NSMutableArray.new()
-    var Rates1:NSMutableArray = NSMutableArray.new()
-    var Rates2:NSMutableArray = NSMutableArray.new()
-    var Rates3:NSMutableArray = NSMutableArray.new()
+    var Descriptions:NSMutableArray = NSMutableArray()
+    var Users:NSMutableArray = NSMutableArray()
+    var Rates1:NSMutableArray = NSMutableArray()
+    var Rates2:NSMutableArray = NSMutableArray()
+    var Rates3:NSMutableArray = NSMutableArray()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,6 +34,10 @@ class ShowReviewViewController: UIViewController {
         
         navigationBar.topItem?.title = pin?.title
         textDescription.text = pin?.subtitle
+        
+        if let checkedUrl = NSURL(string:pin!.ImageLink) {
+            downloadImage(checkedUrl,frame: imageThumb)
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -47,21 +52,45 @@ class ShowReviewViewController: UIViewController {
         Rates1.removeAllObjects()
         Rates2.removeAllObjects()
         Rates3.removeAllObjects()
-        loadData()
+        do {
+            try loadData()
+        }
+        catch {
+            print(error)
+        }
     }
     
-    @IBAction func returnButtonClick(sender: UIButton) {
+    
+    
+    func getDataFromUrl(urL:NSURL, completion: ((data: NSData?) -> Void)) {
+        NSURLSession.sharedSession().dataTaskWithURL(urL) { (data, response, error) in
+            completion(data: data)
+            }.resume()
+    }
+    
+    func downloadImage(url:NSURL, frame:UIImageView){
+       // print("Started downloading \"\(url.lastPathComponent!.stringByDeletingPathExtension)\".")
+        getDataFromUrl(url) { data in
+            dispatch_async(dispatch_get_main_queue()) {
+               // print("Finished downloading \"\(url.lastPathComponent!.stringByDeletingPathExtension)\".")
+                frame.image = UIImage(data: data!)
+            }
+        }
+    }
+
+    
+    @IBAction func returnButtonClick(sender: UIBarButtonItem) {
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
-    @IBAction func newReviewButtonClick(sender: UIButton) {
-        var vc = self.storyboard?.instantiateViewControllerWithIdentifier("rateViewController") as! RateViewController
+    @IBAction func newReviewButtonClick(sender: UIBarButtonItem) {
+        let vc = self.storyboard?.instantiateViewControllerWithIdentifier("rateViewController") as! RateViewController
         let index = pin?.Tag
         NSLog("New Review for: \(index)")
         
         vc.userInfos = userInfos!
-        vc.currentTitle = pin!.title
-        vc.currentDescription = pin!.subtitle
+        vc.currentTitle = pin!.title!
+        vc.currentDescription = pin!.subtitle!
         vc.imageLink = pin!.ImageLink
         vc.currentRating = pin!.Rating
         vc.currentReviewID = pin!.ReviewID
@@ -72,16 +101,16 @@ class ShowReviewViewController: UIViewController {
     }
     
 
-    func loadData() {
+    func loadData() throws {
         
-        var searchUrl:String = url + "review.php"
-        var params:NSMutableDictionary = NSMutableDictionary()
+        let searchUrl:String = url + "review.php"
+        let params:NSMutableDictionary = NSMutableDictionary()
         
         params.setValue("get_rating", forKey: "command")
         params.setValue(pin?.ReviewID, forKey: "review_id")
         
-        let jsonRequest = JSonHelper.new()
-        let jsonData: AnyObject = jsonRequest.getJson(searchUrl, dict: params)
+        let jsonRequest = JSonHelper()
+        let jsonData: AnyObject = try jsonRequest.getJson(searchUrl, dict: params)
         
         NSLog("\(jsonData)")
         if (jsonData is NSMutableDictionary) {

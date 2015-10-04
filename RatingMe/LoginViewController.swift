@@ -27,7 +27,7 @@ class LoginViewController: UIViewController {
     }
     
     func showMessage(message:String) {
-        var alert = UIAlertController(title: "RateMe", message:message, preferredStyle: UIAlertControllerStyle.Alert)
+        let alert = UIAlertController(title: "RateMe", message:message, preferredStyle: UIAlertControllerStyle.Alert)
         alert.addAction(UIAlertAction(title: "Close", style: UIAlertActionStyle.Default, handler: nil))
     
         self.presentViewController(alert, animated: true) { () -> Void in
@@ -43,14 +43,14 @@ class LoginViewController: UIViewController {
         
         userInfos.signInWithTwitter({ (loggedIn) -> () in
             if loggedIn {
-                println("Perfetto!! Effettuato login con Twitter: \(self.userInfos.userName)  \(self.userInfos.userID)")
+                print("Perfetto!! Effettuato login con Twitter: \(self.userInfos.userName)  \(self.userInfos.userID)")
                 self.showMainView()
             }
             else
             {
                 self.activityIndicator.stopAnimating()
                 self.activityIndicator.hidden = true
-                println("Errore. Non posso accedere a Twitter")
+                print("Errore. Non posso accedere a Twitter")
                 self.showMessage("Non posso accedere al tuo account Twitter. Verifica le impostazioni.")
             }
         })
@@ -65,14 +65,14 @@ class LoginViewController: UIViewController {
         
         userInfos.signInWithFacebook({ (loggedIn) -> () in
             if loggedIn {
-                println("Perfetto!! Effettuato login con Facebook: \(self.userInfos.userName)  \(self.userInfos.userID)")
+                print("Perfetto!! Effettuato login con Facebook: \(self.userInfos.userName)  \(self.userInfos.userID)")
                 self.showMainView()
             }
             else
             {
                 self.activityIndicator.stopAnimating()
                 self.activityIndicator.hidden = true
-                println("Errore. Non posso accedere a Facebook")
+                print("Errore. Non posso accedere a Facebook")
                  self.showMessage("Non posso accedere al tuo account Facebook. Verifica le impostazioni.")
             }
         })
