@@ -25,8 +25,8 @@ extension String {
 class PinAnnotation: NSObject, MKAnnotation {
     
     var coordinate: CLLocationCoordinate2D
-    var title: String
-    var subtitle: String
+    var title: String?
+    var subtitle: String?
     var Tag: NSNumber
     var Rating: String
     var ImageLink: String

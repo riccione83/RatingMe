@@ -39,7 +39,7 @@ class PinAnnotationView: MKAnnotationView,MKMapViewDelegate {
     
     var state: JPSThumbnailAnnotationViewState = JPSThumbnailAnnotationViewState.JPSThumbnailAnnotationViewStateCollapsed
     
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     
@@ -108,7 +108,7 @@ class PinAnnotationView: MKAnnotationView,MKMapViewDelegate {
     func setupDisclosureButton() {
         let iOS7:Bool =  UIDevice.currentDevice().systemVersion.toDouble() >= 7.0
         let buttonType:UIButtonType = iOS7 ? UIButtonType.System : UIButtonType.Custom
-        disclosureButton = UIButton.buttonWithType(buttonType) as! UIButton
+        disclosureButton = UIButton(type: buttonType)
         disclosureButton.tintColor = UIColor.grayColor()
         
         let disclosureIndicatorImage:UIImage = disclosureButtonImage()
@@ -191,12 +191,17 @@ class PinAnnotationView: MKAnnotationView,MKMapViewDelegate {
     }
     
     func downloadImage(url:NSURL, frame:UIImageView){
-        println("Started downloading \"\(url.lastPathComponent!.stringByDeletingPathExtension)\".")
+       // print("Started downloading \"\(url.lastPathComponent.stringByDeletingPathExtension)\".")
         getDataFromUrl(url) { data in
             dispatch_async(dispatch_get_main_queue()) {
-                println("Finished downloading \"\(url.lastPathComponent!.stringByDeletingPathExtension)\".")
+         //       print("Finished downloading \"\(url.lastPathComponent!.stringByDeletingPathExtension)\".")
                // let img = self.imageResize(UIImage(data: data!)!, sizeChange: CGSizeMake(50, 47)) as! UIImage
-                frame.image = UIImage(data: data!)
+                if data != nil {
+                    frame.image = UIImage(data: data!)
+                }
+                else {
+                    frame.image = UIImage(named: "baloon_no_star")!
+                }
             }
         }
     }
@@ -293,7 +298,7 @@ class PinAnnotationView: MKAnnotationView,MKMapViewDelegate {
         self.bgLayer.addAnimation(animation, forKey: animation.keyPath)
     }
     
-    override init!(annotation: MKAnnotation!, reuseIdentifier: String!) {
+    override init(annotation: MKAnnotation?, reuseIdentifier: String?) {
         
         super.init(annotation: annotation, reuseIdentifier: reuseIdentifier)
         
@@ -319,7 +324,7 @@ class PinAnnotationView: MKAnnotationView,MKMapViewDelegate {
         let parentX:CGFloat = rect_in.origin.x + rect_in.size.width/2.0
     
         // Determine Size
-        var rect:CGRect = CGRectMake(rect_in.origin.x+(stroke / 2.0 + 7.0), rect_in.origin.y+( stroke / 2.0 + 7.0), rect_in.size.width-(stroke + 14.0), rect_in.size.height-(stroke + 29.0))
+        let rect:CGRect = CGRectMake(rect_in.origin.x+(stroke / 2.0 + 7.0), rect_in.origin.y+( stroke / 2.0 + 7.0), rect_in.size.width-(stroke + 14.0), rect_in.size.height-(stroke + 29.0))
 
     
         // Create Callout Bubble Path

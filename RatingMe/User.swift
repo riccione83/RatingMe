@@ -45,7 +45,7 @@ public class User{
                 
             }
             else {
-                println("Access denied to Twitter account")
+                print("Access denied to Twitter account")
                 onComplete(false)
             }
         }
@@ -82,16 +82,16 @@ public class User{
                 
             }
             else {
-                println("Access denied to Facebook account")
+                print("Access denied to Facebook account")
                 onComplete(false)
             }
         }
     }
     
     private func loadProfileInfo(accountStore: ACAccountStore,account: ACAccount, onComplete: (NSDictionary?) -> ()) {
-        var meUrl = NSURL(string: "https://graph.facebook.com/me")
+        let meUrl = NSURL(string: "https://graph.facebook.com/me")
         
-        var slRequest = SLRequest(forServiceType: SLServiceTypeFacebook,
+        let slRequest = SLRequest(forServiceType: SLServiceTypeFacebook,
             requestMethod: SLRequestMethod.GET,
             URL: meUrl, parameters: nil)
         
@@ -105,13 +105,16 @@ public class User{
                 if error != nil { onComplete(nil) }
                 
                 var serializationError: NSError?;
-                
-                let meData = NSJSONSerialization.JSONObjectWithData(
+            do {
+                let meData = try NSJSONSerialization.JSONObjectWithData(
                     data,
-                    options: NSJSONReadingOptions.MutableContainers,
-                    error: &serializationError) as? NSDictionary
+                    options: NSJSONReadingOptions.MutableContainers) as? NSDictionary
                 
                 onComplete(meData)
+            }
+            catch _{
+                onComplete(nil)
+            }
         }
     }
     

@@ -24,7 +24,7 @@ class ReviewViewController: UIViewController {
     @IBOutlet var textQuestion2: UITextField!
     @IBOutlet var textQuestion3: UITextField!
     
-    let locationManager:CLLocationManager = CLLocationManager.new()
+    let locationManager:CLLocationManager = CLLocationManager()
     var delegate:ReviewControllerProtocol? = nil
     
     //let url = "http://localhost:8888/rating/"
@@ -47,21 +47,27 @@ class ReviewViewController: UIViewController {
         params.setValue(question2, forKey: "question2")
         params.setValue(question3, forKey: "question3")
         
+        let jsonData:AnyObject?
         
-        let jsonRequest = JSonHelper.new()
-        let jsonData: AnyObject = jsonRequest.getJson(searchUrl, dict: params)
+        do {
+            let jsonRequest = JSonHelper()
         
+            jsonData = try jsonRequest.getJson(searchUrl, dict: params)
+        }
+        catch {
+            jsonData = nil
+        }
         NSLog("\(jsonData)")
         if (jsonData is NSMutableDictionary) {
-            if (jsonData.valueForKey("message") != nil) {
+            if (jsonData!.valueForKey("message") != nil) {
                 NSLog("\(jsonData)")
                 if (delegate != nil) {
-                    delegate?.searchByUserLocation(locationManager.location.coordinate.latitude, lon: locationManager.location.coordinate.longitude, center: true)
+                    delegate?.searchByUserLocation(locationManager.location!.coordinate.latitude, lon: locationManager.location!.coordinate.longitude, center: true)
                 }
                 self.dismissViewControllerAnimated(true, completion: nil)
             }
             else {
-                let error_str:String = jsonData.valueForKey("error") as! String
+                let error_str:String = jsonData!.valueForKey("error") as! String
                 NSLog("\(error_str)")
             }
         }
@@ -69,11 +75,11 @@ class ReviewViewController: UIViewController {
     
     @IBAction func sendNewReview(sender: UIButton) {
         
-        let lat = "\(locationManager.location.coordinate.latitude)"
-        let lon = "\(locationManager.location.coordinate.longitude)"
+        let lat = "\(locationManager.location!.coordinate.latitude)"
+        let lon = "\(locationManager.location!.coordinate.longitude)"
         
         if(textQuestion1.text != "" && reviewTitle.text != "" && reviewText.text != "" && reviewText.text != "Enter a description") {
-            newReview(reviewTitle.text, description: reviewText.text, latitude: lat, longitude: lon, question1: textQuestion1.text, question2: textQuestion2.text, question3: textQuestion3.text)
+            newReview(reviewTitle.text!, description: reviewText.text, latitude: lat, longitude: lon, question1: textQuestion1.text!, question2: textQuestion2.text!, question3: textQuestion3.text!)
         }
         else {
             showMessage("Impossibile inviare la recensione. E' necessario compilare tutti i campi e almeno una domanda.")
@@ -85,7 +91,7 @@ class ReviewViewController: UIViewController {
     }
     
     func showMessage(message:String) {
-        var alert = UIAlertController(title: "RateMe", message:message, preferredStyle: UIAlertControllerStyle.Alert)
+        let alert = UIAlertController(title: "RateMe", message:message, preferredStyle: UIAlertControllerStyle.Alert)
         alert.addAction(UIAlertAction(title: "Close", style: UIAlertActionStyle.Default, handler: nil))
         self.presentViewController(alert, animated: true, completion: nil)
     }
@@ -110,11 +116,11 @@ class ReviewViewController: UIViewController {
     }
     
     func keyboardWillShow(sender: NSNotification) {
-        self.view.frame.origin.y -= 150
+        self.view.frame.origin.y -= 160
     }
     
     func keyboardWillHide(sender: NSNotification) {
-        self.view.frame.origin.y += 150
+        self.view.frame.origin.y += 160
     }
     
     func closeKeyboard(touch:UIGestureRecognizer) {
@@ -150,7 +156,7 @@ extension ReviewViewController: UITextViewDelegate {
     }
     
     func textViewDidEndEditing(textView: UITextView) {
-        if count(reviewText.text) == 0 {
+        if reviewText.text.characters.count == 0 {
             reviewText.text = "Enter a description"
             reviewText.textColor = UIColor.lightGrayColor()
             reviewText.resignFirstResponder()
@@ -165,8 +171,8 @@ extension ReviewViewController: MKMapViewDelegate {
 
 extension ReviewViewController:CLLocationManagerDelegate {
     
-    func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
-        centerMap(locationManager.location.coordinate.latitude, withLon: locationManager.location.coordinate.longitude)
+    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        centerMap(locationManager.location!.coordinate.latitude, withLon: locationManager.location!.coordinate.longitude)
         reviewMap.showsUserLocation = true
     }
 }

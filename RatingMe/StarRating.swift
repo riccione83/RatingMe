@@ -11,9 +11,9 @@ import UIKit
 class StarRating: UIView {
     
     var currentRating = 0
-    var starRating:NSMutableArray = NSMutableArray.new()
+    var starRating:NSMutableArray = NSMutableArray()
 
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
 
@@ -93,21 +93,21 @@ class StarRating: UIView {
         refreshStars(animate)
     }
 
-    override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
-        let touch:UITouch = touches.first as! UITouch
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        let touch:UITouch = touches.first! //as UITouch
         let touchLocation:CGPoint = touch.locationInView(self)
         handleTouchAtLocation(touchLocation,animate:false)
 
     }
     
-    override func touchesMoved(touches: Set<NSObject>, withEvent event: UIEvent) {
-        let touch:UITouch = touches.first as! UITouch
+    override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        let touch:UITouch = touches.first!
         let touchLocation:CGPoint = touch.locationInView(self)
         handleTouchAtLocation(touchLocation,animate:false)
     }
     
-    override func touchesEnded(touches: Set<NSObject>, withEvent event: UIEvent) {
-        let touch:UITouch = touches.first as! UITouch
+    override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        let touch:UITouch = touches.first!
         let touchLocation:CGPoint = touch.locationInView(self)
         handleTouchAtLocation(touchLocation,animate:true)
     }
