@@ -8,6 +8,7 @@
 
 import UIKit
 import MapKit
+import MBProgressHUD
 
 extension String {
     func toDouble() -> Double? {
@@ -44,6 +45,12 @@ class ViewController: UIViewController, ReviewControllerProtocol,RateControllerP
         vc.delegate = self
         self.presentViewController(vc, animated: true, completion: nil)
 
+    }
+    
+    
+    @IBAction func btnOpenLeftMenuClick(sender: AnyObject) {
+        
+        self.openLeft()
     }
     
     @IBAction func showReview(sender: UIButton) {
@@ -243,6 +250,8 @@ class ViewController: UIViewController, ReviewControllerProtocol,RateControllerP
     }
     
     override func viewDidAppear(animated: Bool) {
+        
+        self.closeLeft()
         
         userInfos = loadLoginData()
         

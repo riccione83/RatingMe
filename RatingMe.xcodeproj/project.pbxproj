@@ -116,13 +116,13 @@
 				93FC5C071B3C4CD70010A94D /* PinAnnotationView.swift */,
 				93FC5BE81B3C4CB00010A94D /* Main.storyboard */,
 				93E06C341B85DD8300DAEA51 /* LoginViewController.swift */,
+				93F5F8F81BC2B01700582D58 /* LeftMenuViewController.swift */,
 				93B1C6BA1B628F7D002044A3 /* RateCustomCell.swift */,
 				937FCCC11B4577CF00DC141C /* StarRating.swift */,
 				93D95BEA1B442B73002D5C53 /* ReviewViewController.swift */,
 				93FC5BEB1B3C4CB00010A94D /* Images.xcassets */,
 				93FC5BED1B3C4CB00010A94D /* LaunchScreen.xib */,
 				93FC5BE21B3C4CB00010A94D /* Supporting Files */,
-				93F5F8F81BC2B01700582D58 /* LeftMenuViewController.swift */,
 			);
 			path = RatingMe;
 			sourceTree = "<group>";
