@@ -388,6 +388,60 @@
             </objects>
             <point key="canvasLocation" x="226.5" y="327"/>
         </scene>
+        <!--Left Menu View Controller-->
+        <scene sceneID="x2H-BK-MFt">
+            <objects>
+                <viewController storyboardIdentifier="LeftViewController" id="c8W-sp-dUB" customClass="LeftMenuViewController" customModule="RatingMe" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="vfE-DQ-EJp"/>
+                        <viewControllerLayoutGuide type="bottom" id="GTj-Ql-LNw"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="pTg-Y6-0f0">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xFA-Eb-KHK">
+                                <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                <animations/>
+                                <color key="backgroundColor" red="0.27123145230000001" green="0.68238291849999999" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            </view>
+                        </subviews>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="xFA-Eb-KHK" secondAttribute="trailing" id="LF6-0Z-1xV"/>
+                            <constraint firstItem="xFA-Eb-KHK" firstAttribute="top" secondItem="pTg-Y6-0f0" secondAttribute="top" id="Peg-uy-evd"/>
+                            <constraint firstItem="GTj-Ql-LNw" firstAttribute="top" secondItem="xFA-Eb-KHK" secondAttribute="bottom" id="fKA-uO-NWr"/>
+                            <constraint firstItem="xFA-Eb-KHK" firstAttribute="leading" secondItem="pTg-Y6-0f0" secondAttribute="leading" id="jMV-58-E3U"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="subviews">
+                                <exclude reference="xFA-Eb-KHK"/>
+                            </mask>
+                            <mask key="constraints">
+                                <exclude reference="fKA-uO-NWr"/>
+                                <exclude reference="LF6-0Z-1xV"/>
+                                <exclude reference="Peg-uy-evd"/>
+                                <exclude reference="jMV-58-E3U"/>
+                            </mask>
+                        </variation>
+                        <variation key="heightClass=regular-widthClass=compact">
+                            <mask key="subviews">
+                                <include reference="xFA-Eb-KHK"/>
+                            </mask>
+                            <mask key="constraints">
+                                <include reference="fKA-uO-NWr"/>
+                                <include reference="LF6-0Z-1xV"/>
+                                <include reference="Peg-uy-evd"/>
+                                <include reference="jMV-58-E3U"/>
+                            </mask>
+                        </variation>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="lEC-9c-EDE" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="222" y="981.75"/>
+        </scene>
         <!--Review View Controller-->
         <scene sceneID="qOX-4D-auV">
             <objects>
