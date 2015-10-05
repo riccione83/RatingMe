@@ -1,0 +1,13 @@
+PODS:
+  - MBProgressHUD (0.9.1)
+  - SlideMenuControllerSwift (2.0.0)
+
+DEPENDENCIES:
+  - MBProgressHUD (~> 0.9.1)
+  - SlideMenuControllerSwift
+
+SPEC CHECKSUMS:
+  MBProgressHUD: c47f2c166c126cf2ce36498d80f33e754d4e93ad
+  SlideMenuControllerSwift: 85ce7142935a32e26de41aa90fac0cc9f60fb01c
+
+COCOAPODS: 0.38.2
