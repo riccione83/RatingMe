@@ -14,6 +14,7 @@
 		93D95BEB1B442B73002D5C53 /* ReviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D95BEA1B442B73002D5C53 /* ReviewViewController.swift */; };
 		93E06C331B85C7BD00DAEA51 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93E06C321B85C7BD00DAEA51 /* User.swift */; };
 		93E06C351B85DD8300DAEA51 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93E06C341B85DD8300DAEA51 /* LoginViewController.swift */; };
+		93F5F8F91BC2B01700582D58 /* LeftMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93F5F8F81BC2B01700582D58 /* LeftMenuViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		93FC5BE51B3C4CB00010A94D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93FC5BE41B3C4CB00010A94D /* AppDelegate.swift */; };
 		93FC5BE71B3C4CB00010A94D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93FC5BE61B3C4CB00010A94D /* ViewController.swift */; };
 		93FC5BEA1B3C4CB00010A94D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 93FC5BE81B3C4CB00010A94D /* Main.storyboard */; };
@@ -23,6 +24,7 @@
 		93FC5C051B3C4CC80010A94D /* JSonHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93FC5C041B3C4CC80010A94D /* JSonHelper.swift */; };
 		93FC5C081B3C4CD70010A94D /* PinAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93FC5C061B3C4CD70010A94D /* PinAnnotation.swift */; };
 		93FC5C091B3C4CD70010A94D /* PinAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93FC5C071B3C4CD70010A94D /* PinAnnotationView.swift */; };
+		E88BC524191C9A5C13351C23 /* Pods_RatingMe.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A5E55D43CAB3465B72919E5 /* Pods_RatingMe.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +38,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		6025ED769039CCD4D2FAE9B8 /* Pods-RatingMe.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RatingMe.debug.xcconfig"; path = "Pods/Target Support Files/Pods-RatingMe/Pods-RatingMe.debug.xcconfig"; sourceTree = "<group>"; };
+		6A5E55D43CAB3465B72919E5 /* Pods_RatingMe.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RatingMe.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9341480F1B84CD0B00F768BD /* ShowReviewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowReviewViewController.swift; sourceTree = "<group>"; };
 		937FCCC11B4577CF00DC141C /* StarRating.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StarRating.swift; sourceTree = "<group>"; };
 		93AB02151B45305900358705 /* NewRateViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewRateViewController.swift; sourceTree = "<group>"; };
@@ -43,6 +47,7 @@
 		93D95BEA1B442B73002D5C53 /* ReviewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReviewViewController.swift; sourceTree = "<group>"; };
 		93E06C321B85C7BD00DAEA51 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		93E06C341B85DD8300DAEA51 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		93F5F8F81BC2B01700582D58 /* LeftMenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LeftMenuViewController.swift; sourceTree = "<group>"; };
 		93FC5BDF1B3C4CB00010A94D /* RatingMe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RatingMe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		93FC5BE31B3C4CB00010A94D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		93FC5BE41B3C4CB00010A94D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -56,6 +61,7 @@
 		93FC5C041B3C4CC80010A94D /* JSonHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSonHelper.swift; sourceTree = "<group>"; };
 		93FC5C061B3C4CD70010A94D /* PinAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinAnnotation.swift; sourceTree = "<group>"; };
 		93FC5C071B3C4CD70010A94D /* PinAnnotationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PinAnnotationView.swift; sourceTree = "<group>"; };
+		F4D72DE2FD88CBEBE27B458B /* Pods-RatingMe.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RatingMe.release.xcconfig"; path = "Pods/Target Support Files/Pods-RatingMe/Pods-RatingMe.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +69,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E88BC524191C9A5C13351C23 /* Pods_RatingMe.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -82,6 +89,8 @@
 				93FC5BE11B3C4CB00010A94D /* RatingMe */,
 				93FC5BF71B3C4CB00010A94D /* RatingMeTests */,
 				93FC5BE01B3C4CB00010A94D /* Products */,
+				9B4C4C6C8FE3935A586A5BF3 /* Pods */,
+				E8190E32A6318A6881901D40 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -107,6 +116,7 @@
 				93FC5C071B3C4CD70010A94D /* PinAnnotationView.swift */,
 				93FC5BE81B3C4CB00010A94D /* Main.storyboard */,
 				93E06C341B85DD8300DAEA51 /* LoginViewController.swift */,
+				93F5F8F81BC2B01700582D58 /* LeftMenuViewController.swift */,
 				93B1C6BA1B628F7D002044A3 /* RateCustomCell.swift */,
 				937FCCC11B4577CF00DC141C /* StarRating.swift */,
 				93D95BEA1B442B73002D5C53 /* ReviewViewController.swift */,
@@ -142,6 +152,23 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		9B4C4C6C8FE3935A586A5BF3 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				6025ED769039CCD4D2FAE9B8 /* Pods-RatingMe.debug.xcconfig */,
+				F4D72DE2FD88CBEBE27B458B /* Pods-RatingMe.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		E8190E32A6318A6881901D40 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				6A5E55D43CAB3465B72919E5 /* Pods_RatingMe.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -149,9 +176,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 93FC5BFE1B3C4CB00010A94D /* Build configuration list for PBXNativeTarget "RatingMe" */;
 			buildPhases = (
+				C615D390307410844CA33BA9 /* Check Pods Manifest.lock */,
 				93FC5BDB1B3C4CB00010A94D /* Sources */,
 				93FC5BDC1B3C4CB00010A94D /* Frameworks */,
 				93FC5BDD1B3C4CB00010A94D /* Resources */,
+				62BBD224C917E238B8A9591A /* Embed Pods Frameworks */,
+				B38062E2B73DF78A6ECA5043 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -240,6 +270,54 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		62BBD224C917E238B8A9591A /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-RatingMe/Pods-RatingMe-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B38062E2B73DF78A6ECA5043 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-RatingMe/Pods-RatingMe-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C615D390307410844CA33BA9 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		93FC5BDB1B3C4CB00010A94D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -255,6 +333,7 @@
 				93FC5C051B3C4CC80010A94D /* JSonHelper.swift in Sources */,
 				93FC5BE71B3C4CB00010A94D /* ViewController.swift in Sources */,
 				93FC5BE51B3C4CB00010A94D /* AppDelegate.swift in Sources */,
+				93F5F8F91BC2B01700582D58 /* LeftMenuViewController.swift in Sources */,
 				93E06C331B85C7BD00DAEA51 /* User.swift in Sources */,
 				93AB02161B45305900358705 /* NewRateViewController.swift in Sources */,
 			);
@@ -383,6 +462,7 @@
 		};
 		93FC5BFF1B3C4CB00010A94D /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6025ED769039CCD4D2FAE9B8 /* Pods-RatingMe.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -395,6 +475,7 @@
 		};
 		93FC5C001B3C4CB00010A94D /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F4D72DE2FD88CBEBE27B458B /* Pods-RatingMe.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";

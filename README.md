@@ -21,4 +21,4 @@ Copyright (c) Riccardo Rizzo.
 This library is distributed under the terms of the MIT/X11.
 
 While not required, I greatly encourage and appreciate any improvements that you make
-to this library be contributed back for the benefit of all who use RunMe.
+to this library be contributed back for the benefit of all who use RateMe.

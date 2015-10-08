@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MBProgressHUD
 
 class LoginViewController: UIViewController {
 
@@ -18,7 +19,7 @@ class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-       activityIndicator.hidden = true
+       self.hideLoadingHUD()
     }
 
     override func didReceiveMemoryWarning() {
@@ -26,20 +27,27 @@ class LoginViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    private func showLoadingHUD() {
+        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+        hud.labelText = "Loading..."
+    }
+    
+    private func hideLoadingHUD() {
+        MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
+    }
+    
     func showMessage(message:String) {
         let alert = UIAlertController(title: "RateMe", message:message, preferredStyle: UIAlertControllerStyle.Alert)
         alert.addAction(UIAlertAction(title: "Close", style: UIAlertActionStyle.Default, handler: nil))
     
         self.presentViewController(alert, animated: true) { () -> Void in
-            self.activityIndicator.stopAnimating()
-            self.activityIndicator.hidden = true
+            self.hideLoadingHUD()
         }
     }
 
     @IBAction func loginWithTwitterClick(sender: AnyObject) {
         
-        activityIndicator.hidden = false
-        activityIndicator.startAnimating()
+        self.showLoadingHUD()
         
         userInfos.signInWithTwitter({ (loggedIn) -> () in
             if loggedIn {
@@ -60,8 +68,7 @@ class LoginViewController: UIViewController {
     
     @IBAction func loginWithFacebookClick(sender: AnyObject) {
         
-        activityIndicator.hidden = false
-        activityIndicator.startAnimating()
+        self.showLoadingHUD()
         
         userInfos.signInWithFacebook({ (loggedIn) -> () in
             if loggedIn {
@@ -81,8 +88,7 @@ class LoginViewController: UIViewController {
     
     func showMainView() {
         
-        activityIndicator.stopAnimating()
-        activityIndicator.hidden = true
+        self.hideLoadingHUD()
 
         delegate?.userInfos = userInfos
         self.dismissViewControllerAnimated(true, completion: nil)
