@@ -4,6 +4,11 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>Alamofire.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>MBProgressHUD.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -19,20 +24,35 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>SwiftyJSON.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>600B6C561AC58D5FC09E90CBE528B594</key>
+		<key>394FD9829678A95DCC094ADF77C00D6A</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>7A35E3E002D7B52CC96C7A5C8826A951</key>
+		<key>432ECC54282C84882B482CCB4CF227FC</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>C396B589F7DBA985CBF26959501A76E8</key>
+		<key>7AFB185A3EE3996292D2BA94363833F1</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>8B1BF1810F35054C7E715FDFDBD37D17</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>E61CE3B6DFA1FE6B3E296965C76C0E10</key>
 		<dict>
 			<key>primary</key>
 			<true/>

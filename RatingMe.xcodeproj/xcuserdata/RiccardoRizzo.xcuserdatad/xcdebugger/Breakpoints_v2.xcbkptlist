@@ -10,13 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "RatingMe/User.swift"
-            timestampString = "461838118.241472"
+            timestampString = "467303319.078178"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "29"
-            endingLineNumber = "29"
-            landmarkName = "signInWithTwitter(_:)"
-            landmarkType = "5">
+            startingLineNumber = "43"
+            endingLineNumber = "43">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -26,27 +24,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "RatingMe/ShowReviewViewController.swift"
-            timestampString = "464263771.894411"
+            timestampString = "467287794.110777"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "115"
-            endingLineNumber = "115"
-            landmarkName = "loadData()"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "RatingMe/ShowReviewViewController.swift"
-            timestampString = "464263771.894411"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "113"
-            endingLineNumber = "113"
+            startingLineNumber = "105"
+            endingLineNumber = "105"
             landmarkName = "loadData()"
             landmarkType = "5">
          </BreakpointContent>
@@ -58,11 +40,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "RatingMe/NewRateViewController.swift"
-            timestampString = "461840886.29553"
+            timestampString = "467288522.617501"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "59"
-            endingLineNumber = "59"
+            startingLineNumber = "55"
+            endingLineNumber = "55"
             landmarkName = "feedbackClick(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -74,7 +56,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "RatingMe/NewRateViewController.swift"
-            timestampString = "461840869.522633"
+            timestampString = "467288522.617501"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "53"
@@ -90,13 +72,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "RatingMe/ViewController.swift"
-            timestampString = "465752386.036293"
+            timestampString = "467305552.734411"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "649"
-            endingLineNumber = "649"
-            landmarkName = "searchBarTextDidEndEditing(_:)"
-            landmarkType = "5">
+            startingLineNumber = "639"
+            endingLineNumber = "639">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -106,11 +86,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "RatingMe/ViewController.swift"
-            timestampString = "465752386.036293"
+            timestampString = "467305552.734411"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "454"
-            endingLineNumber = "454"
+            startingLineNumber = "442"
+            endingLineNumber = "442"
             landmarkName = "searchForLocation(_:withRadius:latitude_:longitude_:center:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -122,11 +102,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "RatingMe/ViewController.swift"
-            timestampString = "465752386.036293"
+            timestampString = "467305552.734411"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "453"
-            endingLineNumber = "453"
+            startingLineNumber = "441"
+            endingLineNumber = "441"
             landmarkName = "searchForLocation(_:withRadius:latitude_:longitude_:center:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -138,11 +118,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "RatingMe/ViewController.swift"
-            timestampString = "465752386.036293"
+            timestampString = "467305552.734411"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "455"
-            endingLineNumber = "455"
+            startingLineNumber = "444"
+            endingLineNumber = "444"
             landmarkName = "searchForLocation(_:withRadius:latitude_:longitude_:center:)"
             landmarkType = "5">
          </BreakpointContent>

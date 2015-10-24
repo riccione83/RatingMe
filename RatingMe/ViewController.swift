@@ -9,6 +9,8 @@
 import UIKit
 import MapKit
 import MBProgressHUD
+import Alamofire
+import SwiftyJSON
 
 extension String {
     func toDouble() -> Double? {
@@ -27,7 +29,8 @@ class ViewController: UIViewController, ReviewControllerProtocol,RateControllerP
     var userInfos:User?
     var lastRegion:MKCoordinateRegion?
     var loginHappened:Bool = false
-    let url = "http://www.riccardorizzo.eu/rating/"
+    //let url = "http://www.riccardorizzo.eu/rating/"
+    let url = "http://ratingme-riccione83.c9.io"
     
     var results:MKLocalSearchResponse? = MKLocalSearchResponse()
     
@@ -169,7 +172,7 @@ class ViewController: UIViewController, ReviewControllerProtocol,RateControllerP
                 vc.currentTitle = itm.title!
                 vc.currentDescription = itm.subtitle!
                 vc.imageLink = itm.ImageLink
-                vc.currentRating = itm.Rating
+                vc.currentRating = Double(itm.Rating)
                 vc.currentReviewID = itm.ReviewID
                 vc.Q1 = itm.Question1
                 vc.Q2 = itm.Question2
@@ -194,61 +197,6 @@ class ViewController: UIViewController, ReviewControllerProtocol,RateControllerP
         self.presentViewController(vc, animated: true, completion: nil)
     }
 
-    
-    func sendLongText() {
-        
-            let filenames = "TextLabel";      //set name here
-        
-            NSLog("\(filenames)");
-            let urlString = "http://localhost:8888/test.php";
-            
-            let request = NSMutableURLRequest()
-            request.URL = NSURL(string: urlString)
-            request.HTTPMethod = "POST"
-            
-            let boundary = "---------------------------14737809831466499882746641449"
-        
-            let contentType = String(format:"multipart/form-data; boundary=\(boundary)")
-            request.addValue(contentType, forHTTPHeaderField: "Content-Type")
-            
-            let body = NSMutableData()
-        
-            //Block
-            body.appendData(String(format:"\r\n--\(boundary)\r\n").dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)!)
-            body.appendData(String(format:"Content-Disposition: form-data; name=\"filenames\"\r\n\r\n").dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)!)
-            body.appendData(filenames.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)!)
-        
-        
-            //End
-            body.appendData(String(format:"\r\n--%@\r\n",boundary).dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: true)!)
-        
-            request.HTTPBody = body
-        
-            var response: NSURLResponse?
-            //var error: NSError?
-        
-            let urlData: NSData?
-            do {
-                urlData = try NSURLConnection.sendSynchronousRequest(request, returningResponse: &response)
-                }
-                catch _ {
-                //error = error1
-                urlData = nil
-            }
-        
-            if let httpResponse = response as? NSHTTPURLResponse {
-            print("Response: \(httpResponse.statusCode)")
-            
-            if httpResponse.statusCode >= 200 && httpResponse.statusCode<300
-            {
-                let responseData = NSString(data: urlData!, encoding: NSUTF8StringEncoding)
-                NSLog("\(responseData)")
-            //    let jsonData = parseJSON(urlData!)
-              //  return jsonData
-            }
-        }
-    }
-    
     override func viewDidAppear(animated: Bool) {
         
         self.closeLeft()
@@ -288,20 +236,30 @@ class ViewController: UIViewController, ReviewControllerProtocol,RateControllerP
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
+    
+    // TODO - Sistemare qui
     func saveLoginData(userData: User) {
-        NSUserDefaults.standardUserDefaults().setObject(userData.userID, forKey: "loginDataUserID")
-        NSUserDefaults.standardUserDefaults().setObject(userData.userName, forKey: "loginDataUserName")
+        NSUserDefaults.standardUserDefaults().setObject(userData.userID, forKey: "loginData.UserID")
+        NSUserDefaults.standardUserDefaults().setObject(userData.userName, forKey: "loginData.UserName")
+        NSUserDefaults.standardUserDefaults().setObject(userData.userCity, forKey: "loginData.UserCity")
+        NSUserDefaults.standardUserDefaults().setObject(userData.userEmail, forKey: "loginData.UserEmail")
+        NSUserDefaults.standardUserDefaults().setObject(userData.userPasswordHash, forKey: "loginData.UserPasswordHash")
+        NSUserDefaults.standardUserDefaults().setObject(userData.userSocialID, forKey: "loginData.UserSocialID")
         NSUserDefaults.standardUserDefaults().synchronize()
     }
     
     func loadLoginData() -> User? {
         if userInfos == nil {
-            if let userID =  NSUserDefaults.standardUserDefaults().objectForKey("loginDataUserID") as? String {
-                let userName = NSUserDefaults.standardUserDefaults().objectForKey("loginDataUserName") as! String
+            if let _ =  NSUserDefaults.standardUserDefaults().objectForKey("loginData.UserID") as? String {
                 let data:User = User()
-                data.userID = userID
-                data.userName = userName
+                
+                data.userID = NSUserDefaults.standardUserDefaults().objectForKey("loginData.UserID") as! String
+                data.userName = NSUserDefaults.standardUserDefaults().objectForKey("loginData.UserName") as! String
+                data.userCity = NSUserDefaults.standardUserDefaults().objectForKey("loginData.UserCity") as! String
+                data.userEmail = NSUserDefaults.standardUserDefaults().objectForKey("loginData.UserEmail") as! String
+                data.userPasswordHash = NSUserDefaults.standardUserDefaults().objectForKey("loginData.UserPasswordHash") as! String
+                data.userSocialID = NSUserDefaults.standardUserDefaults().objectForKey("loginData.UserSocialID") as! String
+                
                 return data
             }
             else {
@@ -370,14 +328,43 @@ class ViewController: UIViewController, ReviewControllerProtocol,RateControllerP
         }
     }
 
+    func makeSignUpRequest(lat:String, lon:String, radius:String) {
+        
+        let parameters = [
+            "lat": lat,
+            "lon": lon,
+            "radius":radius
+            ]
+        
+        Alamofire.request(.GET, url + "/api/show_reviews", parameters: parameters)
+            .responseJSON { response in
+                print(response.request)  // original URL request
+                print(response.response) // URL response
+                print(response.data)     // server data
+                print(response.result)   // result of response serialization
+                
+                if let JSON = response.result.value {
+                    print("JSON: \(JSON)")
+                }
+        }
+        
+    }
     
+    
+    func response(latitude_:String,longitude_:String,radius_:String) {
+        
+        
+    }
+
+
     func searchForLocation(location:String, withRadius radius_:Double, latitude_:Double=0.0, longitude_:Double=0.0, center:Bool) {
         
+        let jsonRequest = JSonHelper()
+        let Pins:NSMutableArray = NSMutableArray()
         
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
         
-        let searchUrl:String = url + "review.php"
-        //var postParams:String = ""
+        var params = [:]
         
         var radius = radius_
         if(radius < 1) {
@@ -385,90 +372,78 @@ class ViewController: UIViewController, ReviewControllerProtocol,RateControllerP
         }
         
         let new_location = location.stringByReplacingOccurrencesOfString(" ", withString: "+", options: NSStringCompareOptions.LiteralSearch, range: nil)
-        
-        let params:NSMutableDictionary = NSMutableDictionary()
-        
+    
         if latitude_==0.0 && longitude_==0.0 {
-            params.setValue("get_review", forKey: "command")
-            params.setValue(new_location, forKey: "address")
-            params.setValue((NSString(format: "%.2f", radius) as String), forKey: "radius")
-            if (new_location == "") {
-                return
-            }
+            
+            params = [  "address:": new_location,
+                        "radius": NSString(format: "%.2f", radius)
+                     ]
         }
         else {
-            params.setValue("get_review", forKey: "command")
-            params.setValue("\(latitude_)", forKey: "latitude")
-            params.setValue("\(longitude_)", forKey: "longitude")
-            params.setValue((NSString(format: "%.2f", radius) as String), forKey: "radius")
+            params = [
+                        "lat": "\(latitude_)",
+                        "lon": "\(longitude_)",
+                        "radius":"\(radius_)"
+                     ]
         }
+    
+        jsonRequest.getJson(jsonRequest.API_showReviews, parameters: params as! [String:AnyObject]) { (jsonData) -> () in
         
-        let jsonRequest = JSonHelper()
-        var jsonData:NSArray = []
-        
-        do {
-           jsonData = try jsonRequest.getJson(searchUrl,dict: params) as! NSMutableArray
-        }
-        catch {
-            print(error)
-        }
-        var i=0
-        mainMap.removeAnnotations(mainMap.annotations)
-        let Pins:NSMutableArray = NSMutableArray()
-        for dict in jsonData {
-            let description = dict.valueForKey("description") as? String
-            //let createdAt = dict.valueForKey("CreatedAt") as? String
-            let image = dict.valueForKey("image") as? String
-            let latitude = dict.valueForKey("lat") as! NSString
-            let longitude = dict.valueForKey("lon") as! NSString
-            var rating = dict.valueForKey("rating") as? String
-            let title = dict.valueForKey("title") as? String
-            let reviewID = dict.valueForKey("id") as! String
-            let lat:Double = (latitude  as NSString).doubleValue
-            let lon:Double = (longitude as NSString).doubleValue
-            let question1:String = dict.valueForKey("question1") as! String
-            let question2:String = dict.valueForKey("question2") as! String
-            let question3:String = dict.valueForKey("question3") as! String
-            let isAdvertisement = dict.valueForKey("is_advertisement") as! String
-            let advertisementImageLink = dict.valueForKey("ad_image_link") as! String
+            self.mainMap.removeAnnotations(self.mainMap.annotations)
             
-            let _lat:String = String(format:"{%f,%f}", lat,lon)
-            let point = CGPointFromString(_lat)
-            let coordinate = CLLocationCoordinate2DMake(CLLocationDegrees(point.x), CLLocationDegrees(point.y))
-            if rating == nil {
-                rating = "0"
+            if jsonData == nil {
+                return
             }
-            else
-            {
-                let fullNameArr = rating?.componentsSeparatedByString(".")[0]
-                rating = fullNameArr
+            let json = JSON(jsonData!)
+        
+            if let message = json[0]["error"].string {
+                print(message)
+                return
             }
+            if let message = json["error"].string {
+                print(message)
+                return
+            }
+    
+            for (key,subJson):(String, JSON) in json {
+                let description = subJson[0]["description"].string!
+                let image = subJson[0]["picture"].string ?? ""
+                let latitude = subJson[0]["latitude"].double!
+                let longitude = subJson[0]["longitude"].double!
+                let rating = subJson[0]["point"].int!
+                let title = subJson[0]["title"].string!
+                let id = subJson[0]["id"].int!
+                print(subJson[0]["point"])
+                let reviewID = String(format: "\(id)")
+                let question1 = subJson[0]["question1"].string!
+                let question2 = subJson[0]["question2"].string!
+                let question3 = subJson[0]["question3"].string!
+                let isAdvertisement = subJson[0]["is_advertisement"].string ?? "0"
+                let advertisementImageLink = subJson[0]["ad_image_link"].string ?? ""
             
-            let pinPoint = PinAnnotation(coordinate: coordinate, title:title!, subtitle: description!, tag: i,rating: rating!, link: image!, ID: reviewID, Q1: question1, Q2: question2, Q3: question3, isAdv: isAdvertisement, advImgLink: advertisementImageLink)
+                let coord:String = String(format:"{%f,%f}", latitude,longitude)
+                let point = CGPointFromString(coord)
+                let coordinate = CLLocationCoordinate2DMake(CLLocationDegrees(point.x), CLLocationDegrees(point.y))
+                
+                let tag = Int(key)! + 1
+                let pinPoint = PinAnnotation(coordinate: coordinate, title:title, subtitle: description, tag: tag ,rating: rating, link: image, ID: reviewID, Q1: question1, Q2: question2, Q3: question3, isAdv: isAdvertisement, advImgLink: advertisementImageLink)
             
-            Pins.addObject(pinPoint)
-            i = i + 1
-        }
-        
-        if i > 0 {
-        
-            mainMap.addAnnotations(Pins as! [MKAnnotation])
-            
+                Pins.addObject(pinPoint)
+                self.mainMap.addAnnotation(pinPoint)
+            }
             if(center) {
-                fitAnnotation(Pins)
+                self.fitAnnotation(Pins)
             }
-        }
+
         
         if(center && latitude_ > 0 && longitude_ > 0) {
-        //    if( latitude_ > 0.0 && longitude_ > 0.0) {
-            
-                centerMap(latitude_, withLon: longitude_)
-        //    }
+                self.centerMap(latitude_, withLon: longitude_)
         }
-        
-        NSLog("Showed pins: \(i)")
+         //NSLog("Showed pins: \(tag)")
+    }
         UIApplication.sharedApplication().networkActivityIndicatorVisible = false
     }
+    
     
     func fitAnnotation(point:NSArray) {
         var zoomRect:MKMapRect = MKMapRectNull;

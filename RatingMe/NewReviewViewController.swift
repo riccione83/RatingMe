@@ -8,13 +8,18 @@
 
 import UIKit
 import MapKit
+import SwiftyJSON
+import Alamofire
 
 protocol ReviewControllerProtocol {
     func searchByUserLocation(lat:Double,lon:Double, center: Bool)
 }
 
 class ReviewViewController: UIViewController {
-
+    
+    let jsonRequest = JSonHelper()
+    
+    @IBOutlet var scrollView: UIScrollView!
     @IBOutlet var reviewMap: MKMapView!
     @IBOutlet var reviewTitle: UITextField!
     @IBOutlet var reviewText: UITextView!
@@ -26,49 +31,56 @@ class ReviewViewController: UIViewController {
     
     let locationManager:CLLocationManager = CLLocationManager()
     var delegate:ReviewControllerProtocol? = nil
+    var keyboardWasShowed: Bool = false
+    var imagePicker = UIImagePickerController()
+    var selectedImage:UIImage? = nil
     
-    //let url = "http://localhost:8888/rating/"
-    let url = "http://www.riccardorizzo.eu/rating/"
+    func selectImageToSend() {
+        imagePicker.delegate = self
+        imagePicker.sourceType = UIImagePickerControllerSourceType.SavedPhotosAlbum;
+        imagePicker.allowsEditing = false
+        
+        self.presentViewController(imagePicker, animated: true, completion: nil)
+    }
     
-    func newReview(title:String, description:String, latitude:String, longitude:String, question1:String="", question2:String="", question3:String="") {
+    @IBAction func selectImage(sender: AnyObject) {
+        selectImageToSend()
+    }
+    
+    func newReview(title:String, description:String, latitude:String, longitude:String, question1:String="", question2:String="", question3:String="")
+    {
+        let newTitle = title
+        let newDescription = description
         
-        var newTitle = title
-        var newDescription = description
-        var searchUrl:String = url + "review.php"
-        var params:NSMutableDictionary = NSMutableDictionary()
-        
-        params.setValue("set_review", forKey: "command")
-        params.setValue(latitude, forKey: "latitude")
-        params.setValue(longitude, forKey: "longitude")
-        params.setValue(newTitle, forKey: "title")
-        params.setValue(newDescription, forKey: "description")
-        params.setValue("1", forKey: "user_id")
-        params.setValue(question1, forKey: "question1")
-        params.setValue(question2, forKey: "question2")
-        params.setValue(question3, forKey: "question3")
-        
-        let jsonData:AnyObject?
-        
-        do {
-            let jsonRequest = JSonHelper()
-        
-            jsonData = try jsonRequest.getJson(searchUrl, dict: params)
-        }
-        catch {
-            jsonData = nil
-        }
-        NSLog("\(jsonData)")
-        if (jsonData is NSMutableDictionary) {
-            if (jsonData!.valueForKey("message") != nil) {
-                NSLog("\(jsonData)")
-                if (delegate != nil) {
-                    delegate?.searchByUserLocation(locationManager.location!.coordinate.latitude, lon: locationManager.location!.coordinate.longitude, center: true)
+        let params = [
+                            "latitude":latitude,
+                            "longitude":longitude,
+                            "title":newTitle,
+                            "description":newDescription,
+                            "question1":question1,
+                            "question2":question2,
+                            "question3":question3,
+                            "user_id":"1",
+                            "isAdvertisement":"0",
+                            "adImageLink":"0" ]
+    
+        jsonRequest.uploadWithParameters(jsonRequest.API_newReview, parameters: params, image: selectedImage) { (jsonData, jsonError) -> () in
+            
+            if jsonData != nil {
+                if jsonData!.result.isSuccess {
+                    let serverResponse = jsonData!.result.value as! NSDictionary
+                    
+                    if let responseMessage = serverResponse["message"] {
+                        if (responseMessage as! String) == "success" {
+                            if (self.delegate != nil) {
+                                self.delegate?.searchByUserLocation(self.locationManager.location!.coordinate.latitude, lon: self.locationManager.location!.coordinate.longitude, center: true)
+                            }
+                            self.dismissViewControllerAnimated(true, completion: nil)
+                        }
+                        print(responseMessage)
+                        return
+                    }
                 }
-                self.dismissViewControllerAnimated(true, completion: nil)
-            }
-            else {
-                let error_str:String = jsonData!.valueForKey("error") as! String
-                NSLog("\(error_str)")
             }
         }
     }
@@ -96,14 +108,31 @@ class ReviewViewController: UIViewController {
         self.presentViewController(alert, animated: true, completion: nil)
     }
     
+    func initUI() {
+        self.scrollView.contentSize = CGSizeMake(scrollView.bounds.size.width, scrollView.bounds.size.height*3)
+        var offset: CGPoint = scrollView.contentOffset
+        offset.x = 2
+        scrollView.contentOffset = offset
+    }
+    
     override func viewDidLoad() {
         
         super.viewDidLoad()
         locationManager.delegate = self
         locationManager.requestWhenInUseAuthorization()
         locationManager.startUpdatingLocation()
+        
     }
 
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        if scrollView.contentOffset.x != 0 {
+            var offset: CGPoint = scrollView.contentOffset
+            offset.x = 2
+            scrollView.contentOffset = offset
+        }
+    }
+    
+    
     override func viewDidAppear(animated: Bool) {
         
         let touchImage: UITapGestureRecognizer = UITapGestureRecognizer()
@@ -116,11 +145,17 @@ class ReviewViewController: UIViewController {
     }
     
     func keyboardWillShow(sender: NSNotification) {
-        self.view.frame.origin.y -= 160
+        if !keyboardWasShowed {
+            self.view.frame.origin.y -= 160
+            keyboardWasShowed = true
+        }
     }
     
     func keyboardWillHide(sender: NSNotification) {
-        self.view.frame.origin.y += 160
+        if keyboardWasShowed {
+            self.view.frame.origin.y += 160
+            keyboardWasShowed = false
+        }
     }
     
     func closeKeyboard(touch:UIGestureRecognizer) {
@@ -143,6 +178,29 @@ class ReviewViewController: UIViewController {
         reviewMap.setRegion(region, animated: true)
     }
     
+}
+
+extension ReviewViewController: UIImagePickerControllerDelegate,UINavigationControllerDelegate {  //For ImagePicker
+    
+    func imagePickerController(picker: UIImagePickerController!, didFinishPickingImage image: UIImage!, editingInfo: NSDictionary!){
+        
+        self.dismissViewControllerAnimated(true, completion: { () -> Void in
+        
+        })
+        
+        //selectedImage = image
+        let aspectRatio = image.size.width / image.size.height
+        let newHeight = 600 / aspectRatio
+        
+        UIGraphicsBeginImageContext(CGSizeMake(600, newHeight))
+        image.drawInRect(CGRectMake(0, 0, 600, newHeight))
+        
+        let scaledImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        selectedImage =  scaledImage
+        
+    }
 }
 
 extension ReviewViewController: UITextViewDelegate {

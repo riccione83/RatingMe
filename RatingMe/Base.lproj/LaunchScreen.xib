@@ -1,33 +1,37 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="8191" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="iN0-l3-epB">
-            <rect key="frame" x="0.0" y="0.0" width="480" height="480"/>
+            <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2QU-TF-vd0">
+                <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2QU-TF-vd0">
                     <rect key="frame" x="38" y="0.0" width="414" height="736"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Welcome to RateMe" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VRW-O5-gw8">
                             <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
+                            <animations/>
                             <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="35"/>
                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="The place where you can rate everything" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0K3-k8-kUj">
                             <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
+                            <animations/>
                             <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="16"/>
                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BluePin" translatesAutoresizingMaskIntoConstraints="NO" id="XCa-yc-SXR">
                             <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                            <animations/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="55" id="YQu-VG-OgE"/>
                                 <constraint firstAttribute="height" constant="60" id="qsd-Oc-qIg"/>
@@ -46,6 +50,7 @@
                             </variation>
                         </imageView>
                     </subviews>
+                    <animations/>
                     <color key="backgroundColor" red="0.010922944529999999" green="0.7030243343" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstItem="XCa-yc-SXR" firstAttribute="centerX" secondItem="VRW-O5-gw8" secondAttribute="centerX" constant="0.25" id="Gju-50-tnj"/>
@@ -63,11 +68,11 @@
                             <exclude reference="XCa-yc-SXR"/>
                         </mask>
                         <mask key="constraints">
+                            <exclude reference="kym-ZM-AXu"/>
+                            <exclude reference="lIT-oy-OOQ"/>
                             <exclude reference="T1s-wW-fqP"/>
                             <exclude reference="pze-hN-LDp"/>
                             <exclude reference="wbR-wS-kng"/>
-                            <exclude reference="kym-ZM-AXu"/>
-                            <exclude reference="lIT-oy-OOQ"/>
                             <exclude reference="Gju-50-tnj"/>
                             <exclude reference="YIr-6U-bGk"/>
                         </mask>
@@ -79,17 +84,18 @@
                             <include reference="XCa-yc-SXR"/>
                         </mask>
                         <mask key="constraints">
+                            <include reference="kym-ZM-AXu"/>
+                            <include reference="lIT-oy-OOQ"/>
                             <include reference="T1s-wW-fqP"/>
                             <include reference="pze-hN-LDp"/>
                             <include reference="wbR-wS-kng"/>
-                            <include reference="kym-ZM-AXu"/>
-                            <include reference="lIT-oy-OOQ"/>
                             <include reference="Gju-50-tnj"/>
                             <include reference="YIr-6U-bGk"/>
                         </mask>
                     </variation>
                 </view>
             </subviews>
+            <animations/>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="2QU-TF-vd0" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="9mh-yf-N3C"/>

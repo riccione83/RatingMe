@@ -13,14 +13,14 @@ protocol RateControllerProtocol {
 }
 
 class RateViewController: UIViewController {
-
-    let url = "http://www.riccardorizzo.eu/rating/"
     
     var delegate:RateControllerProtocol? = nil
+    let jsonRequest = JSonHelper()
     
     var isFullscreen = false
     var oldFrame: CGRect = CGRectMake(0, 0, 0, 0)
     
+    @IBOutlet var scrollView: UIScrollView!
     @IBOutlet var labelTitle: UILabel!
     @IBOutlet var textDescription: UITextView!
     @IBOutlet var thumbImage: UIImageView!
@@ -36,7 +36,7 @@ class RateViewController: UIViewController {
     var currentTitle:String = ""
     var currentDescription:String = ""
     var imageLink:String = ""
-    var currentRating:String = ""
+    var currentRating:Double = 0
     var currentReviewID:String = ""
     var lastLatitude:Double = 0.0;
     var lastLongitude:Double = 0.0;
@@ -51,23 +51,18 @@ class RateViewController: UIViewController {
             var rating = Int(currentRating)
             
             var divisor = 1
-            let rate1 = starRatingView1.currentRating
-            var rate2 = 0
-            var rate3 = 0
             
             if starRatingView2 != nil && !starRatingView2.hidden {
-                rate2 = starRatingView2.currentRating
                 divisor++
             }
             
             if starRatingView3 != nil && !starRatingView3.hidden {
-                rate3 = starRatingView3.currentRating
                 divisor++
             }
             
             rating = (starRatingView1.currentRating + starRatingView2.currentRating + starRatingView3.currentRating) / divisor
             
-            newRating(currentReviewID, user_id: userInfos!.userID,user_name: userInfos!.userName, rate: rating!, description: txtRateDescription.text!, rate_q1: starRatingView1.currentRating,rate_q2: starRatingView2.currentRating, rate_q3: starRatingView3.currentRating)
+            newRating(currentReviewID, user_id: userInfos!.userID,user_name: userInfos!.userName, rate: Double(rating), description: txtRateDescription.text!, rate_q1: starRatingView1.currentRating,rate_q2: starRatingView2.currentRating, rate_q3: starRatingView3.currentRating)
         }
         else {
             thumbImage.frame = oldFrame
@@ -90,16 +85,14 @@ class RateViewController: UIViewController {
 
     
     
-    func newRating(review_id:String, user_id:String,user_name:String, rate:Int, description:String, rate_q1:Int, rate_q2:Int, rate_q3:Int) {
+    func newRating(review_id:String, user_id:String,user_name:String, rate:Double, description:String, rate_q1:Int, rate_q2:Int, rate_q3:Int) {
     
         let rating = String(format: "\(rate)")
-        let sUrl:String = url + "review.php"
-        
         let q1 = "\(rate_q1)"
         let q2 = "\(rate_q2)"
         let q3 = "\(rate_q3)"
 
-        let params:NSMutableDictionary = NSMutableDictionary()
+       /* let params:NSMutableDictionary = NSMutableDictionary()
         params.setValue("set_rating", forKey: "command")
         params.setValue(review_id, forKey: "review_id")
         params.setValue(user_id, forKey: "user_id")
@@ -109,26 +102,27 @@ class RateViewController: UIViewController {
         params.setValue(q1, forKey: "rate_q1")
         params.setValue(q2, forKey: "rate_q2")
         params.setValue(q3, forKey: "rate_q3")
+        */
+        // TODO: Sistemare qui
+        let params = ["":""]
+        
         
         var jsonData:NSMutableDictionary = NSMutableDictionary()
-        do {
-            let jsonRequest = JSonHelper()
-            jsonData = try jsonRequest.getJson(sUrl,dict: params) as! NSMutableDictionary
-        }
-        catch{
-            print(error)
-        }
         
-        if (jsonData.valueForKey("message") != nil) {
-            NSLog("\(jsonData)")
-            delegate?.searchByUserLocation(lastLatitude, lon: lastLongitude, center: true)
-            self.dismissViewControllerAnimated(true, completion: nil)
-        }
-        else
-        {
-            let error_str:String = jsonData.valueForKey("error") as! String
-            NSLog("\(error_str)")
-            showMessage(error_str)
+        
+        jsonRequest.getJson(jsonRequest.API_newRating, parameters: params) { (jsonData) -> () in
+            
+            if (jsonData!.valueForKey("message") != nil) {
+                NSLog("\(jsonData)")
+                self.delegate?.searchByUserLocation(self.lastLatitude, lon: self.lastLongitude, center: true)
+                self.dismissViewControllerAnimated(true, completion: nil)
+            }
+            else
+            {
+                let error_str:String = jsonData!.valueForKey("error") as! String
+                NSLog("\(error_str)")
+                self.showMessage(error_str)
+            }
         }
     }
 
@@ -170,7 +164,7 @@ class RateViewController: UIViewController {
         }
         NSLog("\(new_Link)")
         
-        if let checkedUrl = NSURL(string:new_Link) {
+        if let checkedUrl = NSURL(string:jsonRequest.url + new_Link) {
             downloadImage(checkedUrl,frame: thumbImage)
         }
     }
@@ -179,11 +173,11 @@ class RateViewController: UIViewController {
         
         if (sender.direction == UISwipeGestureRecognizerDirection.Left) {
             NSLog("Swipe to left")
-            analyzeImageLink(imageLink, increment: 45)
+       //     analyzeImageLink(imageLink, increment: 45)
         }
         else if (sender.direction == UISwipeGestureRecognizerDirection.Right) {
                 NSLog("Swipe to right")
-                analyzeImageLink(imageLink,increment: -45)
+         //       analyzeImageLink(imageLink,increment: -45)
         }
     }
     
@@ -220,6 +214,11 @@ class RateViewController: UIViewController {
     
     override func viewDidAppear(animated: Bool) {
     }
+    
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+      txtRateDescription.resignFirstResponder()
+    }
+
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         txtRateDescription.resignFirstResponder()
@@ -282,7 +281,7 @@ class RateViewController: UIViewController {
             starRatingView3.hidden = true
         }
         
-        if let checkedUrl = NSURL(string:imageLink) {
+        if let checkedUrl = NSURL(string:jsonRequest.url + imageLink) {
             downloadImage(checkedUrl,frame: thumbImage)
         }
     }

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftyJSON
 
 class ShowReviewViewController: UIViewController {
     
@@ -16,8 +17,6 @@ class ShowReviewViewController: UIViewController {
     @IBOutlet var viewNoReview: UIView!
     @IBOutlet var imageThumb: UIImageView!
     
-    let url = "http://www.riccardorizzo.eu/rating/"
-    
     var pin:PinAnnotation?
     var currentReviewID:String?
     var userInfos:User?
@@ -26,6 +25,8 @@ class ShowReviewViewController: UIViewController {
     var Rates1:NSMutableArray = NSMutableArray()
     var Rates2:NSMutableArray = NSMutableArray()
     var Rates3:NSMutableArray = NSMutableArray()
+    
+    let jsonRequest = JSonHelper()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,7 +36,7 @@ class ShowReviewViewController: UIViewController {
         navigationBar.topItem?.title = pin?.title
         textDescription.text = pin?.subtitle
         
-        if let checkedUrl = NSURL(string:pin!.ImageLink) {
+        if let checkedUrl = NSURL(string: jsonRequest.url + pin!.ImageLink) {
             downloadImage(checkedUrl,frame: imageThumb)
         }
     }
@@ -52,12 +53,8 @@ class ShowReviewViewController: UIViewController {
         Rates1.removeAllObjects()
         Rates2.removeAllObjects()
         Rates3.removeAllObjects()
-        do {
-            try loadData()
-        }
-        catch {
-            print(error)
-        }
+        
+        loadData()
     }
     
     
@@ -68,12 +65,12 @@ class ShowReviewViewController: UIViewController {
             }.resume()
     }
     
-    func downloadImage(url:NSURL, frame:UIImageView){
-       // print("Started downloading \"\(url.lastPathComponent!.stringByDeletingPathExtension)\".")
-        getDataFromUrl(url) { data in
-            dispatch_async(dispatch_get_main_queue()) {
-               // print("Finished downloading \"\(url.lastPathComponent!.stringByDeletingPathExtension)\".")
-                frame.image = UIImage(data: data!)
+    func downloadImage(url:NSURL, frame:UIImageView) {
+        if url.lastPathComponent != "" {
+            getDataFromUrl(url) { data in
+                dispatch_async(dispatch_get_main_queue()) {
+                    frame.image = UIImage(data: data!)
+                }
             }
         }
     }
@@ -92,7 +89,7 @@ class ShowReviewViewController: UIViewController {
         vc.currentTitle = pin!.title!
         vc.currentDescription = pin!.subtitle!
         vc.imageLink = pin!.ImageLink
-        vc.currentRating = pin!.Rating
+        vc.currentRating = Double(pin!.Rating)
         vc.currentReviewID = pin!.ReviewID
         vc.Q1 = pin!.Question1
         vc.Q2 = pin!.Question2
@@ -101,42 +98,41 @@ class ShowReviewViewController: UIViewController {
     }
     
 
-    func loadData() throws {
+    func loadData() {
+        let params = [ "id": pin!.ReviewID]
         
-        let searchUrl:String = url + "review.php"
-        let params:NSMutableDictionary = NSMutableDictionary()
-        
-        params.setValue("get_rating", forKey: "command")
-        params.setValue(pin?.ReviewID, forKey: "review_id")
-        
-        let jsonRequest = JSonHelper()
-        let jsonData: AnyObject = try jsonRequest.getJson(searchUrl, dict: params)
-        
-        NSLog("\(jsonData)")
-        if (jsonData is NSMutableDictionary) {
-                NSLog("\(jsonData)")
-        }
-        else if (jsonData is NSMutableArray) {
-            
-            let returnData:NSMutableArray = jsonData as! NSMutableArray
-            
-            for P in returnData {
-                let D:NSMutableDictionary = P as! NSMutableDictionary
-                Descriptions.addObject(D.valueForKey("description")!)
-                Users.addObject(D.valueForKey("user")!)
-                Rates1.addObject(D.valueForKey("rate1")!.floatValue)
-                Rates2.addObject(D.valueForKey("rate2")!.floatValue)
-                Rates3.addObject(D.valueForKey("rate3")!.floatValue)
+        jsonRequest.getJson(jsonRequest.API_showRatings, parameters: params) { (jsonData) -> () in
+
+            if jsonData == nil {
+                return
             }
-            rateTableView.reloadData()
-        }
-        if Descriptions.count == 0 {
-            viewNoReview.hidden = false
+            let json = JSON(jsonData!)
+            
+            if let message = json[0]["error"].string {
+                print(message)
+                return
+            }
+            
+            for (key,subJson):(String, JSON) in json {
+                print(key)
+                print(subJson[0]["description"])
+                
+                self.Descriptions.addObject(subJson[0]["description"].string!)
+                self.Users.addObject(subJson[0]["user_name"].string!)
+                self.Rates1.addObject(subJson[0]["rate1"].float!)
+                self.Rates2.addObject(subJson[0]["rate2"].float!)
+                self.Rates3.addObject(subJson[0]["rate2"].float!)
+            }
+            
+            self.rateTableView.reloadData()
+            if self.Descriptions.count == 0 {
+                self.viewNoReview.hidden = false
+            }
         }
     }
-    
-}
+} //End
 
+    
 extension ShowReviewViewController:UITableViewDelegate, UITableViewDataSource {
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

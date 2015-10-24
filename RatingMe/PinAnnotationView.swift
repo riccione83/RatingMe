@@ -151,22 +151,22 @@ class PinAnnotationView: MKAnnotationView,MKMapViewDelegate {
         if !thumbnail.isAdvertisement {
                 switch(thumbnail.Rating)
                 {
-                    case "0":
+                    case 0:
                         image = UIImage(named: "baloon_no_star")!
                         break
-                    case "1":
+                    case 1:
                         image = UIImage(named: "baloon_1_star")!
                         break
-                    case "2":
+                    case 2:
                         image = UIImage(named: "baloon_2_star")!
                         break
-                    case "3":
+                    case 3:
                         image = UIImage(named: "baloon_3_star")!
                         break
-                    case "4":
+                    case 4:
                         image = UIImage(named: "baloon_4_star")!
                         break
-                    case "5":
+                    case 5:
                         image = UIImage(named: "baloon_5_star")!
                         break
                     default:

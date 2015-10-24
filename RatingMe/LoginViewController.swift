@@ -11,7 +11,7 @@ import MBProgressHUD
 
 class LoginViewController: UIViewController {
 
-    var userInfos:User = User()
+    var user:UserController = UserController()
     var delegate:ViewController?
     
     @IBOutlet var activityIndicator: UIActivityIndicatorView!
@@ -49,9 +49,9 @@ class LoginViewController: UIViewController {
         
         self.showLoadingHUD()
         
-        userInfos.signInWithTwitter({ (loggedIn) -> () in
+        user.signInWithTwitter({ (loggedIn) -> () in
             if loggedIn {
-                print("Perfetto!! Effettuato login con Twitter: \(self.userInfos.userName)  \(self.userInfos.userID)")
+                print("Perfetto!! Effettuato login con Twitter: \(self.user.user.userName)  \(self.user.user.userID)")
                 self.showMainView()
             }
             else
@@ -69,9 +69,9 @@ class LoginViewController: UIViewController {
         
         self.showLoadingHUD()
         
-        userInfos.signInWithFacebook({ (loggedIn) -> () in
+        user.signInWithFacebook({ (loggedIn) -> () in
             if loggedIn {
-                print("Perfetto!! Effettuato login con Facebook: \(self.userInfos.userName)  \(self.userInfos.userID)")
+                print("Perfetto!! Effettuato login con Facebook: \(self.user.user.userName)  \(self.user.user.userID)")
                 self.showMainView()
             }
             else
@@ -88,7 +88,7 @@ class LoginViewController: UIViewController {
         
         self.hideLoadingHUD()
 
-        delegate?.userInfos = userInfos
+        delegate?.userInfos = user.user
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     

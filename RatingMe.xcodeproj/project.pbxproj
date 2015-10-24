@@ -9,10 +9,11 @@
 /* Begin PBXBuildFile section */
 		934148101B84CD0B00F768BD /* ShowReviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9341480F1B84CD0B00F768BD /* ShowReviewViewController.swift */; };
 		937FCCC21B4577CF00DC141C /* StarRating.swift in Sources */ = {isa = PBXBuildFile; fileRef = 937FCCC11B4577CF00DC141C /* StarRating.swift */; };
+		938EC0FC1BDA778700177356 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938EC0FB1BDA778700177356 /* User.swift */; settings = {ASSET_TAGS = (); }; };
 		93AB02161B45305900358705 /* NewRateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93AB02151B45305900358705 /* NewRateViewController.swift */; };
 		93B1C6BB1B628F7D002044A3 /* RateCustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93B1C6BA1B628F7D002044A3 /* RateCustomCell.swift */; };
-		93D95BEB1B442B73002D5C53 /* ReviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D95BEA1B442B73002D5C53 /* ReviewViewController.swift */; };
-		93E06C331B85C7BD00DAEA51 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93E06C321B85C7BD00DAEA51 /* User.swift */; };
+		93D95BEB1B442B73002D5C53 /* NewReviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D95BEA1B442B73002D5C53 /* NewReviewViewController.swift */; };
+		93E06C331B85C7BD00DAEA51 /* UserController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93E06C321B85C7BD00DAEA51 /* UserController.swift */; };
 		93E06C351B85DD8300DAEA51 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93E06C341B85DD8300DAEA51 /* LoginViewController.swift */; };
 		93F5F8F91BC2B01700582D58 /* LeftMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93F5F8F81BC2B01700582D58 /* LeftMenuViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		93FC5BE51B3C4CB00010A94D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93FC5BE41B3C4CB00010A94D /* AppDelegate.swift */; };
@@ -24,7 +25,7 @@
 		93FC5C051B3C4CC80010A94D /* JSonHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93FC5C041B3C4CC80010A94D /* JSonHelper.swift */; };
 		93FC5C081B3C4CD70010A94D /* PinAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93FC5C061B3C4CD70010A94D /* PinAnnotation.swift */; };
 		93FC5C091B3C4CD70010A94D /* PinAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93FC5C071B3C4CD70010A94D /* PinAnnotationView.swift */; };
-		E88BC524191C9A5C13351C23 /* Pods_RatingMe.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A5E55D43CAB3465B72919E5 /* Pods_RatingMe.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		E88BC524191C9A5C13351C23 /* Pods_RatingMe.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A5E55D43CAB3465B72919E5 /* Pods_RatingMe.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,10 +43,11 @@
 		6A5E55D43CAB3465B72919E5 /* Pods_RatingMe.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RatingMe.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9341480F1B84CD0B00F768BD /* ShowReviewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowReviewViewController.swift; sourceTree = "<group>"; };
 		937FCCC11B4577CF00DC141C /* StarRating.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StarRating.swift; sourceTree = "<group>"; };
+		938EC0FB1BDA778700177356 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		93AB02151B45305900358705 /* NewRateViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewRateViewController.swift; sourceTree = "<group>"; };
 		93B1C6BA1B628F7D002044A3 /* RateCustomCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RateCustomCell.swift; sourceTree = "<group>"; };
-		93D95BEA1B442B73002D5C53 /* ReviewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReviewViewController.swift; sourceTree = "<group>"; };
-		93E06C321B85C7BD00DAEA51 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		93D95BEA1B442B73002D5C53 /* NewReviewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewReviewViewController.swift; sourceTree = "<group>"; };
+		93E06C321B85C7BD00DAEA51 /* UserController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserController.swift; sourceTree = "<group>"; };
 		93E06C341B85DD8300DAEA51 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		93F5F8F81BC2B01700582D58 /* LeftMenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LeftMenuViewController.swift; sourceTree = "<group>"; };
 		93FC5BDF1B3C4CB00010A94D /* RatingMe.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RatingMe.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -83,6 +85,32 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		938EC0F81BDA308F00177356 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				938EC0FB1BDA778700177356 /* User.swift */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		938EC0F91BDA309700177356 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				9341480F1B84CD0B00F768BD /* ShowReviewViewController.swift */,
+				93D95BEA1B442B73002D5C53 /* NewReviewViewController.swift */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		938EC0FA1BDA309C00177356 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				93E06C321B85C7BD00DAEA51 /* UserController.swift */,
+				93FC5C041B3C4CC80010A94D /* JSonHelper.swift */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
 		93FC5BD61B3C4CB00010A94D = {
 			isa = PBXGroup;
 			children = (
@@ -106,10 +134,10 @@
 		93FC5BE11B3C4CB00010A94D /* RatingMe */ = {
 			isa = PBXGroup;
 			children = (
+				938EC0FA1BDA309C00177356 /* Controller */,
+				938EC0F91BDA309700177356 /* View */,
+				938EC0F81BDA308F00177356 /* Model */,
 				93FC5BE41B3C4CB00010A94D /* AppDelegate.swift */,
-				93E06C321B85C7BD00DAEA51 /* User.swift */,
-				9341480F1B84CD0B00F768BD /* ShowReviewViewController.swift */,
-				93FC5C041B3C4CC80010A94D /* JSonHelper.swift */,
 				93FC5BE61B3C4CB00010A94D /* ViewController.swift */,
 				93AB02151B45305900358705 /* NewRateViewController.swift */,
 				93FC5C061B3C4CD70010A94D /* PinAnnotation.swift */,
@@ -119,7 +147,6 @@
 				93F5F8F81BC2B01700582D58 /* LeftMenuViewController.swift */,
 				93B1C6BA1B628F7D002044A3 /* RateCustomCell.swift */,
 				937FCCC11B4577CF00DC141C /* StarRating.swift */,
-				93D95BEA1B442B73002D5C53 /* ReviewViewController.swift */,
 				93FC5BEB1B3C4CB00010A94D /* Images.xcassets */,
 				93FC5BED1B3C4CB00010A94D /* LaunchScreen.xib */,
 				93FC5BE21B3C4CB00010A94D /* Supporting Files */,
@@ -218,7 +245,7 @@
 			attributes = {
 				LastSwiftMigration = 0700;
 				LastSwiftUpdateCheck = 0700;
-				LastUpgradeCheck = 0630;
+				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = "Riccardo Rizzo";
 				TargetAttributes = {
 					93FC5BDE1B3C4CB00010A94D = {
@@ -327,14 +354,15 @@
 				93FC5C091B3C4CD70010A94D /* PinAnnotationView.swift in Sources */,
 				93FC5C081B3C4CD70010A94D /* PinAnnotation.swift in Sources */,
 				937FCCC21B4577CF00DC141C /* StarRating.swift in Sources */,
-				93D95BEB1B442B73002D5C53 /* ReviewViewController.swift in Sources */,
+				93D95BEB1B442B73002D5C53 /* NewReviewViewController.swift in Sources */,
 				93B1C6BB1B628F7D002044A3 /* RateCustomCell.swift in Sources */,
+				938EC0FC1BDA778700177356 /* User.swift in Sources */,
 				934148101B84CD0B00F768BD /* ShowReviewViewController.swift in Sources */,
 				93FC5C051B3C4CC80010A94D /* JSonHelper.swift in Sources */,
 				93FC5BE71B3C4CB00010A94D /* ViewController.swift in Sources */,
 				93FC5BE51B3C4CB00010A94D /* AppDelegate.swift in Sources */,
 				93F5F8F91BC2B01700582D58 /* LeftMenuViewController.swift in Sources */,
-				93E06C331B85C7BD00DAEA51 /* User.swift in Sources */,
+				93E06C331B85C7BD00DAEA51 /* UserController.swift in Sources */,
 				93AB02161B45305900358705 /* NewRateViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -398,6 +426,7 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -469,6 +498,7 @@
 				INFOPLIST_FILE = RatingMe/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "riccardorizzo.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -482,6 +512,7 @@
 				INFOPLIST_FILE = RatingMe/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "riccardorizzo.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -500,6 +531,7 @@
 				);
 				INFOPLIST_FILE = RatingMeTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "riccardorizzo.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RatingMe.app/RatingMe";
 			};
@@ -515,6 +547,7 @@
 				);
 				INFOPLIST_FILE = RatingMeTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "riccardorizzo.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RatingMe.app/RatingMe";
 			};

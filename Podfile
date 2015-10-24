@@ -6,6 +6,8 @@ use_frameworks!
 target 'RatingMe' do
     pod 'SlideMenuControllerSwift'
     pod 'MBProgressHUD', '~> 0.9.1'
+    pod 'Alamofire', '~> 3.0'
+    pod 'SwiftyJSON', :git => 'https://github.com/SwiftyJSON/SwiftyJSON.git'
 end
 
 target 'RatingMeTests' do
