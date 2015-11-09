@@ -11,8 +11,8 @@ import Alamofire
 
 public class JSonHelper {
     
-    let url = "http://ratingme-riccione83.c9.io/"
-    //let url = "https://ratingme.herokuapp.com/"
+    //let url = "http://ratingme-riccione83.c9.io/"
+    let url = "https://ratingme.herokuapp.com/"
     
     let API_newReview = "api/new_review"
     let API_newUser = "api/register_new_user"
@@ -27,17 +27,27 @@ public class JSonHelper {
      * This function is used when we need to pass parameters for example in a PHP page
      * you can pass those parameters via the 'parameters as [String:AnyObject]' use key for data name and value for the object
      */
-    func getJson(apiUrl:String,parameters:[String:AnyObject], completitionHandler: (jsonData: AnyObject?) -> ()) {
+    func getJson(method:String, apiUrl:String,parameters:[String:AnyObject], completitionHandler: (jsonData: AnyObject?) -> ()) {
 
-        Alamofire.request(.GET, url + apiUrl , parameters: parameters)
+        var typeOfRequest = Method.GET
+        
+        if method == "POST" {
+            typeOfRequest = Method.POST
+        }
+        
+        Alamofire.request(typeOfRequest, url + apiUrl , parameters: parameters)
             .responseJSON { response in
                 let JSON = response.result.value
-                // print("JSON: \(JSON)")
-                completitionHandler(jsonData: JSON as AnyObject?)
+                if JSON != nil {
+                    completitionHandler(jsonData: JSON as AnyObject?)
+                }
+                else {
+                    completitionHandler(jsonData: "no_connection")
+                }
         }
     }
     
-    func postJson(apiUrl:String,parameters:[String:AnyObject], completitionHandler: (jsonData: AnyObject?) -> ()) {
+  /*  func postJson(apiUrl:String,parameters:[String:AnyObject], completitionHandler: (jsonData: AnyObject?) -> ()) {
         
         Alamofire.request(.POST, url + apiUrl , parameters: parameters)
             .responseJSON { response in
@@ -45,6 +55,7 @@ public class JSonHelper {
                 completitionHandler(jsonData: JSON as AnyObject?)
         }
     }
+  */
 
     
     func uploadWithParameters(apiUrl:String, parameters:[String:AnyObject],image:UIImage?, completitionHandler: (jsonData: Response<AnyObject, NSError>?,error: ErrorType?) -> ()) {

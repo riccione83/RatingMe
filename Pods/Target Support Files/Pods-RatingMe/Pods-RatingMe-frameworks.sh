@@ -86,12 +86,16 @@ strip_invalid_archs() {
 if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "Pods-RatingMe/Alamofire.framework"
   install_framework "Pods-RatingMe/MBProgressHUD.framework"
+  install_framework "Pods-RatingMe/SDWebImage.framework"
   install_framework "Pods-RatingMe/SlideMenuControllerSwift.framework"
   install_framework "Pods-RatingMe/SwiftyJSON.framework"
+  install_framework "Pods-RatingMe/UIActivityIndicator_for_SDWebImage.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "Pods-RatingMe/Alamofire.framework"
   install_framework "Pods-RatingMe/MBProgressHUD.framework"
+  install_framework "Pods-RatingMe/SDWebImage.framework"
   install_framework "Pods-RatingMe/SlideMenuControllerSwift.framework"
   install_framework "Pods-RatingMe/SwiftyJSON.framework"
+  install_framework "Pods-RatingMe/UIActivityIndicator_for_SDWebImage.framework"
 fi

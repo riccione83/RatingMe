@@ -1,14 +1,21 @@
 PODS:
   - Alamofire (3.0.1)
   - MBProgressHUD (0.9.1)
+  - SDWebImage (3.7.3):
+    - SDWebImage/Core (= 3.7.3)
+  - SDWebImage/Core (3.7.3)
   - SlideMenuControllerSwift (2.0.0)
   - SwiftyJSON (2.3.0)
+  - UIActivityIndicator-for-SDWebImage (1.2):
+    - SDWebImage (~> 3.7)
 
 DEPENDENCIES:
   - Alamofire (~> 3.0)
   - MBProgressHUD (~> 0.9.1)
+  - SDWebImage (~> 3.7)
   - SlideMenuControllerSwift
   - SwiftyJSON (from `https://github.com/SwiftyJSON/SwiftyJSON.git`)
+  - UIActivityIndicator-for-SDWebImage
 
 EXTERNAL SOURCES:
   SwiftyJSON:
@@ -22,7 +29,9 @@ CHECKOUT OPTIONS:
 SPEC CHECKSUMS:
   Alamofire: 2457e1b2e6c46bb05c3a598c542b7bfd08893775
   MBProgressHUD: c47f2c166c126cf2ce36498d80f33e754d4e93ad
+  SDWebImage: 1d2b1a1efda1ade1b00b6f8498865f8ddedc8a84
   SlideMenuControllerSwift: 85ce7142935a32e26de41aa90fac0cc9f60fb01c
   SwiftyJSON: cacfe0373d584585716bd1d43202c24cc66afd65
+  UIActivityIndicator-for-SDWebImage: 7bf7ebbf0ed1747dedc0d6e949c4603a6d0f9e0c
 
 COCOAPODS: 0.39.0

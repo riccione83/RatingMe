@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftyJSON
 
 protocol RateControllerProtocol {
     func searchByUserLocation(lat:Double,lon:Double, center: Bool)
@@ -35,7 +36,7 @@ class RateViewController: UIViewController {
     var userInfos:User?
     var currentTitle:String = ""
     var currentDescription:String = ""
-    var imageLink:String = ""
+    var imageLink:UIImage?
     var currentRating:Double = 0
     var currentReviewID:String = ""
     var lastLatitude:Double = 0.0;
@@ -87,41 +88,32 @@ class RateViewController: UIViewController {
     
     func newRating(review_id:String, user_id:String,user_name:String, rate:Double, description:String, rate_q1:Int, rate_q2:Int, rate_q3:Int) {
     
-        let rating = String(format: "\(rate)")
-        let q1 = "\(rate_q1)"
-        let q2 = "\(rate_q2)"
-        let q3 = "\(rate_q3)"
-
-       /* let params:NSMutableDictionary = NSMutableDictionary()
-        params.setValue("set_rating", forKey: "command")
-        params.setValue(review_id, forKey: "review_id")
-        params.setValue(user_id, forKey: "user_id")
-        params.setValue(user_name, forKey: "user_name")
-        params.setValue(rating, forKey: "rate")
-        params.setValue(description, forKey: "rate_description")
-        params.setValue(q1, forKey: "rate_q1")
-        params.setValue(q2, forKey: "rate_q2")
-        params.setValue(q3, forKey: "rate_q3")
-        */
-        // TODO: Sistemare qui
-        let params = ["":""]
+        let params = ["review_id":review_id,
+                      "user_id":user_id,
+                      "description":description,
+                      "rate_question1":rate_q1,
+                      "rate_question2":rate_q2,
+                      "rate_question3":rate_q3
+                     ]
         
-        
-        var jsonData:NSMutableDictionary = NSMutableDictionary()
-        
-        
-        jsonRequest.getJson(jsonRequest.API_newRating, parameters: params) { (jsonData) -> () in
+        jsonRequest.getJson("GET", apiUrl: jsonRequest.API_newRating, parameters: params as! [String : AnyObject]) { (jsonData) -> () in
+                if jsonData == nil {
+                    return
+                }
+                let json = JSON(jsonData!)
             
-            if (jsonData!.valueForKey("message") != nil) {
-                NSLog("\(jsonData)")
-                self.delegate?.searchByUserLocation(self.lastLatitude, lon: self.lastLongitude, center: true)
-                self.dismissViewControllerAnimated(true, completion: nil)
-            }
-            else
-            {
-                let error_str:String = jsonData!.valueForKey("error") as! String
-                NSLog("\(error_str)")
-                self.showMessage(error_str)
+                if let message = json["error"].string {
+                    print(message)
+                    self.showMessage(message)
+                    return
+                }
+
+            if let message = json["message"].string {
+                if (message == "success") {
+                    NSLog("\(jsonData)")
+                    self.delegate?.searchByUserLocation(self.lastLatitude, lon: self.lastLongitude, center: true)
+                    self.dismissViewControllerAnimated(true, completion: nil)
+                }
             }
         }
     }
@@ -281,9 +273,21 @@ class RateViewController: UIViewController {
             starRatingView3.hidden = true
         }
         
-        if let checkedUrl = NSURL(string:jsonRequest.url + imageLink) {
-            downloadImage(checkedUrl,frame: thumbImage)
+        thumbImage.image = imageLink
+        
+        /*var imagePath = ""
+        if imageLink.containsString("http") {
+            imagePath = imageLink
         }
+        else {
+            imagePath = jsonRequest.url + imageLink
+        }
+
+     
+        if let checkedUrl = NSURL(string:imagePath) {
+            downloadImage(checkedUrl,frame: thumbImage)
+        }*/
+
     }
 
     override func didReceiveMemoryWarning() {

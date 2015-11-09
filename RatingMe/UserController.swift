@@ -26,28 +26,91 @@ public class UserController{
             "user_id": userID
         ]
         
-        loginHelper.getJson(loginHelper.API_loginWithSocial, parameters: params) { (jsonData) -> () in
+        loginHelper.getJson("GET",apiUrl: loginHelper.API_loginWithSocial, parameters: params) { (jsonData) -> () in
             
             if jsonData == nil {
                 completitionHandler(success: false)
             }
             else {
                 let json = JSON(jsonData!)
-            
-                if let message = json["message"].string {
+                if let message = json["error"].string {
                     print(message)
-                    if message == "success" {
-                        completitionHandler(success: true)
-                    }
-                    else {
-                        completitionHandler(success: false)
-                    }
+                    completitionHandler(success: false)
+                }
+                else if let message = json["message"].string {
+                    print(message)
+                    self.user.userID = message
+                    completitionHandler(success: true)
                 }
                 else {
                     completitionHandler(success: false)
                 }
             }
         }
+    }
+    
+    
+    public func signInWithCredentials(userName:String,email:String, password:String, completitionHandler:(messages:String,success:Bool) -> ()) {
+    
+        let params = [
+            "user_name": userName,
+            "user_password_hash": password,
+            "user_email": email
+                     ]
+        
+        loginHelper.getJson("GET", apiUrl: loginHelper.API_newUser, parameters: params) { (jsonData) -> () in
+            if jsonData == nil {
+                completitionHandler(messages: "",success: false)
+            }
+            else {
+                let json = JSON(jsonData!)
+                if let message = json["message"].string {
+                    print(message)
+                    completitionHandler(messages: message,success: false)
+                }
+                else if let message = json["user"].string {
+                    print(message)
+                    self.user.userID = message
+                    completitionHandler(messages: "",success: true)
+                }
+                else {
+                    completitionHandler(messages: "",success: false)
+                }
+            }
+        }
+        
+        
+    }
+    
+    
+    public func loginWithCredentials(userNameorEmail:String, password:String, completitionHandler:(success:Bool) -> ()) {
+        
+        let params = [
+            "user_id":userNameorEmail,
+            "user_password":password
+        ]
+        
+        loginHelper.getJson("GET", apiUrl: loginHelper.API_login, parameters: params) { (jsonData) -> () in
+            if jsonData == nil {
+                completitionHandler(success: false)
+            }
+            else {
+                let json = JSON(jsonData!)
+                if let message = json["error"].string {
+                    print(message)
+                    completitionHandler(success: false)
+                }
+                else if let message = json["user"].string {
+                    print(message)
+                    self.user.userID = message
+                    completitionHandler(success: true)
+                }
+                else {
+                    completitionHandler(success: false)
+                }
+            }
+        }
+        
     }
     
     public func signInWithTwitter(onComplete: (Bool) -> ()) {
@@ -132,14 +195,10 @@ public class UserController{
         
         slRequest.account = account
         
-      //  let myaccount = account
-        
         slRequest.performRequestWithHandler {
             (data: NSData!, response: NSHTTPURLResponse!, error: NSError!) -> Void in
             
-                if error != nil { onComplete(nil) }
-                
-             //   var serializationError: NSError?;
+            if error != nil { onComplete(nil) }
             do {
                 let meData = try NSJSONSerialization.JSONObjectWithData(
                     data,

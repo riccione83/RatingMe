@@ -8,6 +8,8 @@ target 'RatingMe' do
     pod 'MBProgressHUD', '~> 0.9.1'
     pod 'Alamofire', '~> 3.0'
     pod 'SwiftyJSON', :git => 'https://github.com/SwiftyJSON/SwiftyJSON.git'
+    pod 'SDWebImage','~> 3.7'
+    pod 'UIActivityIndicator-for-SDWebImage'
 end
 
 target 'RatingMeTests' do

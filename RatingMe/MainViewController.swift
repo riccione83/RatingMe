@@ -29,17 +29,17 @@ class ViewController: UIViewController, ReviewControllerProtocol,RateControllerP
     var userInfos:User?
     var lastRegion:MKCoordinateRegion?
     var loginHappened:Bool = false
-    //let url = "http://www.riccardorizzo.eu/rating/"
-    let url = "http://ratingme-riccione83.c9.io"
-    
     var results:MKLocalSearchResponse? = MKLocalSearchResponse()
     
     @IBOutlet var resultTableView: UITableView!
     
-    
     @IBAction func logoutClick(sender: AnyObject) {
-        NSUserDefaults.standardUserDefaults().setObject(nil, forKey: "loginDataUserID")
-        NSUserDefaults.standardUserDefaults().setObject(nil, forKey: "loginDataUserName")
+        NSUserDefaults.standardUserDefaults().setObject(nil, forKey: "loginData.UserID")
+        NSUserDefaults.standardUserDefaults().setObject(nil, forKey: "loginData.UserName")
+        NSUserDefaults.standardUserDefaults().setObject(nil, forKey: "loginData.UserCity")
+        NSUserDefaults.standardUserDefaults().setObject(nil, forKey: "loginData.UserEmail")
+        NSUserDefaults.standardUserDefaults().setObject(nil, forKey: "loginData.UserPasswordHash")
+        NSUserDefaults.standardUserDefaults().setObject(nil, forKey: "loginData.UserSocialID")
         NSUserDefaults.standardUserDefaults().synchronize()
         
         userInfos = nil
@@ -50,6 +50,14 @@ class ViewController: UIViewController, ReviewControllerProtocol,RateControllerP
 
     }
     
+    private func showLoadingHUD() {
+        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+        hud.labelText = "Loading data..."
+    }
+    
+    private func hideLoadingHUD() {
+        MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
+    }
     
     @IBAction func btnOpenLeftMenuClick(sender: AnyObject) {
         
@@ -171,7 +179,7 @@ class ViewController: UIViewController, ReviewControllerProtocol,RateControllerP
             if (itm.Tag == index) {
                 vc.currentTitle = itm.title!
                 vc.currentDescription = itm.subtitle!
-                vc.imageLink = itm.ImageLink
+            //    vc.imageLink = itm.ImageLink
                 vc.currentRating = Double(itm.Rating)
                 vc.currentReviewID = itm.ReviewID
                 vc.Q1 = itm.Question1
@@ -328,28 +336,6 @@ class ViewController: UIViewController, ReviewControllerProtocol,RateControllerP
         }
     }
 
-    func makeSignUpRequest(lat:String, lon:String, radius:String) {
-        
-        let parameters = [
-            "lat": lat,
-            "lon": lon,
-            "radius":radius
-            ]
-        
-        Alamofire.request(.GET, url + "/api/show_reviews", parameters: parameters)
-            .responseJSON { response in
-                print(response.request)  // original URL request
-                print(response.response) // URL response
-                print(response.data)     // server data
-                print(response.result)   // result of response serialization
-                
-                if let JSON = response.result.value {
-                    print("JSON: \(JSON)")
-                }
-        }
-        
-    }
-    
     
     func response(latitude_:String,longitude_:String,radius_:String) {
         
@@ -363,6 +349,8 @@ class ViewController: UIViewController, ReviewControllerProtocol,RateControllerP
         let Pins:NSMutableArray = NSMutableArray()
         
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+        
+        showLoadingHUD()
         
         var params = [:]
         
@@ -387,7 +375,7 @@ class ViewController: UIViewController, ReviewControllerProtocol,RateControllerP
                      ]
         }
     
-        jsonRequest.getJson(jsonRequest.API_showReviews, parameters: params as! [String:AnyObject]) { (jsonData) -> () in
+        jsonRequest.getJson("GET",apiUrl: jsonRequest.API_showReviews, parameters: params as! [String:AnyObject]) { (jsonData) -> () in
         
             self.mainMap.removeAnnotations(self.mainMap.annotations)
             
@@ -442,6 +430,7 @@ class ViewController: UIViewController, ReviewControllerProtocol,RateControllerP
          //NSLog("Showed pins: \(tag)")
     }
         UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+        hideLoadingHUD()
     }
     
     

@@ -10,6 +10,7 @@ import UIKit
 import MapKit
 import SwiftyJSON
 import Alamofire
+import MBProgressHUD
 
 protocol ReviewControllerProtocol {
     func searchByUserLocation(lat:Double,lon:Double, center: Bool)
@@ -28,6 +29,7 @@ class ReviewViewController: UIViewController {
     @IBOutlet var textQuestion1: UITextField!
     @IBOutlet var textQuestion2: UITextField!
     @IBOutlet var textQuestion3: UITextField!
+    @IBOutlet var thumbImage: UIImageView!
     
     let locationManager:CLLocationManager = CLLocationManager()
     var delegate:ReviewControllerProtocol? = nil
@@ -47,6 +49,15 @@ class ReviewViewController: UIViewController {
         selectImageToSend()
     }
     
+    private func showLoadingHUD() {
+        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+        hud.labelText = "Sending..."
+    }
+    
+    private func hideLoadingHUD() {
+        MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
+    }
+    
     func newReview(title:String, description:String, latitude:String, longitude:String, question1:String="", question2:String="", question3:String="")
     {
         let newTitle = title
@@ -63,9 +74,10 @@ class ReviewViewController: UIViewController {
                             "user_id":"1",
                             "isAdvertisement":"0",
                             "adImageLink":"0" ]
-    
+        
+        self.showLoadingHUD()
         jsonRequest.uploadWithParameters(jsonRequest.API_newReview, parameters: params, image: selectedImage) { (jsonData, jsonError) -> () in
-            
+            self.hideLoadingHUD()
             if jsonData != nil {
                 if jsonData!.result.isSuccess {
                     let serverResponse = jsonData!.result.value as! NSDictionary
@@ -87,14 +99,20 @@ class ReviewViewController: UIViewController {
     
     @IBAction func sendNewReview(sender: UIButton) {
         
-        let lat = "\(locationManager.location!.coordinate.latitude)"
-        let lon = "\(locationManager.location!.coordinate.longitude)"
+        if(locationManager.location != nil) {
         
-        if(textQuestion1.text != "" && reviewTitle.text != "" && reviewText.text != "" && reviewText.text != "Enter a description") {
-            newReview(reviewTitle.text!, description: reviewText.text, latitude: lat, longitude: lon, question1: textQuestion1.text!, question2: textQuestion2.text!, question3: textQuestion3.text!)
+            let lat = "\(locationManager.location!.coordinate.latitude)"
+            let lon = "\(locationManager.location!.coordinate.longitude)"
+        
+            if(textQuestion1.text != "" && reviewTitle.text != "" && reviewText.text != "" && reviewText.text != "Enter a description") {
+                newReview(reviewTitle.text!, description: reviewText.text, latitude: lat, longitude: lon, question1: textQuestion1.text!, question2: textQuestion2.text!, question3: textQuestion3.text!)
+            }
+            else {
+                showMessage("Impossibile inviare la recensione. E' necessario compilare tutti i campi e almeno una domanda.")
+            }
         }
         else {
-            showMessage("Impossibile inviare la recensione. E' necessario compilare tutti i campi e almeno una domanda.")
+            self.showMessage("Unable to create a new Review. Please enable location services")
         }
     }
     
@@ -199,6 +217,8 @@ extension ReviewViewController: UIImagePickerControllerDelegate,UINavigationCont
         UIGraphicsEndImageContext()
         
         selectedImage =  scaledImage
+        
+        thumbImage.image = scaledImage
         
     }
 }

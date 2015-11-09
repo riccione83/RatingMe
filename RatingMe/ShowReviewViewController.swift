@@ -8,8 +8,10 @@
 
 import UIKit
 import SwiftyJSON
+import SDWebImage
+import MBProgressHUD
 
-class ShowReviewViewController: UIViewController {
+class ShowReviewViewController: UIViewController,NSURLConnectionDataDelegate {
     
     @IBOutlet var rateTableView: UITableView!
     @IBOutlet var navigationBar: UINavigationBar!
@@ -25,6 +27,9 @@ class ShowReviewViewController: UIViewController {
     var Rates1:NSMutableArray = NSMutableArray()
     var Rates2:NSMutableArray = NSMutableArray()
     var Rates3:NSMutableArray = NSMutableArray()
+    var downloadedMutableData:NSMutableData?
+    var urlResponse:NSURLResponse?
+    
     
     let jsonRequest = JSonHelper()
 
@@ -35,8 +40,15 @@ class ShowReviewViewController: UIViewController {
         
         navigationBar.topItem?.title = pin?.title
         textDescription.text = pin?.subtitle
+        var imagePath = ""
+        if pin!.ImageLink.containsString("http") {
+            imagePath = pin!.ImageLink
+        }
+        else {
+            imagePath = jsonRequest.url + pin!.ImageLink
+        }
         
-        if let checkedUrl = NSURL(string: jsonRequest.url + pin!.ImageLink) {
+        if let checkedUrl = NSURL(string: imagePath) {
             downloadImage(checkedUrl,frame: imageThumb)
         }
     }
@@ -57,8 +69,6 @@ class ShowReviewViewController: UIViewController {
         loadData()
     }
     
-    
-    
     func getDataFromUrl(urL:NSURL, completion: ((data: NSData?) -> Void)) {
         NSURLSession.sharedSession().dataTaskWithURL(urL) { (data, response, error) in
             completion(data: data)
@@ -66,13 +76,34 @@ class ShowReviewViewController: UIViewController {
     }
     
     func downloadImage(url:NSURL, frame:UIImageView) {
-        if url.lastPathComponent != "" {
+        
+        let downloader:SDWebImageDownloader = SDWebImageDownloader.sharedDownloader()
+        
+        let hud:MBProgressHUD = MBProgressHUD.showHUDAddedTo(frame, animated: true)
+        
+        hud.mode = MBProgressHUDMode.AnnularDeterminate
+        //hud.labelText = "Wait..."
+        downloader.downloadImageWithURL(url, options: SDWebImageDownloaderOptions.AllowInvalidSSLCertificates, progress: { (receivedSize, expectedSize) -> Void in
+                if receivedSize > 0 {
+                    let received:Float = ((Float(receivedSize)*100.0)/Float(expectedSize))/100.0
+                    hud.progress = received //Float(received)
+                    print("=>",received,expectedSize)
+                }
+            })
+            { (image, data, error, finished) -> Void in  //Download finished
+                if ((image != nil) && finished == true) {
+                    frame.image = image
+            }
+            hud.removeFromSuperview()
+        }
+        
+      /*  if url.lastPathComponent != "" {
             getDataFromUrl(url) { data in
                 dispatch_async(dispatch_get_main_queue()) {
                     frame.image = UIImage(data: data!)
                 }
             }
-        }
+        }*/
     }
 
     
@@ -88,7 +119,7 @@ class ShowReviewViewController: UIViewController {
         vc.userInfos = userInfos!
         vc.currentTitle = pin!.title!
         vc.currentDescription = pin!.subtitle!
-        vc.imageLink = pin!.ImageLink
+        vc.imageLink = imageThumb.image // pin!.ImageLink
         vc.currentRating = Double(pin!.Rating)
         vc.currentReviewID = pin!.ReviewID
         vc.Q1 = pin!.Question1
@@ -101,7 +132,7 @@ class ShowReviewViewController: UIViewController {
     func loadData() {
         let params = [ "id": pin!.ReviewID]
         
-        jsonRequest.getJson(jsonRequest.API_showRatings, parameters: params) { (jsonData) -> () in
+        jsonRequest.getJson("GET", apiUrl: jsonRequest.API_showRatings, parameters: params) { (jsonData) -> () in
 
             if jsonData == nil {
                 return
