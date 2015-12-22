@@ -8,7 +8,7 @@
 
 import UIKit
 
-class User {
+public class User {
     var userID: String
     var userName: String
     var userPasswordHash: String

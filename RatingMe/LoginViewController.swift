@@ -56,7 +56,7 @@ class LoginViewController: UIViewController {
         
         self.showLoadingHUD()
         
-        user.signInWithTwitter({ (loggedIn) -> () in
+        user.signInWithTwitter({ (loggedIn,message) -> () in
             if loggedIn {
                 print("Perfetto!! Effettuato login con Twitter: \(self.user.user.userName)  \(self.user.user.userID)")
                 self.showMainView()
@@ -65,7 +65,7 @@ class LoginViewController: UIViewController {
             {
                 self.hideLoadingHUD()
                 print("Errore. Non posso accedere a Twitter")
-                self.showMessage("Non posso accedere al tuo account Twitter. Verifica la connessione o le impostazioni.")
+                self.showMessage("Unable to access with your Twitter account. Check the connection or the settings. [" + message + "]")
             }
         })
         
@@ -76,7 +76,7 @@ class LoginViewController: UIViewController {
         
         self.showLoadingHUD()
         
-        user.signInWithFacebook({ (loggedIn) -> () in
+        user.signInWithFacebook({ (loggedIn,message) -> () in
             if loggedIn {
                 print("Perfetto!! Effettuato login con Facebook: \(self.user.user.userName)  \(self.user.user.userID)")
                 self.showMainView()
@@ -84,8 +84,8 @@ class LoginViewController: UIViewController {
             else
             {
                 self.hideLoadingHUD()
-                print("Errore. Non posso accedere a Facebook")
-                 self.showMessage("Non posso accedere al tuo account Facebook. Verifica la connessione o le impostazioni.")
+                print(message)
+                self.showMessage("Unable to access with your Facebook account. Check the connection or the settings. [" + message + "]")
             }
         })
 

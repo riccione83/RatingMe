@@ -81,10 +81,6 @@ class RateViewController: UIViewController {
     @IBAction func returnClick(sender: AnyObject) {
         self.dismissViewControllerAnimated(true, completion: nil)
     }
-
-    
-
-    
     
     func newRating(review_id:String, user_id:String,user_name:String, rate:Double, description:String, rate_q1:Int, rate_q2:Int, rate_q3:Int) {
     
@@ -182,6 +178,7 @@ class RateViewController: UIViewController {
         if(!isFullscreen) {
             oldFrame = thumbImage.frame
             thumbImage.frame = self.view.frame
+            self.thumbImage.contentMode = UIViewContentMode.ScaleAspectFit
             isFullscreen = true
             textDescription.backgroundColor = UIColor.whiteColor()
             textDescription.alpha = 0.0
@@ -192,6 +189,7 @@ class RateViewController: UIViewController {
         }
         else {
             thumbImage.frame = oldFrame
+           // self.thumbImage.contentMode = UIViewContentMode.ScaleToFill
             isFullscreen = false
             textDescription.layer.cornerRadius = 0
             textDescription.backgroundColor = UIColor.clearColor()
@@ -217,11 +215,11 @@ class RateViewController: UIViewController {
     }
     
     func keyboardWillShow(sender: NSNotification) {
-        self.view.frame.origin.y -= 150
+    //    self.view.frame.origin.y -= 150
     }
     
     func keyboardWillHide(sender: NSNotification) {
-        self.view.frame.origin.y += 150
+    //    self.view.frame.origin.y += 150
     }
     
     override func viewDidLoad() {
@@ -229,16 +227,6 @@ class RateViewController: UIViewController {
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillShow:"), name:UIKeyboardWillShowNotification, object: nil);
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillHide:"), name:UIKeyboardWillHideNotification, object: nil);
-        
-        let rightScroll:UISwipeGestureRecognizer = UISwipeGestureRecognizer()
-        rightScroll.addTarget(self, action: "swipeImage:")
-        rightScroll.direction =  UISwipeGestureRecognizerDirection.Right
-        thumbImage.addGestureRecognizer(rightScroll)
-        
-        let leftScroll:UISwipeGestureRecognizer = UISwipeGestureRecognizer()
-        leftScroll.addTarget(self, action: "swipeImage:")
-        leftScroll.direction =  UISwipeGestureRecognizerDirection.Left
-        thumbImage.addGestureRecognizer(leftScroll)
         
         let tapSelect:UITapGestureRecognizer = UITapGestureRecognizer()
         tapSelect.addTarget(self, action: "selectThumb:")
@@ -274,20 +262,6 @@ class RateViewController: UIViewController {
         }
         
         thumbImage.image = imageLink
-        
-        /*var imagePath = ""
-        if imageLink.containsString("http") {
-            imagePath = imageLink
-        }
-        else {
-            imagePath = jsonRequest.url + imageLink
-        }
-
-     
-        if let checkedUrl = NSURL(string:imagePath) {
-            downloadImage(checkedUrl,frame: thumbImage)
-        }*/
-
     }
 
     override func didReceiveMemoryWarning() {
@@ -310,16 +284,4 @@ class RateViewController: UIViewController {
             }
         }
     }
-
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

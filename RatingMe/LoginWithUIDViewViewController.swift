@@ -15,6 +15,8 @@ class LoginWithUIDViewViewController: UIViewController {
     @IBOutlet var password: UITextField!
     let userData = UserController()
     var mainController:LoginViewController?
+    var keyboardWasShowed = false
+    @IBOutlet var mainScrollView: UIScrollView!
     
     func showMessage(message:String, detail:String?) {
         let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
@@ -25,11 +27,39 @@ class LoginWithUIDViewViewController: UIViewController {
         hud.dimBackground = true
         hud.hide(true, afterDelay: 2.5)
     }
+
+    
+    func keyboardWillShow(sender: NSNotification) {
+        if !keyboardWasShowed {
+            self.view.frame.origin.y -= 160
+            keyboardWasShowed = true
+        }
+    }
+    
+    func keyboardWillHide(sender: NSNotification) {
+        if keyboardWasShowed {
+            self.view.frame.origin.y += 160
+            keyboardWasShowed = false
+        }
+    }
+    
+    func closeKeyboard(touch:UIGestureRecognizer) {
+        emailOrUser.resignFirstResponder()
+        password.resignFirstResponder()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        let touchImage: UITapGestureRecognizer = UITapGestureRecognizer()
+        touchImage.addTarget(self, action: "closeKeyboard:")
+        touchImage.numberOfTapsRequired = 1
+        mainScrollView.addGestureRecognizer(touchImage)
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillShow:"), name:UIKeyboardWillShowNotification, object: nil);
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillHide:"), name:UIKeyboardWillHideNotification, object: nil);
+
     }
 
     override func didReceiveMemoryWarning() {

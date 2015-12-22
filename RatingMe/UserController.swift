@@ -113,7 +113,7 @@ public class UserController{
         
     }
     
-    public func signInWithTwitter(onComplete: (Bool) -> ()) {
+    public func signInWithTwitter(onComplete: (Bool,String) -> ()) {
         
         let account = ACAccountStore()
         let accountType = account.accountTypeWithAccountTypeIdentifier(ACAccountTypeIdentifierTwitter)
@@ -128,26 +128,26 @@ public class UserController{
                         self.user.userSocialID = user_id
                         self.user.userName = twitterAccount!.username as String
                         self.loginWithSocial(self.user.userName, completitionHandler: { (success) -> () in
-                            onComplete(success)
+                            onComplete(success,"success")
                         })
 
                     }
                 }
                 else
                 {
-                    onComplete(false)
+                    onComplete(false,"Unknown error.")
                 }
                 
             }
             else {
                 print("Access denied to Twitter account")
-                onComplete(false)
+                onComplete(false,"Access denied to Twitter account")
             }
         }
     }
     
     
-    public func signInWithFacebook(onComplete: (Bool) -> ()) {
+    public func signInWithFacebook(onComplete: (Bool,String) -> ()) {
         
         let account = ACAccountStore()
         let accountType = account.accountTypeWithAccountTypeIdentifier(ACAccountTypeIdentifierFacebook)
@@ -165,23 +165,32 @@ public class UserController{
                     
                     let facebookAccount = allAccounts.last as? ACAccount
                     self.loadProfileInfo(account, account: facebookAccount!, onComplete: { (data:NSDictionary?) -> () in
-                        self.user.userSocialID = data?.objectForKey("id") as! String
-                        self.user.userName = facebookAccount!.username as String
-                        self.loginWithSocial(self.user.userName, completitionHandler: { (success) -> () in
-                            onComplete(success)
-                        })
+                        
+                        let returnedData = JSON(data!)
+                        
+                        if(returnedData["error"] == nil) {
+                            self.user.userSocialID = data?.objectForKey("id") as! String
+                            self.user.userName = facebookAccount!.username as String
+                            self.loginWithSocial(self.user.userName, completitionHandler: { (success) -> () in
+                                onComplete(success,"success")
+                            })
+                        }
+                        else {
+                            print(returnedData["error"]["message"])
+                            onComplete(false,String(returnedData["error"]["message"]))
+                        }
 
                     })
                 }
                 else
                 {
-                    onComplete(false)
+                    onComplete(false,"No account found on your device")
                 }
                 
             }
             else {
                 print("Access denied to Facebook account")
-                onComplete(false)
+                onComplete(false,"Access denied to Facebook account")
             }
         }
     }

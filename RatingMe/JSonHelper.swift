@@ -21,6 +21,7 @@ public class JSonHelper {
     let API_showRatings = "api/show_ratings"
     let API_newRating = "api/new_rating"
     let API_loginWithSocial = "api/login_with_social"
+    let API_searchReviews = "api/search_reviews"
     
     
     /*
@@ -46,18 +47,7 @@ public class JSonHelper {
                 }
         }
     }
-    
-  /*  func postJson(apiUrl:String,parameters:[String:AnyObject], completitionHandler: (jsonData: AnyObject?) -> ()) {
         
-        Alamofire.request(.POST, url + apiUrl , parameters: parameters)
-            .responseJSON { response in
-                let JSON = response.result.value
-                completitionHandler(jsonData: JSON as AnyObject?)
-        }
-    }
-  */
-
-    
     func uploadWithParameters(apiUrl:String, parameters:[String:AnyObject],image:UIImage?, completitionHandler: (jsonData: Response<AnyObject, NSError>?,error: ErrorType?) -> ()) {
         
         Alamofire.upload(

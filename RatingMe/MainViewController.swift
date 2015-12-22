@@ -30,6 +30,9 @@ class ViewController: UIViewController, ReviewControllerProtocol,RateControllerP
     var lastRegion:MKCoordinateRegion?
     var loginHappened:Bool = false
     var results:MKLocalSearchResponse? = MKLocalSearchResponse()
+    let searchTableView: UITableView  =   UITableView()
+    
+    var searchedItems:NSMutableArray?
     
     @IBOutlet var resultTableView: UITableView!
     
@@ -315,8 +318,76 @@ class ViewController: UIViewController, ReviewControllerProtocol,RateControllerP
     
     func searchQuery(query:String) {
         
+        let jsonRequest = JSonHelper()
+        var params = [:]
+        params = [  "search": query
+                 ]
         
-        let request = MKLocalSearchRequest()
+        jsonRequest.getJson("GET",apiUrl: jsonRequest.API_searchReviews, parameters: params as! [String:AnyObject]) { (jsonData) -> () in
+            
+            if jsonData == nil {
+                return
+            }
+            let json = JSON(jsonData!)
+            
+            if let message = json[0]["error"].string {
+                print(message)
+                return
+            }
+            else if let message = json["error"].string {
+                print(message)
+                return
+            }
+            else if json.count > 0 {
+                self.searchedItems = NSMutableArray()
+                for (_,subJson):(String, JSON) in json {
+                    let description = subJson[0]["description"].string!
+                    let latitude = subJson[0]["latitude"].double!
+                    let longitude = subJson[0]["longitude"].double!
+                    let title = subJson[0]["title"].string!
+                    let coord:String = String(format:"{%f,%f}", latitude,longitude)
+                    let point = CGPointFromString(coord)
+                    let coordinate = CLLocationCoordinate2DMake(CLLocationDegrees(point.x), CLLocationDegrees(point.y))
+                    
+                    let pin:PinAnnotation = PinAnnotation(coordinate: coordinate, title: title, subtitle: description, tag: 0, rating: 0, link: "", ID: "0", Q1: "", Q2: "", Q3: "", isAdv: "0", advImgLink: "")
+                    
+                    self.searchedItems?.addObject(pin)
+                }
+            
+
+                self.searchTableView.tag           =   999
+                self.searchTableView.frame         =   self.mainMap.frame
+                self.searchTableView.delegate      =   self
+                self.searchTableView.dataSource    =   self
+            
+                self.searchTableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "cell")
+            
+                self.view.addSubview(self.searchTableView)
+                self.searchTableView.reloadData()
+            }
+            else {
+                let request = MKLocalSearchRequest()
+                request.naturalLanguageQuery = query
+                
+                //let span = MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1)
+                request.region = self.mainMap.region
+                
+                UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+                
+                let search = MKLocalSearch(request: request)
+                search.startWithCompletionHandler { (response, error) -> Void in
+                    UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+                    if response != nil {
+                        self.results = response
+                        self.resultTableView.hidden = false
+                        self.resultTableView.reloadData()
+                    }
+                }
+            }
+        }
+
+        
+    /*    let request = MKLocalSearchRequest()
         request.naturalLanguageQuery = query
 
         //let span = MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1)
@@ -326,14 +397,13 @@ class ViewController: UIViewController, ReviewControllerProtocol,RateControllerP
         
         let search = MKLocalSearch(request: request)
         search.startWithCompletionHandler { (response, error) -> Void in
-        //search.startWithCompletionHandler { (response: MKLocalSearchResponse!, error: NSError!) in
             UIApplication.sharedApplication().networkActivityIndicatorVisible = false
             if response != nil {
                 self.results = response
                 self.resultTableView.hidden = false
                 self.resultTableView.reloadData()
             }
-        }
+        }*/
     }
 
     
@@ -377,7 +447,7 @@ class ViewController: UIViewController, ReviewControllerProtocol,RateControllerP
     
         jsonRequest.getJson("GET",apiUrl: jsonRequest.API_showReviews, parameters: params as! [String:AnyObject]) { (jsonData) -> () in
         
-            self.mainMap.removeAnnotations(self.mainMap.annotations)
+            
             
             if jsonData == nil {
                 return
@@ -392,7 +462,9 @@ class ViewController: UIViewController, ReviewControllerProtocol,RateControllerP
                 print(message)
                 return
             }
-    
+            
+
+            self.mainMap.removeAnnotations(self.mainMap.annotations)
             for (key,subJson):(String, JSON) in json {
                 let description = subJson[0]["description"].string!
                 let image = subJson[0]["picture"].string ?? ""
@@ -428,9 +500,10 @@ class ViewController: UIViewController, ReviewControllerProtocol,RateControllerP
                 self.centerMap(latitude_, withLon: longitude_)
         }
          //NSLog("Showed pins: \(tag)")
+            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+            self.hideLoadingHUD()
     }
-        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-        hideLoadingHUD()
+
     }
     
     
@@ -531,37 +604,69 @@ extension ViewController:UISearchControllerDelegate {
 extension ViewController:UITableViewDataSource,UITableViewDelegate {
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if let _ = self.results?.mapItems {
-            return self.results!.mapItems.count
+        if tableView.tag != 999 {
+            if let _ = self.results?.mapItems {
+                return self.results!.mapItems.count
+            }
+            else {
+                return 0
+            }
         }
         else {
-            return 0
+            return self.searchedItems!.count
         }
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
        
-        let cell:UITableViewCell =  UITableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: "SearchCell")
+        if tableView.tag != 999 {
+            let cell:UITableViewCell =  UITableViewCell(style: UITableViewCellStyle.Value1, reuseIdentifier: "SearchCell")
     
-        let newRecordName = (self.results!.mapItems[indexPath.row] ).placemark.name
-        let newRecordAddress = (self.results!.mapItems[indexPath.row] ).placemark
-        let addressOnly = newRecordAddress.title //newRecordAddress.name + ", " + newRecordAddress.title
+            let newRecordName = (self.results!.mapItems[indexPath.row] ).placemark.name
+            let newRecordAddress = (self.results!.mapItems[indexPath.row] ).placemark
+            let addressOnly = newRecordAddress.title //newRecordAddress.name + ", " + newRecordAddress.title
         
-        cell.textLabel!.text = newRecordName
-        cell.detailTextLabel!.text = addressOnly
+            cell.textLabel!.text = newRecordName
+            cell.detailTextLabel!.text = addressOnly
         
-        return cell;
+            return cell;
+        }
+        else
+        {
+            //let cell:UITableViewCell = tableView.dequeueReusableCellWithIdentifier("cell")! as UITableViewCell
+            let cellIdentifier = "Cell"
+            
+            var cell:UITableViewCell? = tableView.dequeueReusableCellWithIdentifier(cellIdentifier) //as! UITableViewCell
+            if cell == nil {
+                cell = UITableViewCell(style: UITableViewCellStyle.Value1, reuseIdentifier: cellIdentifier)
+            }
+            
+            cell!.textLabel?.text = (self.searchedItems![indexPath.row] as? PinAnnotation)?.title
+            cell!.detailTextLabel?.text = (self.searchedItems![indexPath.row] as? PinAnnotation)?.subtitle
+            return cell!
+
+        }
+        
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        self.resultTableView.hidden = true
-        searchBar.text = ""
-        searchBar.setShowsCancelButton(false, animated: true)
-        searchBar.endEditing(true)
+        if tableView.tag != 999 {
+            self.resultTableView.hidden = true
+            searchBar.text = ""
+            searchBar.setShowsCancelButton(false, animated: true)
+            searchBar.endEditing(true)
         
-        let latitude = (self.results!.mapItems[indexPath.row]).placemark.location!.coordinate.latitude
-        let longitude = (self.results!.mapItems[indexPath.row]).placemark.location!.coordinate.longitude
-        self.centerMap(latitude, withLon: longitude)
+            let latitude = (self.results!.mapItems[indexPath.row]).placemark.location!.coordinate.latitude
+            let longitude = (self.results!.mapItems[indexPath.row]).placemark.location!.coordinate.longitude
+            self.centerMap(latitude, withLon: longitude)
+        }
+        else {
+            let latitude = (self.searchedItems![indexPath.row] as? PinAnnotation)?.coordinate.latitude
+            let longitude = (self.searchedItems![indexPath.row] as? PinAnnotation)?.coordinate.longitude
+            self.centerMap(latitude!, withLon: longitude!)
+            
+            tableView.removeFromSuperview()
+        }
     }
     
 }
@@ -599,11 +704,13 @@ extension ViewController:UISearchBarDelegate {
         searchBar.setShowsCancelButton(false, animated: true)
         searchBar.endEditing(true)
         self.resultTableView.hidden = true
+        self.searchTableView.removeFromSuperview()
     }
     
     func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
         searchBar.setShowsCancelButton(true, animated: true)
         self.resultTableView.hidden = true
+        self.searchTableView.removeFromSuperview()
     }
     
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {

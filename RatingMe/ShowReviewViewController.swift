@@ -11,13 +11,13 @@ import SwiftyJSON
 import SDWebImage
 import MBProgressHUD
 
-class ShowReviewViewController: UIViewController,NSURLConnectionDataDelegate {
+class ShowReviewViewController: UIViewController, NSURLConnectionDataDelegate {
     
     @IBOutlet var rateTableView: UITableView!
     @IBOutlet var navigationBar: UINavigationBar!
     @IBOutlet var textDescription: UITextView!
     @IBOutlet var viewNoReview: UIView!
-    @IBOutlet var imageThumb: UIImageView!
+    @IBOutlet var imageThumb: CustomImageView! //UIImageView!
     
     var pin:PinAnnotation?
     var currentReviewID:String?
@@ -29,17 +29,49 @@ class ShowReviewViewController: UIViewController,NSURLConnectionDataDelegate {
     var Rates3:NSMutableArray = NSMutableArray()
     var downloadedMutableData:NSMutableData?
     var urlResponse:NSURLResponse?
-    
+    var imageShowedInBig = false
+    var prevFrame:CGRect = CGRect.null
     
     let jsonRequest = JSonHelper()
 
+    
+    func showImage() {
+        if (!imageShowedInBig) {
+            UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveLinear, animations: { () -> Void in
+                self.prevFrame = self.imageThumb.frame
+                self.imageThumb.contentMode = UIViewContentMode.ScaleAspectFit
+                self.imageThumb.frame = UIScreen.mainScreen().bounds
+                }, completion: { (finished) -> Void in
+                    self.imageShowedInBig = true
+            })
+        }
+        else {
+            UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveLinear, animations: { () -> Void in
+                self.imageThumb.frame = self.prevFrame
+              //  self.imageThumb.contentMode = UIViewContentMode.ScaleToFill
+                }, completion: { (finished) -> Void in
+                    self.imageShowedInBig = false
+            })
+        }
+        
+    }
+
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
         
+        // Do any additional setup after loading the view.
+        let touchImage: UITapGestureRecognizer = UITapGestureRecognizer()
+        touchImage.addTarget(self, action: "showImage")
+        touchImage.numberOfTapsRequired = 1
+        imageThumb.addGestureRecognizer(touchImage)
+        
+        
         navigationBar.topItem?.title = pin?.title
         textDescription.text = pin?.subtitle
+        imageThumb.userInteractionEnabled = true
         var imagePath = ""
         if pin!.ImageLink.containsString("http") {
             imagePath = pin!.ImageLink
@@ -79,31 +111,19 @@ class ShowReviewViewController: UIViewController,NSURLConnectionDataDelegate {
         
         let downloader:SDWebImageDownloader = SDWebImageDownloader.sharedDownloader()
         
-        let hud:MBProgressHUD = MBProgressHUD.showHUDAddedTo(frame, animated: true)
-        
-        hud.mode = MBProgressHUDMode.AnnularDeterminate
-        //hud.labelText = "Wait..."
         downloader.downloadImageWithURL(url, options: SDWebImageDownloaderOptions.AllowInvalidSSLCertificates, progress: { (receivedSize, expectedSize) -> Void in
                 if receivedSize > 0 {
                     let received:Float = ((Float(receivedSize)*100.0)/Float(expectedSize))/100.0
-                    hud.progress = received //Float(received)
+                    self.imageThumb.updateProgress(CGFloat(receivedSize), expectedSize: CGFloat(expectedSize))
                     print("=>",received,expectedSize)
                 }
             })
             { (image, data, error, finished) -> Void in  //Download finished
                 if ((image != nil) && finished == true) {
                     frame.image = image
+                    self.imageThumb.revealImage()
             }
-            hud.removeFromSuperview()
         }
-        
-      /*  if url.lastPathComponent != "" {
-            getDataFromUrl(url) { data in
-                dispatch_async(dispatch_get_main_queue()) {
-                    frame.image = UIImage(data: data!)
-                }
-            }
-        }*/
     }
 
     

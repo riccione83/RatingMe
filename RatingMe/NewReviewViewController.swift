@@ -30,6 +30,7 @@ class ReviewViewController: UIViewController {
     @IBOutlet var textQuestion2: UITextField!
     @IBOutlet var textQuestion3: UITextField!
     @IBOutlet var thumbImage: UIImageView!
+    @IBOutlet var tmbImageButton: UIButton!
     
     let locationManager:CLLocationManager = CLLocationManager()
     var delegate:ReviewControllerProtocol? = nil
@@ -38,15 +39,39 @@ class ReviewViewController: UIViewController {
     var selectedImage:UIImage? = nil
     
     func selectImageToSend() {
-        imagePicker.delegate = self
-        imagePicker.sourceType = UIImagePickerControllerSourceType.SavedPhotosAlbum;
-        imagePicker.allowsEditing = false
         
-        self.presentViewController(imagePicker, animated: true, completion: nil)
+        let alert = UIAlertController(title: "Insert image", message: "", preferredStyle: UIAlertControllerStyle.ActionSheet)
+        alert.addAction(UIAlertAction(title: "Photo Album", style: UIAlertActionStyle.Default, handler: { (UIAlertAction) -> Void in
+            self.imagePicker.delegate = self
+            self.imagePicker.sourceType = UIImagePickerControllerSourceType.SavedPhotosAlbum;
+            self.imagePicker.allowsEditing = false
+            self.presentViewController(self.imagePicker, animated: true, completion: nil)
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Camera", style: UIAlertActionStyle.Default, handler: { (UIAlertAction) -> Void in
+            self.imagePicker.delegate = self
+            self.imagePicker.sourceType = UIImagePickerControllerSourceType.Camera;
+            self.imagePicker.allowsEditing = false
+            self.presentViewController(self.imagePicker, animated: true, completion: nil)
+        }))
+        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Destructive, handler: nil))
+        self.presentViewController(alert, animated: true, completion: nil)
+    }
+    
+    func selectImageFromPhotoAlbum() {
+
     }
     
     @IBAction func selectImage(sender: AnyObject) {
-        selectImageToSend()
+        if thumbImage.image == nil {
+            selectImageToSend()
+        }
+        else
+        {
+            thumbImage.image = nil
+             tmbImageButton.titleLabel?.text = "+"
+        }
+        
     }
     
     private func showLoadingHUD() {
@@ -108,7 +133,7 @@ class ReviewViewController: UIViewController {
                 newReview(reviewTitle.text!, description: reviewText.text, latitude: lat, longitude: lon, question1: textQuestion1.text!, question2: textQuestion2.text!, question3: textQuestion3.text!)
             }
             else {
-                showMessage("Impossibile inviare la recensione. E' necessario compilare tutti i campi e almeno una domanda.")
+                showMessage("Unable to send this review. Please fill the request field and at least one question.")
             }
         }
         else {
@@ -219,6 +244,8 @@ extension ReviewViewController: UIImagePickerControllerDelegate,UINavigationCont
         selectedImage =  scaledImage
         
         thumbImage.image = scaledImage
+        
+        tmbImageButton.titleLabel?.text = "X"
         
     }
 }

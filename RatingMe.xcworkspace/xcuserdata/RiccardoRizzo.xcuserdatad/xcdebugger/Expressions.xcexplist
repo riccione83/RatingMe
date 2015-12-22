@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VariablesViewState
+   version = "1.0">
+   <ContextStates>
+      <ContextState
+         contextName = "ViewController.tableView(UITableView, cellForRowAtIndexPath : NSIndexPath) -&gt; UITableViewCell:MainViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "(self.searchedItems![indexPath.row] as? PinAnnotation)?.title">
+            </PersistentString>
+            <PersistentString
+               value = "(self.searchedItems![indexPath.row] as? PinAnnotation)?.subtitle">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "ShowReviewViewController.(loadData(ShowReviewViewController) -&gt; () -&gt; ()).(closure #1):ShowReviewViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "subJson[0]">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "ViewController.makeSignUpRequest(String, lon : String, radius : String) -&gt; ():ViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "httpRequest.HTTPBody">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "HTTPHelper.(sendRequest(HTTPHelper) -&gt; (NSURLRequest, completion : (NSData!, NSError!) -&gt; ()) -&gt; ()).(closure #1).(closure #2):HTTPHelper.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "httpResponse.statusCode">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "ViewController.(searchForLocation(ViewController) -&gt; (String, withRadius : Double, latitude_ : Double, longitude_ : Double, center : Bool) -&gt; ()).(closure #1):ViewController.swift">
+      </ContextState>
+   </ContextStates>
+</VariablesViewState>
