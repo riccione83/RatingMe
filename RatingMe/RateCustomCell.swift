@@ -24,6 +24,10 @@ class RateCustomCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        
+        self.starRatingQuestion1.initUI(0, spacing: 22, imageSize: 20, withOpacity: false)
+        self.starRatingQuestion2.initUI(0, spacing: 22, imageSize: 20, withOpacity: false)
+        self.starRatingQuestion3.initUI(0, spacing: 22, imageSize: 20, withOpacity: false)
     }
 
     override func setSelected(selected: Bool, animated: Bool) {

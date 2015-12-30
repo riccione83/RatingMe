@@ -289,7 +289,7 @@ class ViewController: UIViewController, ReviewControllerProtocol,RateControllerP
         searchBar.searchBarStyle = UISearchBarStyle.Minimal
         searchBar.tintColor            = UIColor.lightGrayColor()
         searchBar.barTintColor         = UIColor.whiteColor()
-        searchBar.placeholder          = "Search place here"
+        searchBar.placeholder          = "Search for a place here"
         
         locationManager.delegate = self
         locationManager.requestWhenInUseAuthorization()

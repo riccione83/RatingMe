@@ -18,6 +18,7 @@ class ShowReviewViewController: UIViewController, NSURLConnectionDataDelegate {
     @IBOutlet var textDescription: UITextView!
     @IBOutlet var viewNoReview: UIView!
     @IBOutlet var imageThumb: CustomImageView! //UIImageView!
+    @IBOutlet var darkBackgroundView: UIView!
     
     var pin:PinAnnotation?
     var currentReviewID:String?
@@ -38,7 +39,10 @@ class ShowReviewViewController: UIViewController, NSURLConnectionDataDelegate {
     func showImage() {
         if (!imageShowedInBig) {
             UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveLinear, animations: { () -> Void in
+                self.darkBackgroundView.hidden = false
+                self.darkBackgroundView.alpha = 1.0
                 self.prevFrame = self.imageThumb.frame
+                self.imageThumb.layer.borderColor = UIColor(red: 13/255, green: 70/255, blue: 131/255, alpha: 0.0).CGColor
                 self.imageThumb.contentMode = UIViewContentMode.ScaleAspectFit
                 self.imageThumb.frame = UIScreen.mainScreen().bounds
                 }, completion: { (finished) -> Void in
@@ -48,8 +52,11 @@ class ShowReviewViewController: UIViewController, NSURLConnectionDataDelegate {
         else {
             UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveLinear, animations: { () -> Void in
                 self.imageThumb.frame = self.prevFrame
-              //  self.imageThumb.contentMode = UIViewContentMode.ScaleToFill
+                self.darkBackgroundView.hidden = true
+                self.darkBackgroundView.alpha = 0.0
                 }, completion: { (finished) -> Void in
+                    self.imageThumb.contentMode = UIViewContentMode.ScaleAspectFill
+                    self.imageThumb.layer.borderColor = UIColor(red: 13/255, green: 70/255, blue: 131/255, alpha: 1.0).CGColor
                     self.imageShowedInBig = false
             })
         }
@@ -72,6 +79,11 @@ class ShowReviewViewController: UIViewController, NSURLConnectionDataDelegate {
         navigationBar.topItem?.title = pin?.title
         textDescription.text = pin?.subtitle
         imageThumb.userInteractionEnabled = true
+        imageThumb.layer.masksToBounds = true
+        imageThumb.layer.cornerRadius = imageThumb.bounds.size.width/2
+        imageThumb.layer.borderWidth = 1.0
+        imageThumb.layer.borderColor = UIColor(red: 13/255, green: 70/255, blue: 131/255, alpha: 1.0).CGColor
+        
         var imagePath = ""
         if pin!.ImageLink.containsString("http") {
             imagePath = pin!.ImageLink
@@ -91,6 +103,7 @@ class ShowReviewViewController: UIViewController, NSURLConnectionDataDelegate {
     }
     
     override func viewDidAppear(animated: Bool) {
+        darkBackgroundView.hidden = true
         viewNoReview.hidden = true
         Descriptions.removeAllObjects()
         Users.removeAllObjects()
@@ -172,7 +185,7 @@ class ShowReviewViewController: UIViewController, NSURLConnectionDataDelegate {
                 self.Users.addObject(subJson[0]["user_name"].string!)
                 self.Rates1.addObject(subJson[0]["rate1"].float!)
                 self.Rates2.addObject(subJson[0]["rate2"].float!)
-                self.Rates3.addObject(subJson[0]["rate2"].float!)
+                self.Rates3.addObject(subJson[0]["rate3"].float!)
             }
             
             self.rateTableView.reloadData()
@@ -217,10 +230,15 @@ extension ShowReviewViewController:UITableViewDelegate, UITableViewDataSource {
         myCell.labelNoteTitle.text = String(format: "Note by \(userName)")
         
         myCell.labelNote.text = Descriptions.objectAtIndex(indexPath.row) as? String
+    
+        myCell.starRatingQuestion1.setRating(Rates1.objectAtIndex(indexPath.row) as! Int)
+        myCell.starRatingQuestion2.setRating(Rates2.objectAtIndex(indexPath.row) as! Int)
+        myCell.starRatingQuestion3.setRating(Rates3.objectAtIndex(indexPath.row) as! Int)
         
-        myCell.starRatingQuestion1.initUI(Rates1.objectAtIndex(indexPath.row) as! Int, spacing: 22, imageSize: 20, withOpacity: false)
+      /*  myCell.starRatingQuestion1.initUI(Rates1.objectAtIndex(indexPath.row) as! Int, spacing: 22, imageSize: 20, withOpacity: false)
         myCell.starRatingQuestion2.initUI(Rates2.objectAtIndex(indexPath.row) as! Int, spacing: 22, imageSize: 20, withOpacity: false)
         myCell.starRatingQuestion3.initUI(Rates3.objectAtIndex(indexPath.row) as! Int, spacing: 22, imageSize: 20, withOpacity: false)
+    */
         
         myCell.starRatingQuestion1.userInteractionEnabled = false
         myCell.starRatingQuestion2.userInteractionEnabled = false

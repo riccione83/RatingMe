@@ -122,23 +122,26 @@ class ReviewViewController: UIViewController {
         }
     }
     
-    @IBAction func sendNewReview(sender: UIButton) {
-        
+    @IBAction func sendNewReviewBtnClick(sender: AnyObject) {
         if(locationManager.location != nil) {
-        
+            
             let lat = "\(locationManager.location!.coordinate.latitude)"
             let lon = "\(locationManager.location!.coordinate.longitude)"
-        
+            
             if(textQuestion1.text != "" && reviewTitle.text != "" && reviewText.text != "" && reviewText.text != "Enter a description") {
                 newReview(reviewTitle.text!, description: reviewText.text, latitude: lat, longitude: lon, question1: textQuestion1.text!, question2: textQuestion2.text!, question3: textQuestion3.text!)
             }
             else {
-                showMessage("Unable to send this review. Please fill the request field and at least one question.")
+                showMessage("Unable to send this review. Please fill all the requested fields and at least one question.")
             }
         }
         else {
             self.showMessage("Unable to create a new Review. Please enable location services")
         }
+    }
+    @IBAction func sendNewReview(sender: UIButton) {
+        
+
     }
     
     @IBAction func cancelClickButton(sender: UIButton) {
@@ -207,6 +210,7 @@ class ReviewViewController: UIViewController {
         textQuestion1.resignFirstResponder()
         textQuestion2.resignFirstResponder()
         textQuestion3.resignFirstResponder()
+        self.view.endEditing(true)
     }
     
     override func didReceiveMemoryWarning() {

@@ -32,6 +32,7 @@ class RateViewController: UIViewController {
     @IBOutlet var labelQuestion2: UILabel!
     @IBOutlet var labelQuestion3: UILabel!
     @IBOutlet var txtRateDescription: UITextField!
+    @IBOutlet var darkBackGroundView: UIView!
     
     var userInfos:User?
     var currentTitle:String = ""
@@ -49,32 +50,42 @@ class RateViewController: UIViewController {
     @IBAction func feedbackClick(sender: AnyObject) {
         
         if !isFullscreen {
-            var rating = Int(currentRating)
             
-            var divisor = 1
+            if (txtRateDescription.text != "") {
+                var rating = Int(currentRating)
             
-            if starRatingView2 != nil && !starRatingView2.hidden {
-                divisor++
+                var divisor = 1
+            
+                if starRatingView2 != nil && !starRatingView2.hidden {
+                    divisor++
+                }
+            
+                if starRatingView3 != nil && !starRatingView3.hidden {
+                    divisor++
+                }
+            
+                rating = (starRatingView1.currentRating + starRatingView2.currentRating + starRatingView3.currentRating) / divisor
+            
+                newRating(currentReviewID, user_id: userInfos!.userID,user_name: userInfos!.userName, rate: Double(rating), description: txtRateDescription.text!, rate_q1: starRatingView1.currentRating,rate_q2: starRatingView2.currentRating, rate_q3: starRatingView3.currentRating)
             }
-            
-            if starRatingView3 != nil && !starRatingView3.hidden {
-                divisor++
+            else {
+                showMessage("Please add a short note to send a new rating. Thankyou.")
             }
-            
-            rating = (starRatingView1.currentRating + starRatingView2.currentRating + starRatingView3.currentRating) / divisor
-            
-            newRating(currentReviewID, user_id: userInfos!.userID,user_name: userInfos!.userName, rate: Double(rating), description: txtRateDescription.text!, rate_q1: starRatingView1.currentRating,rate_q2: starRatingView2.currentRating, rate_q3: starRatingView3.currentRating)
         }
         else {
-            thumbImage.frame = oldFrame
-            isFullscreen = false
-            textDescription.layer.cornerRadius = 0
-            textDescription.backgroundColor = UIColor.clearColor()
-            textDescription.alpha = 1
-            starRatingView1.alpha = 1
-            starRatingView2.alpha = 1
-            starRatingView3.alpha = 1
-            txtRateDescription.alpha = 1
+            self.thumbImage.frame = self.oldFrame
+            self.darkBackGroundView.alpha = 0.0
+            self.darkBackGroundView.hidden = true
+            self.textDescription.layer.cornerRadius = 0
+            self.textDescription.backgroundColor = UIColor.clearColor()
+            self.textDescription.alpha = 1
+            self.starRatingView1.alpha = 1
+            self.starRatingView2.alpha = 1
+            self.starRatingView3.alpha = 1
+            self.txtRateDescription.alpha = 1
+            self.thumbImage.contentMode = UIViewContentMode.ScaleAspectFill
+            self.thumbImage.layer.borderColor = UIColor(red: 13/255, green: 70/255, blue: 131/255, alpha: 1.0).CGColor
+            self.isFullscreen = false
         }
     }
     
@@ -170,36 +181,46 @@ class RateViewController: UIViewController {
     }
     
     func selectThumb(sender: UITapGestureRecognizer) {
-        NSLog("Touble tap")
-        UIView.beginAnimations(nil, context: nil)
-        UIView.setAnimationDuration(0.5)
-        UIView.setAnimationDelay(0.0)
-        UIView.setAnimationCurve(UIViewAnimationCurve.EaseOut)
-        if(!isFullscreen) {
-            oldFrame = thumbImage.frame
-            thumbImage.frame = self.view.frame
-            self.thumbImage.contentMode = UIViewContentMode.ScaleAspectFit
-            isFullscreen = true
-            textDescription.backgroundColor = UIColor.whiteColor()
-            textDescription.alpha = 0.0
-            starRatingView1.alpha = 0.0
-            starRatingView2.alpha = 0.0
-            starRatingView3.alpha = 0.0
-            txtRateDescription.alpha = 0.0
+        
+        
+        if (!isFullscreen) {
+            UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveLinear, animations: { () -> Void in
+                
+                self.darkBackGroundView.alpha = 1.0
+                self.darkBackGroundView.hidden = false
+                self.thumbImage.layer.borderColor = UIColor(red: 13/255, green: 70/255, blue: 131/255, alpha: 0.0).CGColor
+                self.oldFrame = self.thumbImage.frame
+                self.thumbImage.frame = self.view.frame
+                self.thumbImage.contentMode = UIViewContentMode.ScaleAspectFit
+                self.textDescription.backgroundColor = UIColor.whiteColor()
+                self.textDescription.alpha = 0.0
+                self.starRatingView1.alpha = 0.0
+                self.starRatingView2.alpha = 0.0
+                self.starRatingView3.alpha = 0.0
+                self.txtRateDescription.alpha = 0.0
+                }, completion: { (finished) -> Void in
+                     self.isFullscreen = true
+            })
         }
         else {
-            thumbImage.frame = oldFrame
-           // self.thumbImage.contentMode = UIViewContentMode.ScaleToFill
-            isFullscreen = false
-            textDescription.layer.cornerRadius = 0
-            textDescription.backgroundColor = UIColor.clearColor()
-            textDescription.alpha = 1
-            starRatingView1.alpha = 1
-            starRatingView2.alpha = 1
-            starRatingView3.alpha = 1
-            txtRateDescription.alpha = 1
+            UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveLinear, animations: { () -> Void in
+                self.thumbImage.frame = self.oldFrame
+                self.darkBackGroundView.alpha = 0.0
+                self.darkBackGroundView.hidden = true
+                self.textDescription.layer.cornerRadius = 0
+                self.textDescription.backgroundColor = UIColor.clearColor()
+                self.textDescription.alpha = 1
+                self.starRatingView1.alpha = 1
+                self.starRatingView2.alpha = 1
+                self.starRatingView3.alpha = 1
+                self.txtRateDescription.alpha = 1
+
+                }, completion: { (finished) -> Void in
+                    self.thumbImage.contentMode = UIViewContentMode.ScaleAspectFill
+                    self.thumbImage.layer.borderColor = UIColor(red: 13/255, green: 70/255, blue: 131/255, alpha: 1.0).CGColor
+                    self.isFullscreen = false
+            })
         }
-        UIView.commitAnimations()
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -211,7 +232,12 @@ class RateViewController: UIViewController {
 
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        
+    }
+    
+    func closeKeyboard(touch:UIGestureRecognizer) {
         txtRateDescription.resignFirstResponder()
+        self.view.endEditing(true)
     }
     
     func keyboardWillShow(sender: NSNotification) {
@@ -228,11 +254,23 @@ class RateViewController: UIViewController {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillShow:"), name:UIKeyboardWillShowNotification, object: nil);
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillHide:"), name:UIKeyboardWillHideNotification, object: nil);
         
+        
         let tapSelect:UITapGestureRecognizer = UITapGestureRecognizer()
         tapSelect.addTarget(self, action: "selectThumb:")
-        tapSelect.numberOfTapsRequired = 2
+        tapSelect.numberOfTapsRequired = 1
         thumbImage.addGestureRecognizer(tapSelect)
 
+        let touchImage: UITapGestureRecognizer = UITapGestureRecognizer()
+        touchImage.addTarget(self, action: "closeKeyboard:")
+        touchImage.numberOfTapsRequired = 1
+        scrollView.addGestureRecognizer(touchImage)
+        
+        thumbImage.userInteractionEnabled = true
+        thumbImage.layer.masksToBounds = true
+        thumbImage.layer.cornerRadius = thumbImage.bounds.size.width/2
+        thumbImage.layer.borderWidth = 1.0
+        thumbImage.layer.borderColor = UIColor(red: 13/255, green: 70/255, blue: 131/255, alpha: 1.0).CGColor
+        
         // Do any additional setup after loading the view.
         textDescription.text = currentTitle + "\r\n" + currentDescription
         
