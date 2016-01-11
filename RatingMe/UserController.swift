@@ -20,10 +20,12 @@ public class UserController{
             self.user = User()
     }
     
-    func loginWithSocial(userID:String, completitionHandler:(success:Bool) -> ()) {
+    func loginWithSocial(userName:String, uid:String, provider:String, completitionHandler:(success:Bool) -> ()) {
         
         let params = [
-            "user_id": userID
+            "user_id": uid,
+            "user_name": userName,
+            "provider": provider
         ]
         
         loginHelper.getJson("GET",apiUrl: loginHelper.API_loginWithSocial, parameters: params) { (jsonData) -> () in
@@ -127,10 +129,9 @@ public class UserController{
                     if let properties = twitterAccount!.valueForKey("properties") as? [String:String], user_id = properties["user_id"] {
                         self.user.userSocialID = user_id
                         self.user.userName = twitterAccount!.username as String
-                        self.loginWithSocial(self.user.userName, completitionHandler: { (success) -> () in
+                        self.loginWithSocial(self.user.userName,uid: self.user.userSocialID, provider: "twitter", completitionHandler: { (success) -> () in
                             onComplete(success,"success")
                         })
-
                     }
                 }
                 else
@@ -170,8 +171,8 @@ public class UserController{
                         
                         if(returnedData["error"] == nil) {
                             self.user.userSocialID = data?.objectForKey("id") as! String
-                            self.user.userName = facebookAccount!.username as String
-                            self.loginWithSocial(self.user.userName, completitionHandler: { (success) -> () in
+                            self.user.userName = facebookAccount!.userFullName as String
+                            self.loginWithSocial(self.user.userName,uid: self.user.userSocialID,provider: "facebook", completitionHandler: { (success) -> () in
                                 onComplete(success,"success")
                             })
                         }

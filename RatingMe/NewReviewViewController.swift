@@ -117,6 +117,11 @@ class ReviewViewController: UIViewController {
                         print(responseMessage)
                         return
                     }
+                    else {
+                        if let responseMessage = serverResponse["error"] {
+                            self.showMessage(responseMessage as! String)
+                        }
+                    }
                 }
             }
         }

@@ -11,8 +11,8 @@ import Alamofire
 
 public class JSonHelper {
     
-    //let url = "http://ratingme-riccione83.c9.io/"
-    let url = "https://ratingme.herokuapp.com/"
+    let url = "https://ratingme-exp-riccione83.c9users.io/"
+    //let url = "https://ratingme.herokuapp.com/"
     
     let API_newReview = "api/new_review"
     let API_newUser = "api/register_new_user"

@@ -5,6 +5,11 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="Lobster 1.4.otf">
+            <string>Lobster1.4</string>
+        </mutableArray>
+    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -15,19 +20,19 @@
                 <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2QU-TF-vd0">
                     <rect key="frame" x="8" y="0.0" width="414" height="736"/>
                     <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Welcome to RatingMe" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VRW-O5-gw8">
+                        <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Welcome to RatingMe" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VRW-O5-gw8">
                             <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
-                            <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="30"/>
+                            <fontDescription key="fontDescription" name="Lobster1.4" family="Lobster 1.4" pointSize="35"/>
                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="The place where you can rate everything" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0K3-k8-kUj">
+                        <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="The place where you can rate everything" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0K3-k8-kUj">
                             <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
                             <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="16"/>
                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BluePin" translatesAutoresizingMaskIntoConstraints="NO" id="XCa-yc-SXR">
+                        <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BluePin" translatesAutoresizingMaskIntoConstraints="NO" id="XCa-yc-SXR">
                             <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="55" id="YQu-VG-OgE"/>
@@ -46,14 +51,34 @@
                                 </mask>
                             </variation>
                         </imageView>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Splash.tiff" translatesAutoresizingMaskIntoConstraints="NO" id="rMd-EU-6d1">
+                            <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="128" id="WaJ-ur-6xx"/>
+                            </constraints>
+                            <variation key="default">
+                                <mask key="constraints">
+                                    <exclude reference="WaJ-ur-6xx"/>
+                                </mask>
+                            </variation>
+                            <variation key="heightClass=regular-widthClass=compact">
+                                <mask key="constraints">
+                                    <include reference="WaJ-ur-6xx"/>
+                                </mask>
+                            </variation>
+                        </imageView>
                     </subviews>
                     <color key="backgroundColor" red="0.010922944529999999" green="0.7030243343" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
+                        <constraint firstItem="rMd-EU-6d1" firstAttribute="centerX" secondItem="2QU-TF-vd0" secondAttribute="centerX" id="29N-Cn-cTD"/>
+                        <constraint firstItem="rMd-EU-6d1" firstAttribute="centerY" secondItem="2QU-TF-vd0" secondAttribute="centerY" id="8It-RG-9b6"/>
                         <constraint firstItem="XCa-yc-SXR" firstAttribute="centerX" secondItem="VRW-O5-gw8" secondAttribute="centerX" constant="0.25" id="Gju-50-tnj"/>
+                        <constraint firstItem="rMd-EU-6d1" firstAttribute="leading" secondItem="2QU-TF-vd0" secondAttribute="leading" constant="57" id="Huh-hK-bSr"/>
                         <constraint firstAttribute="centerX" secondItem="VRW-O5-gw8" secondAttribute="centerX" id="T1s-wW-fqP"/>
                         <constraint firstItem="XCa-yc-SXR" firstAttribute="top" secondItem="0K3-k8-kUj" secondAttribute="bottom" constant="8" id="YIr-6U-bGk"/>
                         <constraint firstItem="0K3-k8-kUj" firstAttribute="centerX" secondItem="VRW-O5-gw8" secondAttribute="centerX" id="kym-ZM-AXu"/>
-                        <constraint firstItem="0K3-k8-kUj" firstAttribute="top" secondItem="VRW-O5-gw8" secondAttribute="bottom" constant="-10" id="lIT-oy-OOQ"/>
+                        <constraint firstItem="0K3-k8-kUj" firstAttribute="top" secondItem="VRW-O5-gw8" secondAttribute="bottom" id="lIT-oy-OOQ"/>
+                        <constraint firstAttribute="trailing" secondItem="rMd-EU-6d1" secondAttribute="trailing" constant="58" id="nrL-21-2Ii"/>
                         <constraint firstAttribute="centerX" secondItem="VRW-O5-gw8" secondAttribute="centerX" id="pze-hN-LDp"/>
                         <constraint firstAttribute="centerY" secondItem="VRW-O5-gw8" secondAttribute="centerY" multiplier="1.5" id="wbR-wS-kng"/>
                     </constraints>
@@ -62,13 +87,18 @@
                             <exclude reference="VRW-O5-gw8"/>
                             <exclude reference="0K3-k8-kUj"/>
                             <exclude reference="XCa-yc-SXR"/>
+                            <exclude reference="rMd-EU-6d1"/>
                         </mask>
                         <mask key="constraints">
-                            <exclude reference="kym-ZM-AXu"/>
-                            <exclude reference="lIT-oy-OOQ"/>
                             <exclude reference="T1s-wW-fqP"/>
                             <exclude reference="pze-hN-LDp"/>
                             <exclude reference="wbR-wS-kng"/>
+                            <exclude reference="29N-Cn-cTD"/>
+                            <exclude reference="8It-RG-9b6"/>
+                            <exclude reference="Huh-hK-bSr"/>
+                            <exclude reference="nrL-21-2Ii"/>
+                            <exclude reference="kym-ZM-AXu"/>
+                            <exclude reference="lIT-oy-OOQ"/>
                             <exclude reference="Gju-50-tnj"/>
                             <exclude reference="YIr-6U-bGk"/>
                         </mask>
@@ -78,13 +108,18 @@
                             <include reference="VRW-O5-gw8"/>
                             <include reference="0K3-k8-kUj"/>
                             <include reference="XCa-yc-SXR"/>
+                            <include reference="rMd-EU-6d1"/>
                         </mask>
                         <mask key="constraints">
-                            <include reference="kym-ZM-AXu"/>
-                            <include reference="lIT-oy-OOQ"/>
                             <include reference="T1s-wW-fqP"/>
                             <include reference="pze-hN-LDp"/>
                             <include reference="wbR-wS-kng"/>
+                            <include reference="29N-Cn-cTD"/>
+                            <include reference="8It-RG-9b6"/>
+                            <include reference="Huh-hK-bSr"/>
+                            <include reference="nrL-21-2Ii"/>
+                            <include reference="kym-ZM-AXu"/>
+                            <include reference="lIT-oy-OOQ"/>
                             <include reference="Gju-50-tnj"/>
                             <include reference="YIr-6U-bGk"/>
                         </mask>
@@ -121,5 +156,6 @@
     </objects>
     <resources>
         <image name="BluePin" width="43" height="72"/>
+        <image name="Splash.tiff" width="630" height="272"/>
     </resources>
 </document>
