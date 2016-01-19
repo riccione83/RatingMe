@@ -10,6 +10,7 @@ import UIKit
 import SwiftyJSON
 import SDWebImage
 import MBProgressHUD
+import Popover
 
 class ShowReviewViewController: UIViewController, NSURLConnectionDataDelegate {
     
@@ -32,9 +33,18 @@ class ShowReviewViewController: UIViewController, NSURLConnectionDataDelegate {
     var urlResponse:NSURLResponse?
     var imageShowedInBig = false
     var prevFrame:CGRect = CGRect.null
+    var currentRandomGeneratedCode = ""
     
     let jsonRequest = JSonHelper()
 
+    private var texts = ["Add a Rate", "Share", "Report abuse"]
+    
+    private var popover: Popover!
+    private var popoverOptions: [PopoverOption] = [
+        .Type(.Down),
+        .BlackOverlayColor(UIColor(white: 0.0, alpha: 0.6))
+    ]
+    
     
     func showImage() {
         if (!imageShowedInBig) {
@@ -78,6 +88,7 @@ class ShowReviewViewController: UIViewController, NSURLConnectionDataDelegate {
         
         navigationBar.topItem?.title = pin?.title
         textDescription.text = pin?.subtitle
+        currentReviewID = pin!.ReviewID
         imageThumb.userInteractionEnabled = true
         imageThumb.layer.masksToBounds = true
         imageThumb.layer.cornerRadius = imageThumb.bounds.size.width/2
@@ -85,16 +96,16 @@ class ShowReviewViewController: UIViewController, NSURLConnectionDataDelegate {
         imageThumb.layer.borderColor = UIColor(red: 13/255, green: 70/255, blue: 131/255, alpha: 1.0).CGColor
         
         var imagePath = ""
-        if pin!.ImageLink.containsString("http") {
-            imagePath = pin!.ImageLink
-        }
-        else {
-            imagePath = jsonRequest.url + pin!.ImageLink
-        }
+            if pin!.ImageLink.containsString("http") {
+                imagePath = pin!.ImageLink
+            }
+            else {
+                imagePath = jsonRequest.url + pin!.ImageLink
+            }
         
-        if let checkedUrl = NSURL(string: imagePath) {
-            downloadImage(checkedUrl,frame: imageThumb)
-        }
+            if let checkedUrl = NSURL(string: imagePath) {
+                downloadImage(checkedUrl,frame: imageThumb)
+            }
     }
 
     override func didReceiveMemoryWarning() {
@@ -145,6 +156,114 @@ class ShowReviewViewController: UIViewController, NSURLConnectionDataDelegate {
     }
     
     @IBAction func newReviewButtonClick(sender: UIBarButtonItem) {
+        
+        let startPoint = CGPoint(x: self.view.frame.width - 25, y: 55)
+        let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: 135))
+        
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.scrollEnabled = false
+        tableView.tag = 999
+        self.popover = Popover(options: self.popoverOptions, showHandler: nil, dismissHandler: nil)
+        self.popover.show(tableView, point: startPoint)
+    }
+    
+    
+    func randomStringWithLength (len : Int) -> NSString {
+        
+        let letters : NSString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+        
+        let randomString : NSMutableString = NSMutableString(capacity: len)
+        
+        for (var i=0; i < len; i++){
+            let length = UInt32 (letters.length)
+            let rand = arc4random_uniform(length)
+            randomString.appendFormat("%C", letters.characterAtIndex(Int(rand)))
+        }
+        
+        return randomString
+    }
+    
+    
+    func askForSureWhenReportIsSelected()
+    {
+            self.currentRandomGeneratedCode = self.randomStringWithLength(6) as String
+        
+            //Create the AlertController
+            let actionSheetController: UIAlertController = UIAlertController(title: "Report abuse", message: "This make the reported Review hidden. Please insert this code below to verify your choose: " + self.currentRandomGeneratedCode, preferredStyle: .Alert)
+            
+            //Create and add the Cancel action
+            let cancelAction: UIAlertAction = UIAlertAction(title: "Cancel", style: .Cancel) { action -> Void in
+                //Do nothing
+            }
+            actionSheetController.addAction(cancelAction)
+            //Create and an option action
+            let nextAction: UIAlertAction = UIAlertAction(title: "Send", style: .Default) { action -> Void in
+                print(actionSheetController.textFields?.first?.text)
+                if self.currentRandomGeneratedCode == actionSheetController.textFields?.first?.text?.uppercaseString {
+                    self.reportAbuseForSelectedReview()
+                }
+                else
+                {
+                    self.showMessage("", detail: "The verify code doesn't match. Please try again")
+                    
+                }
+            }
+            actionSheetController.addAction(nextAction)
+            //Add a text field
+            actionSheetController.addTextFieldWithConfigurationHandler { textField -> Void in
+                //TextField configuration
+                textField.textColor = UIColor.blueColor()
+            }
+        
+
+            //Present the AlertController
+            self.presentViewController(actionSheetController, animated: true, completion: nil)
+    }
+    
+    func showMessage(message:String, detail:String?) {
+        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+        if (detail != nil) {
+            hud.detailsLabelText = detail
+        }
+        hud.mode = MBProgressHUDMode.Text
+        hud.dimBackground = true
+        hud.hide(true, afterDelay: 5.0)
+    }
+
+    
+    func reportAbuseForSelectedReview()
+    {
+        let loginHelper = JSonHelper()
+        //currentReviewID
+        
+        let params = [
+            "review_id": currentReviewID!
+        ]
+        
+        loginHelper.getJson("GET",apiUrl: loginHelper.API_reportReviewAbuse, parameters: params) { (jsonData) -> () in
+            
+            if jsonData == nil {
+                self.showMessage("", detail: "Error on report the Review. Please check your connection")
+            }
+            else {
+                let json = JSON(jsonData!)
+                if let message = json["error"].string {
+                    print(message)
+                    self.showMessage("", detail: "Error while reporting the Review. " + message)
+                }
+                else if let message = json["message"].string {
+                    print(message)
+                    self.showMessage("", detail: "Great! " + message)
+                }
+                else {
+                     self.showMessage("", detail: "Sorry, unknow error. Try again.")
+                }
+            }
+        }
+    }
+
+    func showNewRatingView() {
         let vc = self.storyboard?.instantiateViewControllerWithIdentifier("rateViewController") as! RateViewController
         let index = pin?.Tag
         NSLog("New Review for: \(index)")
@@ -161,6 +280,18 @@ class ShowReviewViewController: UIViewController, NSURLConnectionDataDelegate {
         self.presentViewController(vc, animated: true, completion: nil)
     }
     
+    func shareButtonTapped() {
+            let title:String = self.pin!.title!
+            let Description:String = self.pin!.subtitle!
+            let reviewImage:UIImage = self.imageThumb.image!
+            let review =  title + " - " + Description
+            let welcome = "Hey! Please give a look at this Review! "
+            let link = "http://www.ratingme.eu/reviews/" + currentReviewID!
+            let shareItems:Array = [welcome, review, reviewImage, link]
+            let activityVC = UIActivityViewController(activityItems: shareItems, applicationActivities: nil)
+            
+            self.presentViewController(activityVC, animated: true, completion: nil)
+    }
 
     func loadData() {
         let params = [ "id": pin!.ReviewID]
@@ -184,8 +315,20 @@ class ShowReviewViewController: UIViewController, NSURLConnectionDataDelegate {
                 self.Descriptions.addObject(subJson[0]["description"].string!)
                 self.Users.addObject(subJson[0]["user_name"].string!)
                 self.Rates1.addObject(subJson[0]["rate1"].float!)
-                self.Rates2.addObject(subJson[0]["rate2"].float!)
-                self.Rates3.addObject(subJson[0]["rate3"].float!)
+                if subJson[0]["rate2"].float != nil {
+                    self.Rates2.addObject(subJson[0]["rate2"].float!)
+                }
+                else
+                {
+                    self.Rates2.addObject(0.0)
+                }
+                if subJson[0]["rate3"].float != nil {
+                    self.Rates3.addObject(subJson[0]["rate3"].float!)
+                }
+                else
+                {
+                    self.Rates3.addObject(0.0)
+                }
             }
             
             self.rateTableView.reloadData()
@@ -195,15 +338,42 @@ class ShowReviewViewController: UIViewController, NSURLConnectionDataDelegate {
         }
     }
 } //End
-
     
 extension ShowReviewViewController:UITableViewDelegate, UITableViewDataSource {
     
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        if tableView.tag == 999 {
+            self.popover.dismiss()
+            if indexPath.row == 0 {
+                showNewRatingView()
+            }
+            if indexPath.row == 1 {
+                shareButtonTapped()
+            }
+            if indexPath.row == 2 {
+                askForSureWhenReportIsSelected()
+            }
+        }
+    }
+    
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return Descriptions.count;
+        if tableView.tag == 999 {
+            return 3
+        }
+        else {
+            return Descriptions.count
+        }
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        
+        if tableView.tag == 999 {
+            let cell = UITableViewCell(style: .Default, reuseIdentifier: nil)
+            cell.textLabel?.text = self.texts[indexPath.row]
+            return cell
+        }
+        else {
+            
         let myCell:RateCustomCell = rateTableView.dequeueReusableCellWithIdentifier("CustomCell") as! RateCustomCell
         
         myCell.lblQuestion1.text = pin?.Question1
@@ -245,6 +415,7 @@ extension ShowReviewViewController:UITableViewDelegate, UITableViewDataSource {
         myCell.starRatingQuestion3.userInteractionEnabled = false
         
         return myCell
+        }
     }
     
 }

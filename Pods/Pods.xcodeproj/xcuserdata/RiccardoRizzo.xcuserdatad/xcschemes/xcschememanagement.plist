@@ -19,6 +19,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>Popover.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>SDWebImage.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -47,6 +52,16 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>24D7E5CC67B30C72C652D4071A19400F</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>3D1E8180F23E19E65004295AD10C3ED3</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>432ECC54282C84882B482CCB4CF227FC</key>
 		<dict>
 			<key>primary</key>
@@ -58,6 +73,26 @@
 			<true/>
 		</dict>
 		<key>687FCC22FB01B4B724002A5653837E7A</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>6BF9D8CCEB76596753009C2A6E112196</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>7913C4AF7BD661371ABD712D4860213A</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>973D93C224086E6BCB330DCE7C7612B8</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>A519574100AA47711A7F00A0BF425076</key>
 		<dict>
 			<key>primary</key>
 			<true/>

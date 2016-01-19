@@ -207,11 +207,24 @@ class ViewController: UIViewController, ReviewControllerProtocol,RateControllerP
         vc.pin = annotation
         self.presentViewController(vc, animated: true, completion: nil)
     }
+    
+    func showEULAView()
+    {
+            // Uncomment this to show EULA every time
+            //NSUserDefaults.standardUserDefaults().setObject("0", forKey: "EULA")
+            //NSUserDefaults.standardUserDefaults().synchronize()
+        
+            let eula = NSUserDefaults.standardUserDefaults().objectForKey("loginData.EULA") as? String
+            if eula == nil {
+                    let vc = self.storyboard?.instantiateViewControllerWithIdentifier("EULAViewController") as! EULAViewController
+                    self.presentViewController(vc, animated: true, completion: nil)
+            }
+    }
 
     override func viewDidAppear(animated: Bool) {
         
         self.closeLeft()
-        
+    
         userInfos = loadLoginData()
         
         if userInfos == nil {
@@ -220,7 +233,6 @@ class ViewController: UIViewController, ReviewControllerProtocol,RateControllerP
             self.presentViewController(vc, animated: true, completion: nil)
         }
         else {
-            
             if !loginHappened {
                 loginHappened = true
                 saveLoginData(userInfos!)
@@ -230,7 +242,8 @@ class ViewController: UIViewController, ReviewControllerProtocol,RateControllerP
                     searchByUserLocation(locationManager.location!.coordinate.latitude, lon: locationManager.location!.coordinate.longitude, center: true)
                 }
                 else {
-                    searchForLocation("Italia", withRadius: 100.0, center: true)
+                    let region:MKCoordinateRegion = mainMap.region  // get the current region
+                    searchByUserLocation(region.center.latitude, lon: region.center.longitude, center: false)
                 }
                 
                 mainMap.showsUserLocation = true
@@ -240,6 +253,8 @@ class ViewController: UIViewController, ReviewControllerProtocol,RateControllerP
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        showEULAView()
         setupUI()
     }
 
@@ -543,7 +558,7 @@ class ViewController: UIViewController, ReviewControllerProtocol,RateControllerP
 extension ViewController:MKMapViewDelegate {
     
     func mapView(mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
-        
+      if loginHappened {
         if lastRegion?.center.latitude != mainMap.region.center.latitude {
             lastRegion = mainMap.region
             if let popupView = self.view.viewWithTag(999) {
@@ -552,6 +567,7 @@ extension ViewController:MKMapViewDelegate {
             let region:MKCoordinateRegion = mainMap.region  // get the current region
             searchByUserLocation(region.center.latitude, lon: region.center.longitude, center: false)
         }
+      }
     }
     
     

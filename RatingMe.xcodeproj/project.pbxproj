@@ -10,6 +10,7 @@
 		934148101B84CD0B00F768BD /* ShowReviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9341480F1B84CD0B00F768BD /* ShowReviewViewController.swift */; };
 		934BE18C1BF4B0F0007225D8 /* CircularLoaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 934BE18B1BF4B0F0007225D8 /* CircularLoaderView.swift */; };
 		934BE18E1BF4B2B5007225D8 /* CustomImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 934BE18D1BF4B2B5007225D8 /* CustomImageView.swift */; };
+		935D55B31C47E15200ADC2F9 /* EULAViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 935D55B21C47E15200ADC2F9 /* EULAViewController.swift */; };
 		9368A8FA1C3ABA1F0016481E /* Lobster 1.4.otf in Resources */ = {isa = PBXBuildFile; fileRef = 9368A8F91C3ABA1F0016481E /* Lobster 1.4.otf */; };
 		9368A8FC1C3ABD9C0016481E /* Splash.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 9368A8FB1C3ABD9C0016481E /* Splash.tiff */; };
 		9370F25C1BEDFA2B003470DC /* LoginWithUIDViewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9370F25B1BEDFA2B003470DC /* LoginWithUIDViewViewController.swift */; };
@@ -50,6 +51,7 @@
 		9341480F1B84CD0B00F768BD /* ShowReviewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowReviewViewController.swift; sourceTree = "<group>"; };
 		934BE18B1BF4B0F0007225D8 /* CircularLoaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircularLoaderView.swift; sourceTree = "<group>"; };
 		934BE18D1BF4B2B5007225D8 /* CustomImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomImageView.swift; sourceTree = "<group>"; };
+		935D55B21C47E15200ADC2F9 /* EULAViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EULAViewController.swift; sourceTree = "<group>"; };
 		9368A8F91C3ABA1F0016481E /* Lobster 1.4.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lobster 1.4.otf"; sourceTree = "<group>"; };
 		9368A8FB1C3ABD9C0016481E /* Splash.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = Splash.tiff; sourceTree = "<group>"; };
 		9370F25B1BEDFA2B003470DC /* LoginWithUIDViewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginWithUIDViewViewController.swift; sourceTree = "<group>"; };
@@ -136,6 +138,7 @@
 				93FC5BE61B3C4CB00010A94D /* MainViewController.swift */,
 				9370F25B1BEDFA2B003470DC /* LoginWithUIDViewViewController.swift */,
 				9378572F1BF0AC04003BE6A7 /* SignInViewController.swift */,
+				935D55B21C47E15200ADC2F9 /* EULAViewController.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -398,6 +401,7 @@
 				934BE18E1BF4B2B5007225D8 /* CustomImageView.swift in Sources */,
 				934BE18C1BF4B0F0007225D8 /* CircularLoaderView.swift in Sources */,
 				93FC5C091B3C4CD70010A94D /* PinAnnotationView.swift in Sources */,
+				935D55B31C47E15200ADC2F9 /* EULAViewController.swift in Sources */,
 				93FC5C081B3C4CD70010A94D /* PinAnnotation.swift in Sources */,
 				937FCCC21B4577CF00DC141C /* StarRating.swift in Sources */,
 				93D95BEB1B442B73002D5C53 /* NewReviewViewController.swift in Sources */,

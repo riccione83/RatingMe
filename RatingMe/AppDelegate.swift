@@ -14,9 +14,36 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
+/*    func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
+        print("Got TOKEN DATA: \(deviceToken)")
+        
+        let settings = UIUserNotificationSettings(forTypes: [.Badge, .Alert, .Sound], categories: nil)
+        UIApplication.sharedApplication().registerUserNotificationSettings(settings)
+        
+    }
+    
+    func application(application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: NSError) {
+        print("Couldn't register: \(error)")
+    }
+    
+    func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
+        print("Received: \(userInfo)")
+       // var temp:NSDictionary = userInfo
+        if let info = userInfo["aps"] as? Dictionary<String, AnyObject>
+        {
+                let alertMsg = info["alert"] as! String
+                let alert:UIAlertView!
+                alert = UIAlertView(title: "", message: alertMsg, delegate: nil, cancelButtonTitle: "OK")
+                alert.show()
+        }
+    }*/
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
+        
+        //Init register notification
+      //  UIApplication.sharedApplication().registerForRemoteNotifications()
+        
         
         // create viewController code...
         let storyboard = UIStoryboard(name: "Main", bundle: nil)

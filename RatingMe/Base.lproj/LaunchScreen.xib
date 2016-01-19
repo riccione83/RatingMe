@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -55,15 +56,18 @@
                             <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="128" id="WaJ-ur-6xx"/>
+                                <constraint firstAttribute="width" secondItem="rMd-EU-6d1" secondAttribute="height" multiplier="299:128" id="chX-Sf-aWt"/>
                             </constraints>
                             <variation key="default">
                                 <mask key="constraints">
                                     <exclude reference="WaJ-ur-6xx"/>
+                                    <exclude reference="chX-Sf-aWt"/>
                                 </mask>
                             </variation>
                             <variation key="heightClass=regular-widthClass=compact">
                                 <mask key="constraints">
                                     <include reference="WaJ-ur-6xx"/>
+                                    <include reference="chX-Sf-aWt"/>
                                 </mask>
                             </variation>
                         </imageView>
@@ -90,17 +94,17 @@
                             <exclude reference="rMd-EU-6d1"/>
                         </mask>
                         <mask key="constraints">
+                            <exclude reference="kym-ZM-AXu"/>
+                            <exclude reference="lIT-oy-OOQ"/>
                             <exclude reference="T1s-wW-fqP"/>
                             <exclude reference="pze-hN-LDp"/>
                             <exclude reference="wbR-wS-kng"/>
+                            <exclude reference="Gju-50-tnj"/>
+                            <exclude reference="YIr-6U-bGk"/>
                             <exclude reference="29N-Cn-cTD"/>
                             <exclude reference="8It-RG-9b6"/>
                             <exclude reference="Huh-hK-bSr"/>
                             <exclude reference="nrL-21-2Ii"/>
-                            <exclude reference="kym-ZM-AXu"/>
-                            <exclude reference="lIT-oy-OOQ"/>
-                            <exclude reference="Gju-50-tnj"/>
-                            <exclude reference="YIr-6U-bGk"/>
                         </mask>
                     </variation>
                     <variation key="heightClass=regular-widthClass=compact">
@@ -111,17 +115,17 @@
                             <include reference="rMd-EU-6d1"/>
                         </mask>
                         <mask key="constraints">
+                            <include reference="kym-ZM-AXu"/>
+                            <include reference="lIT-oy-OOQ"/>
                             <include reference="T1s-wW-fqP"/>
                             <include reference="pze-hN-LDp"/>
                             <include reference="wbR-wS-kng"/>
-                            <include reference="29N-Cn-cTD"/>
-                            <include reference="8It-RG-9b6"/>
-                            <include reference="Huh-hK-bSr"/>
-                            <include reference="nrL-21-2Ii"/>
-                            <include reference="kym-ZM-AXu"/>
-                            <include reference="lIT-oy-OOQ"/>
                             <include reference="Gju-50-tnj"/>
                             <include reference="YIr-6U-bGk"/>
+                            <include reference="29N-Cn-cTD"/>
+                            <include reference="8It-RG-9b6"/>
+                            <exclude reference="Huh-hK-bSr"/>
+                            <exclude reference="nrL-21-2Ii"/>
                         </mask>
                     </variation>
                 </view>

@@ -10,6 +10,7 @@ target 'RatingMe' do
     pod 'SwiftyJSON', :git => 'https://github.com/SwiftyJSON/SwiftyJSON.git'
     pod 'SDWebImage','~> 3.7'
     pod 'UIActivityIndicator-for-SDWebImage'
+    pod 'Popover', '~> 0.8'
 end
 
 target 'RatingMeTests' do
