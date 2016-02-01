@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		933A63471C5FB4BB0099C501 /* RatingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933A63461C5FB4BB0099C501 /* RatingsController.swift */; };
 		934148101B84CD0B00F768BD /* ShowReviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9341480F1B84CD0B00F768BD /* ShowReviewViewController.swift */; };
 		934BE18C1BF4B0F0007225D8 /* CircularLoaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 934BE18B1BF4B0F0007225D8 /* CircularLoaderView.swift */; };
 		934BE18E1BF4B2B5007225D8 /* CustomImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 934BE18D1BF4B2B5007225D8 /* CustomImageView.swift */; };
@@ -15,6 +16,9 @@
 		9368A8FC1C3ABD9C0016481E /* Splash.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 9368A8FB1C3ABD9C0016481E /* Splash.tiff */; };
 		9370F25C1BEDFA2B003470DC /* LoginWithUIDViewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9370F25B1BEDFA2B003470DC /* LoginWithUIDViewViewController.swift */; };
 		937857301BF0AC04003BE6A7 /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9378572F1BF0AC04003BE6A7 /* SignInViewController.swift */; };
+		937B92831C5FAFBE0014530E /* Review.swift in Sources */ = {isa = PBXBuildFile; fileRef = 937B92821C5FAFBE0014530E /* Review.swift */; };
+		937B92851C5FAFC90014530E /* Rating.swift in Sources */ = {isa = PBXBuildFile; fileRef = 937B92841C5FAFC90014530E /* Rating.swift */; };
+		937B92871C5FB0440014530E /* ReviewsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 937B92861C5FB0440014530E /* ReviewsController.swift */; };
 		937FCCC21B4577CF00DC141C /* StarRating.swift in Sources */ = {isa = PBXBuildFile; fileRef = 937FCCC11B4577CF00DC141C /* StarRating.swift */; };
 		938EC0FC1BDA778700177356 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938EC0FB1BDA778700177356 /* User.swift */; };
 		93AB02161B45305900358705 /* NewRateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93AB02151B45305900358705 /* NewRateViewController.swift */; };
@@ -48,6 +52,7 @@
 /* Begin PBXFileReference section */
 		6025ED769039CCD4D2FAE9B8 /* Pods-RatingMe.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RatingMe.debug.xcconfig"; path = "Pods/Target Support Files/Pods-RatingMe/Pods-RatingMe.debug.xcconfig"; sourceTree = "<group>"; };
 		6A5E55D43CAB3465B72919E5 /* Pods_RatingMe.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RatingMe.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		933A63461C5FB4BB0099C501 /* RatingsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RatingsController.swift; sourceTree = "<group>"; };
 		9341480F1B84CD0B00F768BD /* ShowReviewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowReviewViewController.swift; sourceTree = "<group>"; };
 		934BE18B1BF4B0F0007225D8 /* CircularLoaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircularLoaderView.swift; sourceTree = "<group>"; };
 		934BE18D1BF4B2B5007225D8 /* CustomImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomImageView.swift; sourceTree = "<group>"; };
@@ -56,6 +61,9 @@
 		9368A8FB1C3ABD9C0016481E /* Splash.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = Splash.tiff; sourceTree = "<group>"; };
 		9370F25B1BEDFA2B003470DC /* LoginWithUIDViewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginWithUIDViewViewController.swift; sourceTree = "<group>"; };
 		9378572F1BF0AC04003BE6A7 /* SignInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
+		937B92821C5FAFBE0014530E /* Review.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Review.swift; sourceTree = "<group>"; };
+		937B92841C5FAFC90014530E /* Rating.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Rating.swift; sourceTree = "<group>"; };
+		937B92861C5FB0440014530E /* ReviewsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReviewsController.swift; sourceTree = "<group>"; };
 		937FCCC11B4577CF00DC141C /* StarRating.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StarRating.swift; sourceTree = "<group>"; };
 		938EC0FB1BDA778700177356 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		93AB02151B45305900358705 /* NewRateViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewRateViewController.swift; sourceTree = "<group>"; };
@@ -122,6 +130,8 @@
 				93B1C6BA1B628F7D002044A3 /* RateCustomCell.swift */,
 				93FC5C061B3C4CD70010A94D /* PinAnnotation.swift */,
 				938EC0FB1BDA778700177356 /* User.swift */,
+				937B92821C5FAFBE0014530E /* Review.swift */,
+				937B92841C5FAFC90014530E /* Rating.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -150,6 +160,8 @@
 				93FC5BE41B3C4CB00010A94D /* AppDelegate.swift */,
 				93E06C321B85C7BD00DAEA51 /* UserController.swift */,
 				93FC5C041B3C4CC80010A94D /* JSonHelper.swift */,
+				937B92861C5FB0440014530E /* ReviewsController.swift */,
+				933A63461C5FB4BB0099C501 /* RatingsController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -402,6 +414,9 @@
 				934BE18C1BF4B0F0007225D8 /* CircularLoaderView.swift in Sources */,
 				93FC5C091B3C4CD70010A94D /* PinAnnotationView.swift in Sources */,
 				935D55B31C47E15200ADC2F9 /* EULAViewController.swift in Sources */,
+				937B92871C5FB0440014530E /* ReviewsController.swift in Sources */,
+				937B92831C5FAFBE0014530E /* Review.swift in Sources */,
+				937B92851C5FAFC90014530E /* Rating.swift in Sources */,
 				93FC5C081B3C4CD70010A94D /* PinAnnotation.swift in Sources */,
 				937FCCC21B4577CF00DC141C /* StarRating.swift in Sources */,
 				93D95BEB1B442B73002D5C53 /* NewReviewViewController.swift in Sources */,
@@ -410,6 +425,7 @@
 				934148101B84CD0B00F768BD /* ShowReviewViewController.swift in Sources */,
 				93FC5C051B3C4CC80010A94D /* JSonHelper.swift in Sources */,
 				93FC5BE71B3C4CB00010A94D /* MainViewController.swift in Sources */,
+				933A63471C5FB4BB0099C501 /* RatingsController.swift in Sources */,
 				9370F25C1BEDFA2B003470DC /* LoginWithUIDViewViewController.swift in Sources */,
 				93FC5BE51B3C4CB00010A94D /* AppDelegate.swift in Sources */,
 				937857301BF0AC04003BE6A7 /* SignInViewController.swift in Sources */,

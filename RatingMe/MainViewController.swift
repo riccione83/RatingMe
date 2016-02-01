@@ -692,8 +692,6 @@ extension ViewController:UISearchBarDelegate {
         if searchBar.text!.characters.count > 0 {
             searchBar.resignFirstResponder()
             searchBar.endEditing(true)
-           // getCoordinatesByLocation(searchBar.text)
-           // searchForLocation(searchBar.text,withRadius: zoomLevelForMap(),center: true)
             searchQuery(searchBar.text!)
         }
     }

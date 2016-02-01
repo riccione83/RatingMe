@@ -370,51 +370,28 @@ class ShowReviewViewController: UIViewController, NSURLConnectionDataDelegate {
     }
 
     func loadData() {
-        let params = [ "id": pin!.ReviewID]
         
-        jsonRequest.getJson("GET", apiUrl: jsonRequest.API_showRatings, parameters: params) { (jsonData) -> () in
-
-            if jsonData == nil {
-                return
+        let rc = RatingsController()
+        
+        rc.getRatingsByID(pin!.ReviewID) { (rating) -> () in
+            for rat in rating! {
+                let r:Rating = rat as! Rating
+                self.Descriptions.addObject(r.Description!)
+                self.Users.addObject(r.userName!)
+                self.Rates1.addObject(r.rate1!)
+                self.Rates2.addObject(r.rate2!)
+                self.Rates3.addObject(r.rate3!)
             }
-            let json = JSON(jsonData!)
-            
-            if let message = json[0]["error"].string {
-                print(message)
-                return
-            }
-            
-            for (key,subJson):(String, JSON) in json {
-                print(key)
-                print(subJson[0]["description"])
-                
-                self.Descriptions.addObject(subJson[0]["description"].string!)
-                self.Users.addObject(subJson[0]["user_name"].string!)
-                self.Rates1.addObject(subJson[0]["rate1"].float!)
-                if subJson[0]["rate2"].float != nil {
-                    self.Rates2.addObject(subJson[0]["rate2"].float!)
-                }
-                else
-                {
-                    self.Rates2.addObject(0.0)
-                }
-                if subJson[0]["rate3"].float != nil {
-                    self.Rates3.addObject(subJson[0]["rate3"].float!)
-                }
-                else
-                {
-                    self.Rates3.addObject(0.0)
-                }
-            }
-            
             self.rateTableView.reloadData()
             if self.Descriptions.count == 0 {
                 self.viewNoReview.hidden = false
             }
         }
     }
-} //End
     
+}//End
+        
+        
 extension ShowReviewViewController:UITableViewDelegate, UITableViewDataSource {
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
