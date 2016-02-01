@@ -23,6 +23,7 @@ public class JSonHelper {
     let API_loginWithSocial = "api/login_with_social"
     let API_searchReviews = "api/search_reviews"
     let API_reportReviewAbuse = "api/report_review"
+    let API_reportUser = "api/report_user"
     
     
     /*

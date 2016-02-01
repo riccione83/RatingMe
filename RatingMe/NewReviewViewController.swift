@@ -12,7 +12,7 @@ import SwiftyJSON
 import Alamofire
 import MBProgressHUD
 
-protocol ReviewControllerProtocol {
+protocol ReviewControllerProtocol {    
     func searchByUserLocation(lat:Double,lon:Double, center: Bool)
 }
 
@@ -37,6 +37,7 @@ class ReviewViewController: UIViewController {
     var keyboardWasShowed: Bool = false
     var imagePicker = UIImagePickerController()
     var selectedImage:UIImage? = nil
+    var userInfo:User = User()
     
     func selectImageToSend() {
         
@@ -96,7 +97,7 @@ class ReviewViewController: UIViewController {
                             "question1":question1,
                             "question2":question2,
                             "question3":question3,
-                            "user_id":"1",
+                            "user_id":userInfo.userID ,
                             "isAdvertisement":"0",
                             "adImageLink":"0" ]
         

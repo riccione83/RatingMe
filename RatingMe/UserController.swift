@@ -85,7 +85,7 @@ public class UserController{
     }
     
     
-    public func loginWithCredentials(userNameorEmail:String, password:String, completitionHandler:(success:Bool) -> ()) {
+    public func loginWithCredentials(userNameorEmail:String, password:String, completitionHandler:(success:Bool, message:String) -> ()) {
         
         let params = [
             "user_id":userNameorEmail,
@@ -94,21 +94,25 @@ public class UserController{
         
         loginHelper.getJson("GET", apiUrl: loginHelper.API_login, parameters: params) { (jsonData) -> () in
             if jsonData == nil {
-                completitionHandler(success: false)
+                completitionHandler(success: false, message: "")
             }
             else {
                 let json = JSON(jsonData!)
                 if let message = json["error"].string {
                     print(message)
-                    completitionHandler(success: false)
+                    completitionHandler(success: false, message: "")
                 }
                 else if let message = json["user"].string {
-                    print(message)
+                    var infoMessage = ""
+                    if let infos = json["info"].string {
+                        print(infos)
+                        infoMessage = infos
+                    }
                     self.user.userID = message
-                    completitionHandler(success: true)
+                    completitionHandler(success: true, message: infoMessage)
                 }
                 else {
-                    completitionHandler(success: false)
+                    completitionHandler(success: false, message: "")
                 }
             }
         }
@@ -129,7 +133,7 @@ public class UserController{
                     if let properties = twitterAccount!.valueForKey("properties") as? [String:String], user_id = properties["user_id"] {
                         self.user.userSocialID = user_id
                         self.user.userName = twitterAccount!.username as String
-                        self.loginWithSocial(self.user.userName,uid: self.user.userSocialID, provider: "twitter", completitionHandler: { (success) -> () in
+                        self.loginWithSocial(self.user.userName + " via Twitter",uid: self.user.userSocialID, provider: "twitter", completitionHandler: { (success) -> () in
                             onComplete(success,"success")
                         })
                     }

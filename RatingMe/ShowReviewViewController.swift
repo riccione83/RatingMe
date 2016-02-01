@@ -37,7 +37,7 @@ class ShowReviewViewController: UIViewController, NSURLConnectionDataDelegate {
     
     let jsonRequest = JSonHelper()
 
-    private var texts = ["Add a Rate", "Share", "Report abuse"]
+    private var texts = ["Add a Rate", "Share", "Report this Review","Block this user"]
     
     private var popover: Popover!
     private var popoverOptions: [PopoverOption] = [
@@ -45,6 +45,14 @@ class ShowReviewViewController: UIViewController, NSURLConnectionDataDelegate {
         .BlackOverlayColor(UIColor(white: 0.0, alpha: 0.6))
     ]
     
+    private func showLoadingHUD() {
+        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+        hud.labelText = "Wait..."
+    }
+    
+    private func hideLoadingHUD() {
+        MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
+    }
     
     func showImage() {
         if (!imageShowedInBig) {
@@ -158,7 +166,7 @@ class ShowReviewViewController: UIViewController, NSURLConnectionDataDelegate {
     @IBAction func newReviewButtonClick(sender: UIBarButtonItem) {
         
         let startPoint = CGPoint(x: self.view.frame.width - 25, y: 55)
-        let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: 135))
+        let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: 180))
         
         tableView.delegate = self
         tableView.dataSource = self
@@ -190,7 +198,7 @@ class ShowReviewViewController: UIViewController, NSURLConnectionDataDelegate {
             self.currentRandomGeneratedCode = self.randomStringWithLength(6) as String
         
             //Create the AlertController
-            let actionSheetController: UIAlertController = UIAlertController(title: "Report abuse", message: "This make the reported Review hidden. Please insert this code below to verify your choose: " + self.currentRandomGeneratedCode, preferredStyle: .Alert)
+            let actionSheetController: UIAlertController = UIAlertController(title: "Report abuse", message: "This make the reported Review hidden to all User. Please insert this code below to verify your choose: " + self.currentRandomGeneratedCode, preferredStyle: .Alert)
             
             //Create and add the Cancel action
             let cancelAction: UIAlertAction = UIAlertAction(title: "Cancel", style: .Cancel) { action -> Void in
@@ -198,7 +206,7 @@ class ShowReviewViewController: UIViewController, NSURLConnectionDataDelegate {
             }
             actionSheetController.addAction(cancelAction)
             //Create and an option action
-            let nextAction: UIAlertAction = UIAlertAction(title: "Send", style: .Default) { action -> Void in
+            let nextAction: UIAlertAction = UIAlertAction(title: "Report", style: .Default) { action -> Void in
                 print(actionSheetController.textFields?.first?.text)
                 if self.currentRandomGeneratedCode == actionSheetController.textFields?.first?.text?.uppercaseString {
                     self.reportAbuseForSelectedReview()
@@ -215,10 +223,42 @@ class ShowReviewViewController: UIViewController, NSURLConnectionDataDelegate {
                 //TextField configuration
                 textField.textColor = UIColor.blueColor()
             }
-        
-
             //Present the AlertController
             self.presentViewController(actionSheetController, animated: true, completion: nil)
+    }
+    
+    func askForSureWhenReportUserIsSelected()
+    {
+        self.currentRandomGeneratedCode = self.randomStringWithLength(6) as String
+        
+        //Create the AlertController
+        let actionSheetController: UIAlertController = UIAlertController(title: "Report abuse", message: "This make the account of selected User locked. Please insert this code below to verify your choose: " + self.currentRandomGeneratedCode, preferredStyle: .Alert)
+        
+        //Create and add the Cancel action
+        let cancelAction: UIAlertAction = UIAlertAction(title: "Cancel", style: .Cancel) { action -> Void in
+            //Do nothing
+        }
+        actionSheetController.addAction(cancelAction)
+        //Create and an option action
+        let nextAction: UIAlertAction = UIAlertAction(title: "Report", style: .Default) { action -> Void in
+            print(actionSheetController.textFields?.first?.text)
+            if self.currentRandomGeneratedCode == actionSheetController.textFields?.first?.text?.uppercaseString {
+                self.reportAbuseForSelectedUser()
+            }
+            else
+            {
+                self.showMessage("", detail: "The verify code doesn't match. Please try again")
+                
+            }
+        }
+        actionSheetController.addAction(nextAction)
+        //Add a text field
+        actionSheetController.addTextFieldWithConfigurationHandler { textField -> Void in
+            //TextField configuration
+            textField.textColor = UIColor.blueColor()
+        }
+        //Present the AlertController
+        self.presentViewController(actionSheetController, animated: true, completion: nil)
     }
     
     func showMessage(message:String, detail:String?) {
@@ -232,6 +272,41 @@ class ShowReviewViewController: UIViewController, NSURLConnectionDataDelegate {
     }
 
     
+    func reportAbuseForSelectedUser()
+    {
+        let loginHelper = JSonHelper()
+        //currentReviewID
+        
+        let params = [
+            "review_id": currentReviewID!
+        ]
+       showLoadingHUD()
+        
+       loginHelper.getJson("GET",apiUrl: loginHelper.API_reportUser, parameters: params) { (jsonData) -> () in
+        
+        self.hideLoadingHUD()
+            if jsonData == nil {
+                self.showMessage("", detail: "Error on report the User. Please check your connection")
+            }
+            else {
+                let json = JSON(jsonData!)
+                if let message = json["error"].string {
+                    print(message)
+                    self.showMessage("", detail: "Error while reporting User account. " + message)
+                }
+                else if let message = json["message"].string {
+                    print(message)
+                    self.showMessage("", detail: "Great! " + message)
+                }
+                else {
+                    self.showMessage("", detail: "Sorry, unknow error. Try again.")
+                }
+            }
+        }
+        
+    }
+    
+    
     func reportAbuseForSelectedReview()
     {
         let loginHelper = JSonHelper()
@@ -240,9 +315,10 @@ class ShowReviewViewController: UIViewController, NSURLConnectionDataDelegate {
         let params = [
             "review_id": currentReviewID!
         ]
-        
+        showLoadingHUD()
         loginHelper.getJson("GET",apiUrl: loginHelper.API_reportReviewAbuse, parameters: params) { (jsonData) -> () in
             
+            self.hideLoadingHUD()
             if jsonData == nil {
                 self.showMessage("", detail: "Error on report the Review. Please check your connection")
             }
@@ -287,7 +363,7 @@ class ShowReviewViewController: UIViewController, NSURLConnectionDataDelegate {
             let review =  title + " - " + Description
             let welcome = "Hey! Please give a look at this Review! "
             let link = "http://www.ratingme.eu/reviews/" + currentReviewID!
-            let shareItems:Array = [welcome, review, reviewImage, link]
+            let shareItems:Array = [reviewImage, welcome, review, link]
             let activityVC = UIActivityViewController(activityItems: shareItems, applicationActivities: nil)
             
             self.presentViewController(activityVC, animated: true, completion: nil)
@@ -353,12 +429,15 @@ extension ShowReviewViewController:UITableViewDelegate, UITableViewDataSource {
             if indexPath.row == 2 {
                 askForSureWhenReportIsSelected()
             }
+            if indexPath.row == 3 {
+                askForSureWhenReportUserIsSelected()
+            }
         }
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if tableView.tag == 999 {
-            return 3
+            return 4
         }
         else {
             return Descriptions.count

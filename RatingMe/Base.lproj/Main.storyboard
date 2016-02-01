@@ -1139,7 +1139,7 @@
                                 <rect key="frame" x="-4" y="392" width="383" height="275"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
-                            <imageView contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MapType" translatesAutoresizingMaskIntoConstraints="NO" id="PIY-RL-iOE" customClass="CustomImageView" customModule="RatingMe" customModuleProvider="target">
+                            <imageView contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="PIY-RL-iOE" customClass="CustomImageView" customModule="RatingMe" customModuleProvider="target">
                                 <rect key="frame" x="10" y="70" width="90" height="90"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="PIY-RL-iOE" secondAttribute="height" multiplier="1:1" id="NWb-EA-hAg"/>
@@ -1283,7 +1283,7 @@
                                         <rect key="frame" x="0.0" y="-60" width="414" height="736"/>
                                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                     </view>
-                                    <imageView contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MapType" translatesAutoresizingMaskIntoConstraints="NO" id="SVN-7i-IMp">
+                                    <imageView contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="SVN-7i-IMp">
                                         <rect key="frame" x="3" y="5" width="90" height="90"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="SVN-7i-IMp" secondAttribute="height" multiplier="1:1" id="Qjw-VR-dGQ"/>

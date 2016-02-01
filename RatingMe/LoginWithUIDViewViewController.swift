@@ -18,6 +18,32 @@ class LoginWithUIDViewViewController: UIViewController {
     var keyboardWasShowed = false
     @IBOutlet var mainScrollView: UIScrollView!
     
+    private func showLoadingHUD() {
+        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+        hud.labelText = "Wait..."
+    }
+    
+    private func hideLoadingHUD() {
+        MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
+    }
+    
+    func messageForUser(message:String) {
+        let actionSheetController: UIAlertController = UIAlertController(title: "Info", message: message, preferredStyle: .Alert)
+        
+        //Create and add the Cancel action
+        let cancelAction: UIAlertAction = UIAlertAction(title: "OK", style: .Cancel) { action -> Void in
+            //Do some stuff
+            self.mainController?.delegate?.userInfos = self.userData.user
+            self.dismissViewControllerAnimated(true, completion: nil)
+        }
+        actionSheetController.addAction(cancelAction)
+        //Create and an option action
+        
+        //Present the AlertController
+        self.presentViewController(actionSheetController, animated: true, completion: nil)
+
+    }
+    
     func showMessage(message:String, detail:String?) {
         let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
         if (detail != nil) {
@@ -77,10 +103,17 @@ class LoginWithUIDViewViewController: UIViewController {
     @IBAction func loginBtnClick(sender: AnyObject) {
             if emailOrUser.text != "" &&
                 password.text != "" {
-                    userData.loginWithCredentials(emailOrUser.text!, password: password.text!, completitionHandler: { (success) -> () in
+                    showLoadingHUD()
+                    userData.loginWithCredentials(emailOrUser.text!, password: password.text!, completitionHandler: { (success, infoMessage) -> () in
+                        self.hideLoadingHUD()
                         if success {
-                            self.mainController?.delegate?.userInfos = self.userData.user
-                            self.dismissViewControllerAnimated(true, completion: nil)
+                            if infoMessage != "" {
+                                self.messageForUser(infoMessage)
+                            }
+                            else {
+                                self.mainController?.delegate?.userInfos = self.userData.user
+                                self.dismissViewControllerAnimated(true, completion: nil)
+                            }
                         }
                         else {
                             self.showMessage("Error on Login", detail: "Please check that user name or password are correct.")

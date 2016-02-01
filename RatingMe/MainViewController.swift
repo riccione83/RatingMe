@@ -78,6 +78,7 @@ class ViewController: UIViewController, ReviewControllerProtocol,RateControllerP
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if (segue.identifier == "ReviewSegue") {
             let reviewView = segue.destinationViewController as! ReviewViewController
+            reviewView.userInfo = userInfos!
             reviewView.delegate = self
         }
     }
@@ -400,25 +401,6 @@ class ViewController: UIViewController, ReviewControllerProtocol,RateControllerP
                 }
             }
         }
-
-        
-    /*    let request = MKLocalSearchRequest()
-        request.naturalLanguageQuery = query
-
-        //let span = MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1)
-        request.region = self.mainMap.region
-       
-        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
-        
-        let search = MKLocalSearch(request: request)
-        search.startWithCompletionHandler { (response, error) -> Void in
-            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-            if response != nil {
-                self.results = response
-                self.resultTableView.hidden = false
-                self.resultTableView.reloadData()
-            }
-        }*/
     }
 
     
@@ -478,7 +460,6 @@ class ViewController: UIViewController, ReviewControllerProtocol,RateControllerP
                 return
             }
             
-
             self.mainMap.removeAnnotations(self.mainMap.annotations)
             for (key,subJson):(String, JSON) in json {
                 let description = subJson[0]["description"].string!
@@ -506,6 +487,8 @@ class ViewController: UIViewController, ReviewControllerProtocol,RateControllerP
                 Pins.addObject(pinPoint)
                 self.mainMap.addAnnotation(pinPoint)
             }
+            
+            
             if(center) {
                 self.fitAnnotation(Pins)
             }
