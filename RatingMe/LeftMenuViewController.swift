@@ -19,7 +19,7 @@ class LeftMenuViewController: UIViewController,UITableViewDataSource,UITableView
    
     @IBOutlet var leftMenuTableView: UITableView!
     var delegate:ViewController?
-    let menuItem = ["New Review","Map Type","Logout"]
+    let menuItem = ["New Review","Messages","Map Type","Logout"]
 
     override func viewDidAppear(animated: Bool) {
         let layer = self.view.layer
@@ -51,9 +51,10 @@ class LeftMenuViewController: UIViewController,UITableViewDataSource,UITableView
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         print("Selected menu item: #\(indexPath.row)")
         switch indexPath.row {
-            case 2: delegate?.logoutClick(self)
+            case 3: delegate?.logoutClick(self)
             case 0: delegate?.performSegueWithIdentifier("ReviewSegue", sender: nil)
-            case 1: delegate?.swapMapType()
+            case 2: delegate?.swapMapType()
+            case 1: delegate?.showMessageView()
             default: self.closeLeft()
         }
         

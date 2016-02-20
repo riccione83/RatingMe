@@ -3,29 +3,13 @@
    version = "1.0">
    <ContextStates>
       <ContextState
-         contextName = "HTTPHelper.(sendRequest(HTTPHelper) -&gt; (NSURLRequest, completion : (NSData!, NSError!) -&gt; ()) -&gt; ()).(closure #1).(closure #2):HTTPHelper.swift">
+         contextName = "ViewController.tableView(UITableView, cellForRowAtIndexPath : NSIndexPath) -&gt; UITableViewCell:MainViewController.swift">
          <PersistentStrings>
             <PersistentString
-               value = "httpResponse.statusCode">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "ShowReviewViewController.tableView(UITableView, cellForRowAtIndexPath : NSIndexPath) -&gt; UITableViewCell:ShowReviewViewController.swift">
-         <PersistentStrings>
-            <PersistentString
-               value = "Rates1">
+               value = "(self.searchedItems![indexPath.row] as? PinAnnotation)?.title">
             </PersistentString>
             <PersistentString
-               value = "starRatingQuestion1">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "ShowReviewViewController.tableView(UITableView, numberOfRowsInSection : Int) -&gt; Int:ShowReviewViewController.swift">
-         <PersistentStrings>
-            <PersistentString
-               value = "Descriptions">
+               value = "(self.searchedItems![indexPath.row] as? PinAnnotation)?.subtitle">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -38,10 +22,29 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
+         contextName = "ViewController.(searchForLocation(ViewController) -&gt; (String, withRadius : Double, latitude_ : Double, longitude_ : Double, center : Bool) -&gt; ()).(closure #1):ViewController.swift">
+      </ContextState>
+      <ContextState
          contextName = "ViewController.makeSignUpRequest(String, lon : String, radius : String) -&gt; ():ViewController.swift">
          <PersistentStrings>
             <PersistentString
                value = "httpRequest.HTTPBody">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "HTTPHelper.(sendRequest(HTTPHelper) -&gt; (NSURLRequest, completion : (NSData!, NSError!) -&gt; ()) -&gt; ()).(closure #1).(closure #2):HTTPHelper.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "httpResponse.statusCode">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "ShowReviewViewController.tableView(UITableView, numberOfRowsInSection : Int) -&gt; Int:ShowReviewViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "Descriptions">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -54,16 +57,21 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "ViewController.(searchForLocation(ViewController) -&gt; (String, withRadius : Double, latitude_ : Double, longitude_ : Double, center : Bool) -&gt; ()).(closure #1):ViewController.swift">
-      </ContextState>
-      <ContextState
-         contextName = "ViewController.tableView(UITableView, cellForRowAtIndexPath : NSIndexPath) -&gt; UITableViewCell:MainViewController.swift">
+         contextName = "ViewController.(searchForLocation(ViewController) -&gt; (String, withRadius : Double, latitude_ : Double, longitude_ : Double, center : Bool) -&gt; ()).(closure #1):MainViewController.swift">
          <PersistentStrings>
             <PersistentString
-               value = "(self.searchedItems![indexPath.row] as? PinAnnotation)?.title">
+               value = "olderPins">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "ShowReviewViewController.tableView(UITableView, cellForRowAtIndexPath : NSIndexPath) -&gt; UITableViewCell:ShowReviewViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "Rates1">
             </PersistentString>
             <PersistentString
-               value = "(self.searchedItems![indexPath.row] as? PinAnnotation)?.subtitle">
+               value = "starRatingQuestion1">
             </PersistentString>
          </PersistentStrings>
       </ContextState>

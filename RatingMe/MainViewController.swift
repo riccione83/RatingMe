@@ -22,6 +22,9 @@ class ViewController: UIViewController, ReviewControllerProtocol,RateControllerP
     @IBOutlet var mainMap: MKMapView!
     @IBOutlet var searchBar: UISearchBar!
     
+    @IBOutlet var menuButton: UIButton!
+    
+    
     let locationManager:CLLocationManager = CLLocationManager()
     var ThisImage:UIImageView = UIImageView()
     var pin:NSMutableArray?
@@ -31,6 +34,8 @@ class ViewController: UIViewController, ReviewControllerProtocol,RateControllerP
     var loginHappened:Bool = false
     var results:MKLocalSearchResponse? = MKLocalSearchResponse()
     let searchTableView: UITableView  =   UITableView()
+    var preventRefreshBanner:Bool = false
+    var olderPins:NSMutableArray = NSMutableArray()
     
     var searchedItems:NSMutableArray?
     
@@ -53,9 +58,20 @@ class ViewController: UIViewController, ReviewControllerProtocol,RateControllerP
 
     }
     
+    func animateStuff(){
+            let alertMsg = "New message has arrived"
+            let alert:UIAlertView!
+            alert = UIAlertView(title: "", message: alertMsg, delegate: nil, cancelButtonTitle: "OK")
+            alert.show()
+        
+        
+    }
+
     private func showLoadingHUD() {
-        let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-        hud.labelText = "Loading data..."
+        if !preventRefreshBanner {
+            let hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+            hud.labelText = "Loading data..."
+        }
     }
     
     private func hideLoadingHUD() {
@@ -95,6 +111,13 @@ class ViewController: UIViewController, ReviewControllerProtocol,RateControllerP
     @IBAction func swapMapTypeButtonClick(sender: UIBarButtonItem) {
         swapMapType()
     }
+    
+    func showMessageView() {
+        let vc = self.storyboard?.instantiateViewControllerWithIdentifier("messageView") as! MessagesViewController
+        vc.userInfo = userInfos!
+        self.presentViewController(vc, animated: true, completion: nil)
+    }
+    
     
     func swapMapType() {
         if mainMap.mapType == MKMapType.Hybrid {
@@ -238,7 +261,7 @@ class ViewController: UIViewController, ReviewControllerProtocol,RateControllerP
                 loginHappened = true
                 saveLoginData(userInfos!)
                 //currentAnnotation = nil
-                
+                preventRefreshBanner = false
                 if (locationManager.location != nil) {
                     searchByUserLocation(locationManager.location!.coordinate.latitude, lon: locationManager.location!.coordinate.longitude, center: true)
                 }
@@ -460,7 +483,7 @@ class ViewController: UIViewController, ReviewControllerProtocol,RateControllerP
                 return
             }
             
-            self.mainMap.removeAnnotations(self.mainMap.annotations)
+            //self.mainMap.removeAnnotations(self.mainMap.annotations)
             for (key,subJson):(String, JSON) in json {
                 let description = subJson[0]["description"].string!
                 let image = subJson[0]["picture"].string ?? ""
@@ -485,7 +508,33 @@ class ViewController: UIViewController, ReviewControllerProtocol,RateControllerP
                 let pinPoint = PinAnnotation(coordinate: coordinate, title:title, subtitle: description, tag: tag ,rating: rating, link: image, ID: reviewID, Q1: question1, Q2: question2, Q3: question3, isAdv: isAdvertisement, advImgLink: advertisementImageLink)
             
                 Pins.addObject(pinPoint)
-                self.mainMap.addAnnotation(pinPoint)
+                //self.mainMap.addAnnotation(pinPoint)
+            }
+            
+            var isEqual = true
+            if Pins.count != self.olderPins.count {
+                isEqual = false
+            }
+            else {
+                if Pins.count > 0 {
+                    for i:Int in 0...(Pins.count-1) {
+                        if (Pins[i] as! PinAnnotation).ReviewID != (self.olderPins[i] as! PinAnnotation).ReviewID {
+                            isEqual = false
+                            break
+                        }
+                    }
+                }
+            }
+            
+            
+            if !isEqual {
+                self.olderPins = Pins
+                self.mainMap.removeAnnotations(self.mainMap.annotations)
+                
+                for pinPoint in Pins {
+                    self.mainMap.addAnnotation(pinPoint as! MKAnnotation)
+                }
+                
             }
             
             
@@ -494,10 +543,9 @@ class ViewController: UIViewController, ReviewControllerProtocol,RateControllerP
             }
 
         
-        if(center && latitude_ > 0 && longitude_ > 0) {
+            if(center && latitude_ > 0 && longitude_ > 0) {
                 self.centerMap(latitude_, withLon: longitude_)
-        }
-         //NSLog("Showed pins: \(tag)")
+            }
             UIApplication.sharedApplication().networkActivityIndicatorVisible = false
             self.hideLoadingHUD()
     }
@@ -543,6 +591,7 @@ extension ViewController:MKMapViewDelegate {
     func mapView(mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
       if loginHappened {
         if lastRegion?.center.latitude != mainMap.region.center.latitude {
+            preventRefreshBanner = true
             lastRegion = mainMap.region
             if let popupView = self.view.viewWithTag(999) {
                 popupView.removeFromSuperview()
@@ -553,7 +602,20 @@ extension ViewController:MKMapViewDelegate {
       }
     }
     
-    
+    func mapView(mapView: MKMapView, didAddAnnotationViews views: [MKAnnotationView]) {
+        
+        for annView in views
+        {
+            annView.transform = CGAffineTransformMakeScale(0.5, 0.5)
+            
+            UIView.animateWithDuration(0.3, animations: { () -> Void in
+                annView.transform = CGAffineTransformMakeScale(1.1, 1.1)
+                }, completion: { (end) -> Void in
+                    annView.transform = CGAffineTransformIdentity
+            })
+            
+        }
+    }
     
     func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
         

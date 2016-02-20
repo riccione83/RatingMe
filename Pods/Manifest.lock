@@ -7,6 +7,7 @@ PODS:
   - SDWebImage/Core (3.7.3)
   - SlideMenuControllerSwift (2.0.0)
   - SwiftyJSON (2.3.0)
+  - SWTableViewCell (0.3.7)
   - UIActivityIndicator-for-SDWebImage (1.2):
     - SDWebImage (~> 3.7)
 
@@ -17,6 +18,7 @@ DEPENDENCIES:
   - SDWebImage (~> 3.7)
   - SlideMenuControllerSwift
   - SwiftyJSON (from `https://github.com/SwiftyJSON/SwiftyJSON.git`)
+  - SWTableViewCell (~> 0.3.7)
   - UIActivityIndicator-for-SDWebImage
 
 EXTERNAL SOURCES:
@@ -35,6 +37,7 @@ SPEC CHECKSUMS:
   SDWebImage: 1d2b1a1efda1ade1b00b6f8498865f8ddedc8a84
   SlideMenuControllerSwift: 85ce7142935a32e26de41aa90fac0cc9f60fb01c
   SwiftyJSON: cacfe0373d584585716bd1d43202c24cc66afd65
+  SWTableViewCell: 2a94aadc9d47b2b611fa064566bf57948b95b579
   UIActivityIndicator-for-SDWebImage: 7bf7ebbf0ed1747dedc0d6e949c4603a6d0f9e0c
 
 COCOAPODS: 0.39.0

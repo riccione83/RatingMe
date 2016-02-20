@@ -13,13 +13,34 @@ import SlideMenuControllerSwift
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    var deviceToken: String?
+    
+    let notificationController: RemoteNotificationController = RemoteNotificationController()
+    
+    func stringFromDeviceTokenData(devideToken: NSData) {
+        
+    }
 
-/*    func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
-        print("Got TOKEN DATA: \(deviceToken)")
+
+    func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
         
-        let settings = UIUserNotificationSettings(forTypes: [.Badge, .Alert, .Sound], categories: nil)
-        UIApplication.sharedApplication().registerUserNotificationSettings(settings)
+        let characterSet: NSCharacterSet = NSCharacterSet( charactersInString: "<>" )
         
+        let deviceTokenString: String = ( deviceToken.description as NSString )
+            .stringByTrimmingCharactersInSet( characterSet )
+            .stringByReplacingOccurrencesOfString( " ", withString: "" ) as String
+        
+        print( deviceTokenString )
+        self.deviceToken = deviceTokenString
+        
+    }
+
+    func application(application: UIApplication, handleActionWithIdentifier identifier: String?, forRemoteNotification userInfo: [NSObject : AnyObject], withResponseInfo responseInfo: [NSObject : AnyObject], completionHandler: () -> Void) {
+        
+        
+        print("\(notificationController.getNotificationCount())")
+    
+    
     }
     
     func application(application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: NSError) {
@@ -28,19 +49,41 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
         print("Received: \(userInfo)")
-       // var temp:NSDictionary = userInfo
+        notificationController.newNotification()
+        
+        application.applicationIconBadgeNumber = notificationController.getNotificationCount()!
         if let info = userInfo["aps"] as? Dictionary<String, AnyObject>
         {
-                let alertMsg = info["alert"] as! String
+            if let viewController = self.window?.rootViewController!.presentedViewController as? ViewController {
+                viewController.animateStuff()
+            }
+            
+               /* let alertMsg = info["alert"] as! String
                 let alert:UIAlertView!
                 alert = UIAlertView(title: "", message: alertMsg, delegate: nil, cancelButtonTitle: "OK")
                 alert.show()
+                */
         }
-    }*/
+    }
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
         
+        
+        let settings = UIUserNotificationSettings(forTypes: [.Sound, .Alert, .Badge], categories: nil)
+        UIApplication.sharedApplication().registerUserNotificationSettings(settings)
+        
+        // This is an asynchronous method to retrieve a Device Token
+        // Callbacks are in AppDelegate.swift
+        // Success = didRegisterForRemoteNotificationsWithDeviceToken
+        // Fail = didFailToRegisterForRemoteNotificationsWithError
+        UIApplication.sharedApplication().registerForRemoteNotifications()
+        
+        
+        application.applicationIconBadgeNumber = 0
+        notificationController.clearNotifications()
+        
+    
         //Init register notification
       //  UIApplication.sharedApplication().registerForRemoteNotifications()
         

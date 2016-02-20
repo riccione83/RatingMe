@@ -20,12 +20,19 @@ public class UserController{
             self.user = User()
     }
     
+    func getDeviceToken() -> String {
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        let deviceToken = appDelegate.deviceToken
+        return deviceToken != nil ? deviceToken! : ""
+    }
+    
     func loginWithSocial(userName:String, uid:String, provider:String, completitionHandler:(success:Bool) -> ()) {
         
         let params = [
             "user_id": uid,
             "user_name": userName,
-            "provider": provider
+            "provider": provider,
+            "device_token": getDeviceToken()
         ]
         
         loginHelper.getJson("GET",apiUrl: loginHelper.API_loginWithSocial, parameters: params) { (jsonData) -> () in
@@ -57,7 +64,8 @@ public class UserController{
         let params = [
             "user_name": userName,
             "user_password_hash": password,
-            "user_email": email
+            "user_email": email,
+            "device_token": getDeviceToken()
                      ]
         
         loginHelper.getJson("GET", apiUrl: loginHelper.API_newUser, parameters: params) { (jsonData) -> () in
@@ -89,7 +97,8 @@ public class UserController{
         
         let params = [
             "user_id":userNameorEmail,
-            "user_password":password
+            "user_password":password,
+            "device_token": getDeviceToken()
         ]
         
         loginHelper.getJson("GET", apiUrl: loginHelper.API_login, parameters: params) { (jsonData) -> () in

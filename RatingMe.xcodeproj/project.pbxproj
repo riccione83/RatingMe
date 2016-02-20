@@ -14,13 +14,19 @@
 		935D55B31C47E15200ADC2F9 /* EULAViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 935D55B21C47E15200ADC2F9 /* EULAViewController.swift */; };
 		9368A8FA1C3ABA1F0016481E /* Lobster 1.4.otf in Resources */ = {isa = PBXBuildFile; fileRef = 9368A8F91C3ABA1F0016481E /* Lobster 1.4.otf */; };
 		9368A8FC1C3ABD9C0016481E /* Splash.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 9368A8FB1C3ABD9C0016481E /* Splash.tiff */; };
+		936AE70B1C709E7800039BAD /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 936AE70A1C709E7800039BAD /* Message.swift */; };
+		936AE70D1C709FA900039BAD /* MessageController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 936AE70C1C709FA900039BAD /* MessageController.swift */; };
+		936AE70F1C70A52200039BAD /* MessagesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 936AE70E1C70A52200039BAD /* MessagesViewController.swift */; };
+		936AE7111C70A57700039BAD /* MessageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 936AE7101C70A57700039BAD /* MessageTableViewCell.swift */; };
 		9370F25C1BEDFA2B003470DC /* LoginWithUIDViewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9370F25B1BEDFA2B003470DC /* LoginWithUIDViewViewController.swift */; };
+		9371D1901C6DDDC6007C5396 /* RemoteNotificationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9371D18F1C6DDDC6007C5396 /* RemoteNotificationController.swift */; };
 		937857301BF0AC04003BE6A7 /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9378572F1BF0AC04003BE6A7 /* SignInViewController.swift */; };
 		937B92831C5FAFBE0014530E /* Review.swift in Sources */ = {isa = PBXBuildFile; fileRef = 937B92821C5FAFBE0014530E /* Review.swift */; };
 		937B92851C5FAFC90014530E /* Rating.swift in Sources */ = {isa = PBXBuildFile; fileRef = 937B92841C5FAFC90014530E /* Rating.swift */; };
 		937B92871C5FB0440014530E /* ReviewsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 937B92861C5FB0440014530E /* ReviewsController.swift */; };
 		937FCCC21B4577CF00DC141C /* StarRating.swift in Sources */ = {isa = PBXBuildFile; fileRef = 937FCCC11B4577CF00DC141C /* StarRating.swift */; };
 		938EC0FC1BDA778700177356 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 938EC0FB1BDA778700177356 /* User.swift */; };
+		939A6C021C75E2CD0096B48B /* SingleMessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 939A6C011C75E2CD0096B48B /* SingleMessageViewController.swift */; };
 		93AB02161B45305900358705 /* NewRateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93AB02151B45305900358705 /* NewRateViewController.swift */; };
 		93B1C6BB1B628F7D002044A3 /* RateCustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93B1C6BA1B628F7D002044A3 /* RateCustomCell.swift */; };
 		93D95BEB1B442B73002D5C53 /* NewReviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D95BEA1B442B73002D5C53 /* NewReviewViewController.swift */; };
@@ -59,13 +65,19 @@
 		935D55B21C47E15200ADC2F9 /* EULAViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EULAViewController.swift; sourceTree = "<group>"; };
 		9368A8F91C3ABA1F0016481E /* Lobster 1.4.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lobster 1.4.otf"; sourceTree = "<group>"; };
 		9368A8FB1C3ABD9C0016481E /* Splash.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = Splash.tiff; sourceTree = "<group>"; };
+		936AE70A1C709E7800039BAD /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
+		936AE70C1C709FA900039BAD /* MessageController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageController.swift; sourceTree = "<group>"; };
+		936AE70E1C70A52200039BAD /* MessagesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagesViewController.swift; sourceTree = "<group>"; };
+		936AE7101C70A57700039BAD /* MessageTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageTableViewCell.swift; sourceTree = "<group>"; };
 		9370F25B1BEDFA2B003470DC /* LoginWithUIDViewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginWithUIDViewViewController.swift; sourceTree = "<group>"; };
+		9371D18F1C6DDDC6007C5396 /* RemoteNotificationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoteNotificationController.swift; sourceTree = "<group>"; };
 		9378572F1BF0AC04003BE6A7 /* SignInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
 		937B92821C5FAFBE0014530E /* Review.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Review.swift; sourceTree = "<group>"; };
 		937B92841C5FAFC90014530E /* Rating.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Rating.swift; sourceTree = "<group>"; };
 		937B92861C5FB0440014530E /* ReviewsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReviewsController.swift; sourceTree = "<group>"; };
 		937FCCC11B4577CF00DC141C /* StarRating.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StarRating.swift; sourceTree = "<group>"; };
 		938EC0FB1BDA778700177356 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		939A6C011C75E2CD0096B48B /* SingleMessageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SingleMessageViewController.swift; sourceTree = "<group>"; };
 		93AB02151B45305900358705 /* NewRateViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewRateViewController.swift; sourceTree = "<group>"; };
 		93B1C6BA1B628F7D002044A3 /* RateCustomCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RateCustomCell.swift; sourceTree = "<group>"; };
 		93D95BEA1B442B73002D5C53 /* NewReviewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewReviewViewController.swift; sourceTree = "<group>"; };
@@ -132,6 +144,7 @@
 				938EC0FB1BDA778700177356 /* User.swift */,
 				937B92821C5FAFBE0014530E /* Review.swift */,
 				937B92841C5FAFC90014530E /* Rating.swift */,
+				936AE70A1C709E7800039BAD /* Message.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -139,6 +152,7 @@
 		938EC0F91BDA309700177356 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				936AE7101C70A57700039BAD /* MessageTableViewCell.swift */,
 				93F5F8F81BC2B01700582D58 /* LeftMenuViewController.swift */,
 				93AB02151B45305900358705 /* NewRateViewController.swift */,
 				93E06C341B85DD8300DAEA51 /* LoginViewController.swift */,
@@ -149,6 +163,8 @@
 				9370F25B1BEDFA2B003470DC /* LoginWithUIDViewViewController.swift */,
 				9378572F1BF0AC04003BE6A7 /* SignInViewController.swift */,
 				935D55B21C47E15200ADC2F9 /* EULAViewController.swift */,
+				936AE70E1C70A52200039BAD /* MessagesViewController.swift */,
+				939A6C011C75E2CD0096B48B /* SingleMessageViewController.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -162,6 +178,8 @@
 				93FC5C041B3C4CC80010A94D /* JSonHelper.swift */,
 				937B92861C5FB0440014530E /* ReviewsController.swift */,
 				933A63461C5FB4BB0099C501 /* RatingsController.swift */,
+				9371D18F1C6DDDC6007C5396 /* RemoteNotificationController.swift */,
+				936AE70C1C709FA900039BAD /* MessageController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -308,9 +326,18 @@
 					93FC5BDE1B3C4CB00010A94D = {
 						CreatedOnToolsVersion = 6.3.2;
 						DevelopmentTeam = RKD82WWETR;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
 					};
 					93FC5BF31B3C4CB00010A94D = {
 						CreatedOnToolsVersion = 6.3.2;
+						DevelopmentTeam = RKD82WWETR;
 						TestTargetID = 93FC5BDE1B3C4CB00010A94D;
 					};
 				};
@@ -411,13 +438,18 @@
 			files = (
 				93E06C351B85DD8300DAEA51 /* LoginViewController.swift in Sources */,
 				934BE18E1BF4B2B5007225D8 /* CustomImageView.swift in Sources */,
+				939A6C021C75E2CD0096B48B /* SingleMessageViewController.swift in Sources */,
 				934BE18C1BF4B0F0007225D8 /* CircularLoaderView.swift in Sources */,
 				93FC5C091B3C4CD70010A94D /* PinAnnotationView.swift in Sources */,
+				9371D1901C6DDDC6007C5396 /* RemoteNotificationController.swift in Sources */,
 				935D55B31C47E15200ADC2F9 /* EULAViewController.swift in Sources */,
 				937B92871C5FB0440014530E /* ReviewsController.swift in Sources */,
+				936AE70B1C709E7800039BAD /* Message.swift in Sources */,
 				937B92831C5FAFBE0014530E /* Review.swift in Sources */,
 				937B92851C5FAFC90014530E /* Rating.swift in Sources */,
 				93FC5C081B3C4CD70010A94D /* PinAnnotation.swift in Sources */,
+				936AE70D1C709FA900039BAD /* MessageController.swift in Sources */,
+				936AE70F1C70A52200039BAD /* MessagesViewController.swift in Sources */,
 				937FCCC21B4577CF00DC141C /* StarRating.swift in Sources */,
 				93D95BEB1B442B73002D5C53 /* NewReviewViewController.swift in Sources */,
 				93B1C6BB1B628F7D002044A3 /* RateCustomCell.swift in Sources */,
@@ -426,6 +458,7 @@
 				93FC5C051B3C4CC80010A94D /* JSonHelper.swift in Sources */,
 				93FC5BE71B3C4CB00010A94D /* MainViewController.swift in Sources */,
 				933A63471C5FB4BB0099C501 /* RatingsController.swift in Sources */,
+				936AE7111C70A57700039BAD /* MessageTableViewCell.swift in Sources */,
 				9370F25C1BEDFA2B003470DC /* LoginWithUIDViewViewController.swift in Sources */,
 				93FC5BE51B3C4CB00010A94D /* AppDelegate.swift in Sources */,
 				937857301BF0AC04003BE6A7 /* SignInViewController.swift in Sources */,
@@ -490,7 +523,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Riccardo Rizzo (QS65UW4GPG)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Riccardo Rizzo (QS65UW4GPG)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -513,6 +547,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				PROVISIONING_PROFILE = "179947c1-3ab6-4cb8-83e0-7c523c97e4b1";
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -536,7 +571,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Riccardo Rizzo (QS65UW4GPG)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Riccardo Rizzo (RKD82WWETR)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
@@ -551,6 +587,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				PROVISIONING_PROFILE = "179947c1-3ab6-4cb8-83e0-7c523c97e4b1";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -563,11 +600,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = RatingMe/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "riccardorizzo.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -578,11 +617,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = RatingMe/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "riccardorizzo.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
@@ -591,6 +632,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -603,6 +646,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "riccardorizzo.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RatingMe.app/RatingMe";
 			};
 			name = Debug;
@@ -611,6 +655,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -619,6 +665,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "riccardorizzo.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/RatingMe.app/RatingMe";
 			};
 			name = Release;
