@@ -98,6 +98,32 @@ class MessageController: NSObject {
         }
     }
     
+    func getNumOfMessages(user_id:String, completitionHandler:(result:NSInteger,errorMessage:String) ->()) {
+        
+        let params = [ "user_id": user_id]
+        
+        jsonRequest.getJson("GET", apiUrl: jsonRequest.API_getNumberOfMessages, parameters: params) { (jsonData) -> () in
+            
+            if jsonData == nil {
+                completitionHandler(result: 0,errorMessage: "No connection")
+            }
+            let json = JSON(jsonData!)
+            
+            if let message = json[0]["error"].string {
+                print(message)
+                completitionHandler(result: 0,errorMessage: message)
+            }
+            
+            for (_,subJson):(String, JSON) in json {
+                print(subJson.rawString())
+                let numOfUnreadMessage = Int(subJson.rawString()!)
+                completitionHandler(result:numOfUnreadMessage!, errorMessage: "")
+                break
+            }
+            
+        }
+    }
+    
     func getMessages(user_id:String, completitionHandler:(result:NSMutableArray,errorMessage:String) ->()) {
         
         let params = [ "user_id": user_id]

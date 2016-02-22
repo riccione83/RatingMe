@@ -20,6 +20,7 @@ class LeftMenuViewController: UIViewController,UITableViewDataSource,UITableView
     @IBOutlet var leftMenuTableView: UITableView!
     var delegate:ViewController?
     let menuItem = ["New Review","Messages","Map Type","Logout"]
+    let notification = RemoteNotificationController()
 
     override func viewDidAppear(animated: Bool) {
         let layer = self.view.layer
@@ -44,6 +45,13 @@ class LeftMenuViewController: UIViewController,UITableViewDataSource,UITableView
         let cell = leftMenuTableView.dequeueReusableCellWithIdentifier("Cell") as! LeftCustomCEll
         
         cell.Title.text = menuItem[indexPath.row]
+        
+        if indexPath.row == 1 {
+            let numOfMessage = notification.getNotificationCount()!
+            if numOfMessage > 0 {
+                cell.Title.text?.appendContentsOf(" (\(numOfMessage))")
+            }
+        }
         
         return cell
     }

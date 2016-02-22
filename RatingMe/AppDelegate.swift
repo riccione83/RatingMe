@@ -14,6 +14,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     var deviceToken: String?
+    var mainViewController:ViewController?
     
     let notificationController: RemoteNotificationController = RemoteNotificationController()
     
@@ -54,9 +55,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         application.applicationIconBadgeNumber = notificationController.getNotificationCount()!
         if let _ = userInfo["aps"] as? Dictionary<String, AnyObject>
         {
-            if let viewController = self.window?.rootViewController!.presentedViewController as? ViewController {
+            mainViewController?.newNotification()
+          /*  if let viewController = self.window?.rootViewController!.presentedViewController as? ViewController {
                 viewController.newNotification()
-            }
+            }*/
         }
     }
 
@@ -85,7 +87,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // create viewController code...
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         
-        let mainViewController = storyboard.instantiateViewControllerWithIdentifier("MainViewController") as! ViewController
+        mainViewController = storyboard.instantiateViewControllerWithIdentifier("MainViewController") as! ViewController
         let leftViewController = storyboard.instantiateViewControllerWithIdentifier("LeftViewController") as! LeftMenuViewController
 
         leftViewController.delegate = mainViewController
@@ -94,7 +96,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         //leftViewController.mainViewController = nvc
         
-        let slideMenuController = SlideMenuController(mainViewController:mainViewController, leftMenuViewController: leftViewController)
+        let slideMenuController = SlideMenuController(mainViewController:mainViewController!, leftMenuViewController: leftViewController)
         
         self.window?.backgroundColor = UIColor(red: 236.0, green: 238.0, blue: 241.0, alpha: 1.0)
         self.window?.rootViewController = slideMenuController

@@ -60,7 +60,8 @@ class ViewController: UIViewController, ReviewControllerProtocol,RateControllerP
     }
     
     func newNotification(){
-           numOfUnreadedMessage++
+            let notification = RemoteNotificationController()
+           numOfUnreadedMessage = notification.getNotificationCount()!
         
            menuButton.setImage(LeftMenuButton.imageOfButtonMenu(numOfMessage: CGFloat(numOfUnreadedMessage), numberOfMessages: String("\(numOfUnreadedMessage as Int)")), forState: .Normal)
     }
@@ -269,11 +270,19 @@ class ViewController: UIViewController, ReviewControllerProtocol,RateControllerP
                 
                 mainMap.showsUserLocation = true
                 
-                let notification = RemoteNotificationController()
-                numOfUnreadedMessage = notification.getNotificationCount()!
-                menuButton.setImage(LeftMenuButton.imageOfButtonMenu(numOfMessage: CGFloat(numOfUnreadedMessage), numberOfMessages: String("\(numOfUnreadedMessage as Int)")), forState: .Normal)
+               
             }
         }
+        
+        let messages = MessageController()
+        messages.getNumOfMessages((userInfos?.userID)!) { (result, errorMessage) -> () in
+            let notification = RemoteNotificationController()
+            let numberOfUnreadMessages:Int = result
+            notification.setNotification(numberOfUnreadMessages)
+            self.menuButton.setImage(LeftMenuButton.imageOfButtonMenu(numOfMessage: CGFloat(numberOfUnreadMessages), numberOfMessages: String("\(numberOfUnreadMessages as Int)")), forState: .Normal)
+        }
+        
+
     }
     
     override func viewDidLoad() {

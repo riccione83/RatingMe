@@ -16,6 +16,7 @@ class MessagesViewController: UIViewController, UITableViewDataSource, UITableVi
     let notificationController = RemoteNotificationController()
     var messages = NSMutableArray()
     var userInfo:User?
+    var numOfUnreadedMessages = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,7 +29,7 @@ class MessagesViewController: UIViewController, UITableViewDataSource, UITableVi
     
     override func viewDidAppear(animated: Bool) {
         let messageController:MessageController = MessageController()
-        
+        numOfUnreadedMessages = 0
         messageController.getMessages(userInfo!.userID) { (result, errorMessage) -> () in
             print(result)
             self.messages = result
@@ -63,6 +64,10 @@ class MessagesViewController: UIViewController, UITableViewDataSource, UITableVi
     func openMessage(message:Message) {
         
         let messageUtil = MessageController()
+        
+        if message.Status == MessageStatus.Unread {
+            self.notificationController.deleteOneNotification()
+        }
         
         messageUtil.setMessageAsReaded(userInfo!.userID, message_id: String("\(message.Id)")) { (result, errorMessage) -> () in
         }
@@ -99,7 +104,10 @@ class MessagesViewController: UIViewController, UITableViewDataSource, UITableVi
         cell.unreadedIcon.layer.borderColor = UIColor.whiteColor().CGColor
         cell.unreadedIcon.layer.borderWidth = 5.0
 
-        // Configure the cell...
+        if cell.messageStatus == MessageStatus.Unread {
+            numOfUnreadedMessages++
+            notificationController.setNotification(numOfUnreadedMessages)
+        }
 
         return cell
     }

@@ -29,6 +29,7 @@ public class JSonHelper {
     let API_deleteMessage = "api/delete_message"
     let API_setMessageReaded = "api/set_message_read"
     let API_setMessageUnread = "api/set_message_unread"
+    let API_getNumberOfMessages = "api/get_num_of_messages"
     
     
     /*

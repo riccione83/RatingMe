@@ -65,6 +65,22 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
+         contextName = "ViewController.viewDidAppear(Bool) -&gt; ():MainViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "numOfUnreadedMessage">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "ViewController.newNotification() -&gt; ():MainViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "numOfUnreadedMessage">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "ShowReviewViewController.tableView(UITableView, cellForRowAtIndexPath : NSIndexPath) -&gt; UITableViewCell:ShowReviewViewController.swift">
          <PersistentStrings>
             <PersistentString
