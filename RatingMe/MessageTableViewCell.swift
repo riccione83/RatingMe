@@ -14,6 +14,7 @@ class MessageTableViewCell: SWTableViewCell {
     @IBOutlet var unreadedIcon: UIView!
     @IBOutlet var messageText: UILabel!
     var messageID: String!
+    var messageStatus: MessageStatus!
     @IBOutlet var longMessageText: UILabel!
     
     override func awakeFromNib() {

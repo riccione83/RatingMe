@@ -36,6 +36,7 @@ class ViewController: UIViewController, ReviewControllerProtocol,RateControllerP
     let searchTableView: UITableView  =   UITableView()
     var preventRefreshBanner:Bool = false
     var olderPins:NSMutableArray = NSMutableArray()
+    var numOfUnreadedMessage:NSInteger = 0
     
     var searchedItems:NSMutableArray?
     
@@ -58,13 +59,10 @@ class ViewController: UIViewController, ReviewControllerProtocol,RateControllerP
 
     }
     
-    func animateStuff(){
-            let alertMsg = "New message has arrived"
-            let alert:UIAlertView!
-            alert = UIAlertView(title: "", message: alertMsg, delegate: nil, cancelButtonTitle: "OK")
-            alert.show()
+    func newNotification(){
+           numOfUnreadedMessage++
         
-        
+           menuButton.setImage(LeftMenuButton.imageOfButtonMenu(numOfMessage: CGFloat(numOfUnreadedMessage), numberOfMessages: String("\(numOfUnreadedMessage as Int)")), forState: .Normal)
     }
 
     private func showLoadingHUD() {
@@ -260,7 +258,6 @@ class ViewController: UIViewController, ReviewControllerProtocol,RateControllerP
             if !loginHappened {
                 loginHappened = true
                 saveLoginData(userInfos!)
-                //currentAnnotation = nil
                 preventRefreshBanner = false
                 if (locationManager.location != nil) {
                     searchByUserLocation(locationManager.location!.coordinate.latitude, lon: locationManager.location!.coordinate.longitude, center: true)
@@ -271,6 +268,10 @@ class ViewController: UIViewController, ReviewControllerProtocol,RateControllerP
                 }
                 
                 mainMap.showsUserLocation = true
+                
+                let notification = RemoteNotificationController()
+                numOfUnreadedMessage = notification.getNotificationCount()!
+                menuButton.setImage(LeftMenuButton.imageOfButtonMenu(numOfMessage: CGFloat(numOfUnreadedMessage), numberOfMessages: String("\(numOfUnreadedMessage as Int)")), forState: .Normal)
             }
         }
     }
@@ -339,6 +340,9 @@ class ViewController: UIViewController, ReviewControllerProtocol,RateControllerP
         rightScroll.addTarget(self, action: "swipeMap:")
         rightScroll.direction =  UISwipeGestureRecognizerDirection.Right
         mainMap.addGestureRecognizer(rightScroll)
+        
+        
+        menuButton.setImage(LeftMenuButton.imageOfButtonMenu(numOfMessage: 1, numberOfMessages: "1"), forState: .Normal)
         
     }
     

@@ -13,6 +13,7 @@ class MessagesViewController: UIViewController, UITableViewDataSource, UITableVi
 
     @IBOutlet var messageTable: UITableView!
     
+    let notificationController = RemoteNotificationController()
     var messages = NSMutableArray()
     var userInfo:User?
     
@@ -70,6 +71,7 @@ class MessagesViewController: UIViewController, UITableViewDataSource, UITableVi
         vc.titleString = message.Message
         vc.bodyString = message.longText
         vc.messageID = String("\(message.Id)")
+        vc.messageStatus = message.Status
         vc.userInfos = userInfo
         self.presentViewController(vc, animated: true, completion: nil)
     }
@@ -89,6 +91,7 @@ class MessagesViewController: UIViewController, UITableViewDataSource, UITableVi
         cell.messageText.text = (messages[indexPath.row] as! Message).Message! as String
         cell.unreadedIcon.hidden = (messages[indexPath.row] as! Message).Status == MessageStatus.Unread ? false : true
         cell.messageID = String("\((messages[indexPath.row] as! Message).Id)")
+        cell.messageStatus = (messages[indexPath.row] as! Message).Status
         cell.longMessageText.text = deleteHTMLFromString((messages[indexPath.row] as! Message).longText! as String)
         
         cell.unreadedIcon.clipsToBounds = true
@@ -109,8 +112,12 @@ class MessagesViewController: UIViewController, UITableViewDataSource, UITableVi
         return rightUtilityButtons
     }
     
-    func setMessageAsReaded(message_id:String) {
+    func setMessageAsReaded(message_id:String, status:MessageStatus) {
         let messageUtil = MessageController()
+        
+        if status == MessageStatus.Unread {
+            self.notificationController.deleteOneNotification()
+        }
         
         messageUtil.setMessageAsReaded(userInfo!.userID, message_id: message_id) { (result, errorMessage) -> () in
             self.messages = result
@@ -118,9 +125,12 @@ class MessagesViewController: UIViewController, UITableViewDataSource, UITableVi
         }
     }
     
-    func deleteMessage(message_id:String) {
+    func deleteMessage(message_id:String, status:MessageStatus) {
         let messageUtil = MessageController()
         
+        if status == MessageStatus.Unread {
+            self.notificationController.deleteOneNotification()
+        }
         messageUtil.deleteMessage(userInfo!.userID, message_id: message_id) { (result, errorMessage) -> () in
             self.messages = result
             self.messageTable.reloadData()
@@ -133,9 +143,9 @@ class MessagesViewController: UIViewController, UITableViewDataSource, UITableVi
         let c = cell as! MessageTableViewCell
         switch index {
         case 0: print("Set read a message: \(c.messageID)")
-                setMessageAsReaded(c.messageID!)
+                setMessageAsReaded(c.messageID!,status: c.messageStatus)
         case 1: print("Cancel a message")
-                deleteMessage(c.messageID!)
+                deleteMessage(c.messageID!,status: c.messageStatus)
         default: print("Nothig")
         }
         

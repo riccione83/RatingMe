@@ -52,17 +52,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         notificationController.newNotification()
         
         application.applicationIconBadgeNumber = notificationController.getNotificationCount()!
-        if let info = userInfo["aps"] as? Dictionary<String, AnyObject>
+        if let _ = userInfo["aps"] as? Dictionary<String, AnyObject>
         {
             if let viewController = self.window?.rootViewController!.presentedViewController as? ViewController {
-                viewController.animateStuff()
+                viewController.newNotification()
             }
-            
-               /* let alertMsg = info["alert"] as! String
-                let alert:UIAlertView!
-                alert = UIAlertView(title: "", message: alertMsg, delegate: nil, cancelButtonTitle: "OK")
-                alert.show()
-                */
         }
     }
 

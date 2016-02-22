@@ -23,6 +23,16 @@ class RemoteNotificationController: NSObject {
         NSUserDefaults.standardUserDefaults().synchronize()
     }
     
+    func deleteOneNotification() {
+        var notificationCount = getNotificationCount()
+        
+        if notificationCount > 1 {
+            notificationCount = notificationCount! - 1
+            NSUserDefaults.standardUserDefaults().setObject(notificationCount, forKey: "count")
+            NSUserDefaults.standardUserDefaults().synchronize()
+        }
+    }
+    
     func getNotificationCount() -> NSInteger? {
             if let count =  NSUserDefaults.standardUserDefaults().objectForKey("count") as? NSInteger {
                 return count
