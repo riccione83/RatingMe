@@ -11,6 +11,7 @@ import MapKit
 import MBProgressHUD
 import Alamofire
 import SwiftyJSON
+import RZViewActions
 
 extension String {
     func toDouble() -> Double? {
@@ -21,10 +22,10 @@ extension String {
 class ViewController: UIViewController, ReviewControllerProtocol,RateControllerProtocol {
     @IBOutlet var mainMap: MKMapView!
     @IBOutlet var searchBar: UISearchBar!
-    
+
     @IBOutlet var menuButton: UIButton!
-    
-    
+
+
     let locationManager:CLLocationManager = CLLocationManager()
     var ThisImage:UIImageView = UIImageView()
     var pin:NSMutableArray?
@@ -37,8 +38,10 @@ class ViewController: UIViewController, ReviewControllerProtocol,RateControllerP
     var preventRefreshBanner:Bool = false
     var olderPins:NSMutableArray = NSMutableArray()
     var numOfUnreadedMessage:NSInteger = 0
-    
+
     var searchedItems:NSMutableArray?
+
+    let newMailView = NewMailView()
     
     @IBOutlet var resultTableView: UITableView!
     
@@ -60,10 +63,34 @@ class ViewController: UIViewController, ReviewControllerProtocol,RateControllerP
     }
     
     func newNotification(){
-            let notification = RemoteNotificationController()
-           numOfUnreadedMessage = notification.getNotificationCount()!
+    
+            newMailView.frame = CGRectMake(0, 0, 270, 270)
+            newMailView.center = self.view.center
+            newMailView.backgroundColor = UIColor.clearColor()
+        self.newMailView.transform = CGAffineTransformMakeScale(0.0, 0.0)
+            self.view.addSubview(newMailView)
         
-           menuButton.setImage(LeftMenuButton.imageOfButtonMenu(numOfMessage: CGFloat(numOfUnreadedMessage), numberOfMessages: String("\(numOfUnreadedMessage as Int)")), forState: .Normal)
+            let scaleUp = RZViewAction({ () -> Void in
+                self.newMailView.transform = CGAffineTransformMakeScale(1.1, 1.1)
+                }, withDuration: 0.6)
+        
+            let wait = RZViewAction.waitForDuration(2.0)
+        
+            let scaleDown = RZViewAction({ () -> Void in
+                self.newMailView.transform = CGAffineTransformMakeScale(0.1, 0.1)
+                }, withDuration: 0.5)
+        
+            let showMailImage = RZViewAction.sequence([scaleUp,wait,scaleDown])
+        
+            UIView.rz_runAction(showMailImage) { (finished) -> Void in
+                self.newMailView.removeFromSuperview()
+        }
+        
+    
+        let notification = RemoteNotificationController()
+        numOfUnreadedMessage = notification.getNotificationCount()!
+        
+        menuButton.setImage(LeftMenuButton.imageOfButtonMenu(numOfMessage: CGFloat(numOfUnreadedMessage), numberOfMessages: String("\(numOfUnreadedMessage as Int)")), forState: .Normal)
     }
 
     private func showLoadingHUD() {
@@ -225,7 +252,7 @@ class ViewController: UIViewController, ReviewControllerProtocol,RateControllerP
     
     func showInfoPanel(annotation: PinAnnotation) {
         let vc = self.storyboard?.instantiateViewControllerWithIdentifier("ShowReviews") as! ShowReviewViewController
-        NSLog("Visualizzo: \(annotation.Tag)")
+       // NSLog("Visualizzo: \(annotation.Tag)")
         vc.userInfos = userInfos!
         vc.pin = annotation
         self.presentViewController(vc, animated: true, completion: nil)
@@ -274,15 +301,15 @@ class ViewController: UIViewController, ReviewControllerProtocol,RateControllerP
             }
         }
         
-        let messages = MessageController()
-        messages.getNumOfMessages((userInfos?.userID)!) { (result, errorMessage) -> () in
-            let notification = RemoteNotificationController()
-            let numberOfUnreadMessages:Int = result
-            notification.setNotification(numberOfUnreadMessages)
-            self.menuButton.setImage(LeftMenuButton.imageOfButtonMenu(numOfMessage: CGFloat(numberOfUnreadMessages), numberOfMessages: String("\(numberOfUnreadMessages as Int)")), forState: .Normal)
+        if userInfos != nil {
+            let messages = MessageController()
+            messages.getNumOfMessages((userInfos?.userID)!) { (result, errorMessage) -> () in
+                let notification = RemoteNotificationController()
+                let numberOfUnreadMessages:Int = result
+                notification.setNotification(numberOfUnreadMessages)
+                self.menuButton.setImage(LeftMenuButton.imageOfButtonMenu(numOfMessage: CGFloat(numberOfUnreadMessages), numberOfMessages: String("\(numberOfUnreadMessages as Int)")), forState: .Normal)
+            }
         }
-        
-
     }
     
     override func viewDidLoad() {
@@ -351,7 +378,7 @@ class ViewController: UIViewController, ReviewControllerProtocol,RateControllerP
         mainMap.addGestureRecognizer(rightScroll)
         
         
-        menuButton.setImage(LeftMenuButton.imageOfButtonMenu(numOfMessage: 1, numberOfMessages: "1"), forState: .Normal)
+        menuButton.setImage(LeftMenuButton.imageOfButtonMenu(numOfMessage: 0, numberOfMessages: "0"), forState: .Normal)
         
     }
     
@@ -397,11 +424,18 @@ class ViewController: UIViewController, ReviewControllerProtocol,RateControllerP
                     let latitude = subJson[0]["latitude"].double!
                     let longitude = subJson[0]["longitude"].double!
                     let title = subJson[0]["title"].string!
+                    let userName = subJson[0]["user"].string!
                     let coord:String = String(format:"{%f,%f}", latitude,longitude)
                     let point = CGPointFromString(coord)
                     let coordinate = CLLocationCoordinate2DMake(CLLocationDegrees(point.x), CLLocationDegrees(point.y))
                     
-                    let pin:PinAnnotation = PinAnnotation(coordinate: coordinate, title: title, subtitle: description, tag: 0, rating: 0, link: "", ID: "0", Q1: "", Q2: "", Q3: "", isAdv: "0", advImgLink: "")
+                    var category:Category?
+                    let cat = subJson[0]["category"]
+                    if cat != nil {
+                        category = Category(description: cat["description"].string!, id: "\(cat["id"].int!)", image: cat["image"].string!)
+                    }
+                    
+                    let pin:PinAnnotation = PinAnnotation(coordinate: coordinate, title: title, subtitle: description, tag: 0, rating: 0, link: "", ID: "0", Q1: "", Q2: "", Q3: "", isAdv: "0", advImgLink: "", category: category, user_name: userName)
                     
                     self.searchedItems?.addObject(pin)
                 }
@@ -479,9 +513,6 @@ class ViewController: UIViewController, ReviewControllerProtocol,RateControllerP
         }
     
         jsonRequest.getJson("GET",apiUrl: jsonRequest.API_showReviews, parameters: params as! [String:AnyObject]) { (jsonData) -> () in
-        
-            
-            
             if jsonData == nil {
                 return
             }
@@ -495,33 +526,39 @@ class ViewController: UIViewController, ReviewControllerProtocol,RateControllerP
                 print(message)
                 return
             }
-            
-            //self.mainMap.removeAnnotations(self.mainMap.annotations)
+    
             for (key,subJson):(String, JSON) in json {
                 let description = subJson[0]["description"].string!
                 let image = subJson[0]["picture"].string ?? ""
                 let latitude = subJson[0]["latitude"].double!
                 let longitude = subJson[0]["longitude"].double!
+                let userName = subJson[0]["user"].string!
                 let rating = subJson[0]["point"].int!
                 let title = subJson[0]["title"].string!
                 let id = subJson[0]["id"].int!
-                print(subJson[0]["point"])
+                //print(subJson[0]["point"])
                 let reviewID = String(format: "\(id)")
                 let question1 = subJson[0]["question1"].string!
                 let question2 = subJson[0]["question2"].string!
                 let question3 = subJson[0]["question3"].string!
                 let isAdvertisement = subJson[0]["is_advertisement"].string ?? "0"
                 let advertisementImageLink = subJson[0]["ad_image_link"].string ?? ""
+                
+                var category:Category?
+                let cat = subJson[0]["category"]
+                if cat != nil {
+                    category = Category(description: cat["description"].string!, id: "\(cat["id"].int!)", image: cat["image"].string!)
+                }
             
                 let coord:String = String(format:"{%f,%f}", latitude,longitude)
                 let point = CGPointFromString(coord)
                 let coordinate = CLLocationCoordinate2DMake(CLLocationDegrees(point.x), CLLocationDegrees(point.y))
                 
                 let tag = Int(key)! + 1
-                let pinPoint = PinAnnotation(coordinate: coordinate, title:title, subtitle: description, tag: tag ,rating: rating, link: image, ID: reviewID, Q1: question1, Q2: question2, Q3: question3, isAdv: isAdvertisement, advImgLink: advertisementImageLink)
+                let pinPoint = PinAnnotation(coordinate: coordinate, title:title, subtitle: description, tag: tag ,rating: rating, link: image, ID: reviewID, Q1: question1, Q2: question2, Q3: question3, isAdv: isAdvertisement, advImgLink: advertisementImageLink, category: category, user_name: userName)
             
                 Pins.addObject(pinPoint)
-                //self.mainMap.addAnnotation(pinPoint)
+
             }
             
             var isEqual = true
@@ -542,11 +579,39 @@ class ViewController: UIViewController, ReviewControllerProtocol,RateControllerP
             
             if !isEqual {
                 self.olderPins = Pins
-                self.mainMap.removeAnnotations(self.mainMap.annotations)
                 
-                for pinPoint in Pins {
-                    self.mainMap.addAnnotation(pinPoint as! MKAnnotation)
+                if self.mainMap.annotations.count > 0 {
+                    for annotation in self.mainMap.annotations {
+                        let annView = self.mainMap.viewForAnnotation(annotation)
+                        if annView != nil{
+                            annView!.alpha = 1.0
+                            //annView.transform = CGAffineTransformMakeScale(0.5, 0.5)
+                        
+                            UIView.animateWithDuration(0.1, animations: { () -> Void in
+                                //annView.transform = CGAffineTransformMakeScale(1.1, 1.1)
+                                annView!.alpha = 0.0
+                                }, completion: { (end) -> Void in
+                                    self.mainMap.removeAnnotations(self.mainMap.annotations)
+                                    for pinPoint in Pins {
+                                        self.mainMap.addAnnotation(pinPoint as! MKAnnotation)
+                                    }
+                            })
+
+                        }
+                    }
                 }
+                else {
+                    for pinPoint in Pins {
+                        self.mainMap.addAnnotation(pinPoint as! MKAnnotation)
+                    }
+                }
+            
+                
+                //self.mainMap.removeAnnotations(self.mainMap.annotations)
+                
+           //     for pinPoint in Pins {
+            //        self.mainMap.addAnnotation(pinPoint as! MKAnnotation)
+             //   }
                 
             }
             
@@ -619,12 +684,15 @@ extension ViewController:MKMapViewDelegate {
         
         for annView in views
         {
-            annView.transform = CGAffineTransformMakeScale(0.5, 0.5)
+            annView.alpha = 0.0
+            //annView.transform = CGAffineTransformMakeScale(0.5, 0.5)
             
-            UIView.animateWithDuration(0.3, animations: { () -> Void in
-                annView.transform = CGAffineTransformMakeScale(1.1, 1.1)
+            UIView.animateWithDuration(0.2, animations: { () -> Void in
+                //annView.transform = CGAffineTransformMakeScale(1.1, 1.1)
+                annView.alpha = 1.0
                 }, completion: { (end) -> Void in
-                    annView.transform = CGAffineTransformIdentity
+                    //annView.transform = CGAffineTransformIdentity
+                    annView.alpha = 1.0
             })
             
         }
@@ -654,8 +722,6 @@ extension ViewController:MKMapViewDelegate {
     }
     
     func mapView(mapView: MKMapView, didSelectAnnotationView view: MKAnnotationView) {
-        
-        //mapView.deselectAnnotation(view.annotation, animated: true)
         if let rr:PinAnnotationView = view as? PinAnnotationView {
             rr.canShowCallout = false
             rr.expand()

@@ -11,12 +11,13 @@ import MapKit
 import SwiftyJSON
 import Alamofire
 import MBProgressHUD
+import Popover
 
-protocol ReviewControllerProtocol {    
+protocol ReviewControllerProtocol {
     func searchByUserLocation(lat:Double,lon:Double, center: Bool)
 }
 
-class ReviewViewController: UIViewController {
+class ReviewViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     let jsonRequest = JSonHelper()
     
@@ -31,13 +32,43 @@ class ReviewViewController: UIViewController {
     @IBOutlet var textQuestion3: UITextField!
     @IBOutlet var thumbImage: UIImageView!
     @IBOutlet var tmbImageButton: UIButton!
+    @IBOutlet var categoryImage: UIImageView!
+    @IBOutlet var middleContainerView: UIView!
+    
     
     let locationManager:CLLocationManager = CLLocationManager()
+    var categories = NSMutableArray()
+    
+    var currentSelectedCategory:NSString?
     var delegate:ReviewControllerProtocol? = nil
     var keyboardWasShowed: Bool = false
     var imagePicker = UIImagePickerController()
     var selectedImage:UIImage? = nil
     var userInfo:User = User()
+    
+    private var popover: Popover!
+    private var popoverOptions: [PopoverOption] = [
+        .Type(.Up),
+        .BlackOverlayColor(UIColor(white: 0.0, alpha: 0.6))
+    ]
+    
+    @IBAction func selectCategory(sender: AnyObject) {
+        
+        var frm: CGRect = sender.frame
+        frm.origin.y =  view.frame.maxY
+        
+        let startPoint = CGPointMake(frm.origin.x, frm.origin.y)
+        let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: view.frame.height/2))
+        
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.scrollEnabled = true
+        tableView.tag = 999
+        
+        self.popover = Popover(options: self.popoverOptions, showHandler: nil, dismissHandler: nil)
+        self.popover.show(tableView, point: startPoint)
+        
+    }
     
     func selectImageToSend() {
         
@@ -60,7 +91,7 @@ class ReviewViewController: UIViewController {
     }
     
     func selectImageFromPhotoAlbum() {
-
+        
     }
     
     @IBAction func selectImage(sender: AnyObject) {
@@ -70,7 +101,7 @@ class ReviewViewController: UIViewController {
         else
         {
             thumbImage.image = nil
-             tmbImageButton.titleLabel?.text = "+"
+            tmbImageButton.titleLabel?.text = "+"
         }
         
     }
@@ -84,22 +115,23 @@ class ReviewViewController: UIViewController {
         MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
     }
     
-    func newReview(title:String, description:String, latitude:String, longitude:String, question1:String="", question2:String="", question3:String="")
+    func newReview(title:String, description:String, latitude:String, longitude:String, question1:String="", question2:String="", question3:String="", category: String)
     {
         let newTitle = title
         let newDescription = description
         
         let params = [
-                            "latitude":latitude,
-                            "longitude":longitude,
-                            "title":newTitle,
-                            "description":newDescription,
-                            "question1":question1,
-                            "question2":question2,
-                            "question3":question3,
-                            "user_id":userInfo.userID ,
-                            "isAdvertisement":"0",
-                            "adImageLink":"0" ]
+            "latitude":latitude,
+            "longitude":longitude,
+            "title":newTitle,
+            "description":newDescription,
+            "question1":question1,
+            "question2":question2,
+            "question3":question3,
+            "user_id":userInfo.userID ,
+            "isAdvertisement":"0",
+            "adImageLink":"0",
+            "category" : category]
         
         self.showLoadingHUD()
         jsonRequest.uploadWithParameters(jsonRequest.API_newReview, parameters: params, image: selectedImage) { (jsonData, jsonError) -> () in
@@ -134,8 +166,18 @@ class ReviewViewController: UIViewController {
             let lat = "\(locationManager.location!.coordinate.latitude)"
             let lon = "\(locationManager.location!.coordinate.longitude)"
             
+            if currentSelectedCategory == nil {
+                currentSelectedCategory = ""
+            }
+            
+            if userInfo.userLoginType == UserLoginType.Anonimous ||
+                userInfo.userLoginType == UserLoginType.Unknow {
+                self.showMessage("Sorry login first to create a new Review")
+                return
+            }
+            
             if(textQuestion1.text != "" && reviewTitle.text != "" && reviewText.text != "" && reviewText.text != "Enter a description") {
-                newReview(reviewTitle.text!, description: reviewText.text, latitude: lat, longitude: lon, question1: textQuestion1.text!, question2: textQuestion2.text!, question3: textQuestion3.text!)
+                newReview(reviewTitle.text!, description: reviewText.text, latitude: lat, longitude: lon, question1: textQuestion1.text!, question2: textQuestion2.text!, question3: textQuestion3.text!, category: "\(currentSelectedCategory!)")
             }
             else {
                 showMessage("Unable to send this review. Please fill all the requested fields and at least one question.")
@@ -145,13 +187,14 @@ class ReviewViewController: UIViewController {
             self.showMessage("Unable to create a new Review. Please enable location services")
         }
     }
+    
     @IBAction func sendNewReview(sender: UIButton) {
         
-
+        
     }
     
     @IBAction func cancelClickButton(sender: UIButton) {
-            self.dismissViewControllerAnimated(true, completion: nil)
+        self.dismissViewControllerAnimated(true, completion: nil)
     }
     
     func showMessage(message:String) {
@@ -174,8 +217,14 @@ class ReviewViewController: UIViewController {
         locationManager.requestWhenInUseAuthorization()
         locationManager.startUpdatingLocation()
         
+        
+        let category = CategoriesController()
+        category.getCategories { (result, errorMessage) -> () in
+            self.categories = result
+        }
+        
     }
-
+    
     func scrollViewDidScroll(scrollView: UIScrollView) {
         if scrollView.contentOffset.x != 0 {
             var offset: CGPoint = scrollView.contentOffset
@@ -231,6 +280,44 @@ class ReviewViewController: UIViewController {
         reviewMap.setRegion(region, animated: true)
     }
     
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        if tableView.tag == 999 {
+            self.popover.dismiss()
+            categoryImage.image = (categories[indexPath.row] as! Category).imageThumb.image
+            currentSelectedCategory = (categories[indexPath.row] as! Category).id
+        }
+    }
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if tableView.tag == 999 {
+            return categories.count
+        }
+        return 0
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        
+        let cell = UITableViewCell(style: .Default, reuseIdentifier: nil)
+        cell.textLabel?.text = (categories[indexPath.row] as! Category).catDescription as? String
+        if (categories[indexPath.row] as! Category).imageThumb.image != nil {
+            cell.imageView?.image = resizeImage((categories[indexPath.row] as! Category).imageThumb.image!, newWidth: 25)
+        }
+        return cell
+        
+    }
+    
+    func resizeImage(image: UIImage, newWidth: CGFloat) -> UIImage {
+        
+        let scale = newWidth / image.size.width
+        let newHeight = image.size.height * scale
+        UIGraphicsBeginImageContext(CGSizeMake(newWidth, newHeight))
+        image.drawInRect(CGRectMake(0, 0, newWidth, newHeight))
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        return newImage
+    }
 }
 
 extension ReviewViewController: UIImagePickerControllerDelegate,UINavigationControllerDelegate {  //For ImagePicker
@@ -238,7 +325,7 @@ extension ReviewViewController: UIImagePickerControllerDelegate,UINavigationCont
     func imagePickerController(picker: UIImagePickerController!, didFinishPickingImage image: UIImage!, editingInfo: NSDictionary!){
         
         self.dismissViewControllerAnimated(true, completion: { () -> Void in
-        
+            
         })
         
         //selectedImage = image

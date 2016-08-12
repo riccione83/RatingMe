@@ -8,13 +8,24 @@
 
 import UIKit
 
+enum UserLoginType {
+    case Facebook
+    case Twitter
+    case Login
+    case Anonimous
+    case Unknow
+}
+
 public class User {
+    
     var userID: String
     var userName: String
     var userPasswordHash: String
     var userEmail: String
     var userCity: String
     var userSocialID:String
+    var userLoginType:UserLoginType
+    
     
     required public init() {
         self.userID = ""
@@ -23,5 +34,6 @@ public class User {
         self.userEmail = ""
         self.userPasswordHash = ""
         self.userSocialID = ""
+        self.userLoginType = .Unknow
     }
 }

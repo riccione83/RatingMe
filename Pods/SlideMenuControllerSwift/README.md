@@ -14,7 +14,7 @@ SlideMenuControllerSwift
 
 iOS Slide View based on iQON, Feedly, Google+, Ameba iPhone app.
 
-![sample](Screenshots/SlideMenuControllerSwift.gif)
+![sample](Screenshots/SlideMenuControllerSwift3.gif)
 
 ##Installation
 
@@ -23,6 +23,15 @@ iOS Slide View based on iQON, Feedly, Google+, Ameba iPhone app.
 pod 'SlideMenuControllerSwift'
 ```
   
+####Carthage
+
+if iOS8 or later, Carthage is supported
+
+* Add `github "dekatotoro/SlideMenuControllerSwift"` to your Cartfile.
+* Run `carthage update`.
+
+for more info, see [Carthage](https://github.com/carthage/carthage)
+
 ####Manually
 Add the `SlideMenuController.swift` file to your project. 
 
@@ -45,6 +54,27 @@ func application(application: UIApplication, didFinishLaunchingWithOptions launc
     self.window?.makeKeyAndVisible()    
 
     return true
+}
+```
+
+####Storyboard Support
+
+1. Inherit `SlideMenuController` and put UIViewController in a storyboard.
+2. Override `awakeFromNib`, then instantiate any view controllers
+
+```swift
+class ContainerViewController: SlideMenuController {
+
+    override func awakeFromNib() {
+        if let controller = self.storyboard?.instantiateViewControllerWithIdentifier("Main") {
+            self.mainViewController = controller
+        }
+        if let controller = self.storyboard?.instantiateViewControllerWithIdentifier("Left") {
+            self.leftViewController = controller
+        }
+        super.awakeFromNib()
+    }
+
 }
 ```
 
@@ -85,24 +115,42 @@ self.slideMenuController()?.closeLeft()
 self.slideMenuController()?.closeRight()
 ```
 
+### monitor the states of menu, you can use `SlideMenuControllerDelegate` use this:
+```swift
+func leftWillOpen()
+func leftDidOpen()
+func leftWillClose()
+func leftDidClose()
+func rightWillOpen()
+func rightDidOpen()
+func rightWillClose()
+func rightDidClose()
+```
+
 ## Requirements
-Requires Swift1.2 and iOS 7.0 and ARC.  
+Requires Swift2.0 and iOS 8.0 and ARC.  
 If you are developing in the swift1.1, please use branch of swift1.1.  
-  
+If you are developing in the swift1.2, please use branch of swift1.2.  
+If you are developing in the swift2.1, please use branch of swift2.1.   
+If you want to use even iOS7.0, please to import the code directly.   
+If you want to use objective-c even iOS6.0, plesea use    [SlideMenuControllerOC](https://github.com/Pluto-Y/SlideMenuControllerOC).
+
 ## Features
 - Highly customizable
 - Complete example
 
 
 ## Contributing
-
 Forks, patches and other feedback are welcome.
 
 ## Creator
-
+### SlideMenuControllerSwift
 [Yuji Hato](https://github.com/dekatotoro) 
 [Blog](http://buzzmemo.blogspot.jp/)
 
-## License
+### SlideMenuControllerOC
+[Pluto Y Blog](http://www.pluto-y.com)
+[Sing Weibo](http://weibo.com/plutoy0504)
 
-SlideMenuControllerSwift is available under the MIT license. See the LICENSE file for more info.
+## License
+SlideMenuControllerSwift is available under the MIT license. See the [LICENSE](./LICENSE) file for more info.

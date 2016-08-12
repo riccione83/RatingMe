@@ -10,7 +10,7 @@ import UIKit
 import MBProgressHUD
 
 class LoginViewController: UIViewController {
-
+    
     var user:UserController = UserController()
     var delegate:ViewController?
     
@@ -26,10 +26,9 @@ class LoginViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-       self.hideLoadingHUD()
+        self.hideLoadingHUD()
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -45,13 +44,13 @@ class LoginViewController: UIViewController {
     }
     
     func showMessage(message:String) {
-       let alert = UIAlertController(title: "RatingMe", message:message, preferredStyle: UIAlertControllerStyle.Alert)
+        let alert = UIAlertController(title: "RatingMe", message:message, preferredStyle: UIAlertControllerStyle.Alert)
         alert.addAction(UIAlertAction(title: "Close", style: UIAlertActionStyle.Default, handler: nil))
         self.presentViewController(alert, animated: true) { () -> Void in
             self.hideLoadingHUD()
         }
     }
-
+    
     @IBAction func loginWithTwitterClick(sender: AnyObject) {
         
         self.showLoadingHUD()
@@ -59,6 +58,7 @@ class LoginViewController: UIViewController {
         user.signInWithTwitter({ (loggedIn,message) -> () in
             if loggedIn {
                 print("Perfetto!! Effettuato login con Twitter: \(self.user.user.userName)  \(self.user.user.userID)")
+                self.user.user.userLoginType = .Twitter
                 self.showMainView()
             }
             else
@@ -79,6 +79,7 @@ class LoginViewController: UIViewController {
         user.signInWithFacebook({ (loggedIn,message) -> () in
             if loggedIn {
                 print("Perfetto!! Effettuato login con Facebook: \(self.user.user.userName)  \(self.user.user.userID)")
+                self.user.user.userLoginType = .Facebook
                 self.showMainView()
             }
             else
@@ -88,13 +89,21 @@ class LoginViewController: UIViewController {
                 self.showMessage("Unable to access with your Facebook account. Check the connection or the settings. [" + message + "]")
             }
         })
-
+        
     }
+    
+    @IBAction func btnAnonimousLogin(sender: AnyObject) {
+        
+        user.user.userLoginType = UserLoginType.Anonimous
+        self.showMainView();
+        
+    }
+    
     
     func showMainView() {
         
         self.hideLoadingHUD()
-
+        
         if delegate?.userInfos == nil {
             delegate?.userInfos = user.user
         }
@@ -106,7 +115,7 @@ class LoginViewController: UIViewController {
     
     
     // MARK: - Navigation
-
+    
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         
@@ -123,5 +132,5 @@ class LoginViewController: UIViewController {
         
     }
     
-
+    
 }

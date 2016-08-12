@@ -17,6 +17,13 @@ class ShowReviewViewController: UIViewController, NSURLConnectionDataDelegate {
     @IBOutlet var rateTableView: UITableView!
     @IBOutlet var navigationBar: UINavigationBar!
     @IBOutlet var textDescription: UITextView!
+    @IBOutlet var descriptionTopView: UIView!
+    
+    @IBOutlet var labelQuestion_1: UILabel!
+    @IBOutlet var labelQuestion_2: UILabel!
+    @IBOutlet var labelQuestion_3: UILabel!
+    
+    
     @IBOutlet var viewNoReview: UIView!
     @IBOutlet var imageThumb: CustomImageView! //UIImageView!
     @IBOutlet var darkBackgroundView: UIView!
@@ -37,7 +44,9 @@ class ShowReviewViewController: UIViewController, NSURLConnectionDataDelegate {
     
     let jsonRequest = JSonHelper()
 
-    private var texts = ["Add a Rate", "Share", "Report this Review","Block this user"]
+    private var texts = ["Report this Review","Block this user"]
+    private var actionOptions = ["Add a Rate","Share","Send a message"]
+    
     
     private var popover: Popover!
     private var popoverOptions: [PopoverOption] = [
@@ -56,6 +65,8 @@ class ShowReviewViewController: UIViewController, NSURLConnectionDataDelegate {
     
     func showImage() {
         if (!imageShowedInBig) {
+            if imageThumb.imageLoaded {
+            
             UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveLinear, animations: { () -> Void in
                 self.darkBackgroundView.hidden = false
                 self.darkBackgroundView.alpha = 1.0
@@ -66,16 +77,18 @@ class ShowReviewViewController: UIViewController, NSURLConnectionDataDelegate {
                 }, completion: { (finished) -> Void in
                     self.imageShowedInBig = true
             })
+            }
         }
         else {
             UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveLinear, animations: { () -> Void in
                 self.imageThumb.frame = self.prevFrame
-                self.darkBackgroundView.hidden = true
+                                    self.imageThumb.layer.borderColor = UIColor(red: 13/255, green: 70/255, blue: 131/255, alpha: 1.0).CGColor
                 self.darkBackgroundView.alpha = 0.0
                 }, completion: { (finished) -> Void in
                     self.imageThumb.contentMode = UIViewContentMode.ScaleAspectFill
-                    self.imageThumb.layer.borderColor = UIColor(red: 13/255, green: 70/255, blue: 131/255, alpha: 1.0).CGColor
+
                     self.imageShowedInBig = false
+                    self.darkBackgroundView.hidden = true
             })
         }
         
@@ -86,27 +99,41 @@ class ShowReviewViewController: UIViewController, NSURLConnectionDataDelegate {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        
-        // Do any additional setup after loading the view.
         let touchImage: UITapGestureRecognizer = UITapGestureRecognizer()
-        touchImage.addTarget(self, action: "showImage")
+        touchImage.addTarget(self, action: #selector(ShowReviewViewController.showImage))
         touchImage.numberOfTapsRequired = 1
         imageThumb.addGestureRecognizer(touchImage)
         
-        
         navigationBar.topItem?.title = pin?.title
         textDescription.text = pin?.subtitle
-        currentReviewID = pin!.ReviewID
+        currentReviewID = pin?.ReviewID
         imageThumb.userInteractionEnabled = true
         imageThumb.layer.masksToBounds = true
         imageThumb.layer.cornerRadius = imageThumb.bounds.size.width/2
         imageThumb.layer.borderWidth = 1.0
         imageThumb.layer.borderColor = UIColor(red: 13/255, green: 70/255, blue: 131/255, alpha: 1.0).CGColor
         
+        labelQuestion_1.text = pin?.Question1
+        
+        if pin?.Question2 != nil && pin?.Question2 != "" {
+            labelQuestion_2.text = pin?.Question2
+        }
+        else {
+            labelQuestion_2.hidden = true
+        }
+        
+        if pin?.Question3 != nil && pin?.Question3 != "" {
+            labelQuestion_3.text = pin?.Question3
+        }
+        else {
+            labelQuestion_3.hidden = true
+        }
+        
+        
         var imagePath = ""
-            if pin!.ImageLink.containsString("http") {
-                imagePath = pin!.ImageLink
-            }
+        if ((pin?.ImageLink.containsString("http")) != nil) {
+            imagePath = pin!.ImageLink
+        }
             else {
                 imagePath = jsonRequest.url + pin!.ImageLink
             }
@@ -124,6 +151,7 @@ class ShowReviewViewController: UIViewController, NSURLConnectionDataDelegate {
     override func viewDidAppear(animated: Bool) {
         darkBackgroundView.hidden = true
         viewNoReview.hidden = true
+        descriptionTopView.hidden = false
         Descriptions.removeAllObjects()
         Users.removeAllObjects()
         Rates1.removeAllObjects()
@@ -165,8 +193,14 @@ class ShowReviewViewController: UIViewController, NSURLConnectionDataDelegate {
     
     @IBAction func newReviewButtonClick(sender: UIBarButtonItem) {
         
+        if userInfos?.userLoginType == UserLoginType.Unknow ||
+            userInfos?.userLoginType == UserLoginType.Anonimous {
+            self.showMessage("Login", detail: "Sorry login first to perform an action")
+            return
+        }
+        
         let startPoint = CGPoint(x: self.view.frame.width - 25, y: 55)
-        let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: 180))
+        let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: 90))
         
         tableView.delegate = self
         tableView.dataSource = self
@@ -177,13 +211,34 @@ class ShowReviewViewController: UIViewController, NSURLConnectionDataDelegate {
     }
     
     
+    @IBAction func newButtonReviewClicked(sender: AnyObject) {
+        
+        if userInfos?.userLoginType == UserLoginType.Unknow ||
+            userInfos?.userLoginType == UserLoginType.Anonimous {
+            self.showMessage("Login", detail: "Sorry login first to perform an action")
+            return
+        }
+        
+        let startPoint = CGPoint(x: self.view.frame.width - 80, y: 55)
+        let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: 135))
+        
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.scrollEnabled = false
+        tableView.tag = 888
+        self.popover = Popover(options: self.popoverOptions, showHandler: nil, dismissHandler: nil)
+        self.popover.show(tableView, point: startPoint)
+        
+    }
+    
+    
     func randomStringWithLength (len : Int) -> NSString {
         
         let letters : NSString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
         
         let randomString : NSMutableString = NSMutableString(capacity: len)
         
-        for (var i=0; i < len; i++){
+        for _ in 0..<len {  //(var i=0; i < len; i++)
             let length = UInt32 (letters.length)
             let rand = arc4random_uniform(length)
             randomString.appendFormat("%C", letters.characterAtIndex(Int(rand)))
@@ -356,6 +411,14 @@ class ShowReviewViewController: UIViewController, NSURLConnectionDataDelegate {
         self.presentViewController(vc, animated: true, completion: nil)
     }
     
+    func showNewMessageView() {
+        let vc = self.storyboard?.instantiateViewControllerWithIdentifier("newMesageViewController") as! NewMessageViewController
+        vc.UserInfos = userInfos!
+        //vc.labelTitle.text = vc.labelTitle.text! + "\(pin?.userName)"
+        vc.ToUser = pin?.userName
+        self.presentViewController(vc, animated: true, completion: nil)
+    }
+    
     func shareButtonTapped() {
             let title:String = self.pin!.title!
             let Description:String = self.pin!.subtitle!
@@ -385,6 +448,7 @@ class ShowReviewViewController: UIViewController, NSURLConnectionDataDelegate {
             self.rateTableView.reloadData()
             if self.Descriptions.count == 0 {
                 self.viewNoReview.hidden = false
+                self.descriptionTopView.hidden = true
             }
         }
     }
@@ -398,23 +462,32 @@ extension ShowReviewViewController:UITableViewDelegate, UITableViewDataSource {
         if tableView.tag == 999 {
             self.popover.dismiss()
             if indexPath.row == 0 {
-                showNewRatingView()
-            }
-            if indexPath.row == 1 {
-                shareButtonTapped()
-            }
-            if indexPath.row == 2 {
                 askForSureWhenReportIsSelected()
             }
-            if indexPath.row == 3 {
+            if indexPath.row == 1 {
                 askForSureWhenReportUserIsSelected()
             }
         }
+        else if tableView.tag == 888 {
+                self.popover.dismiss()
+                if indexPath.row == 0 {
+                    showNewRatingView()
+                }
+                if indexPath.row == 1 {
+                    shareButtonTapped()
+                }
+                if indexPath.row == 2 {
+                    showNewMessageView()
+                }
+            }
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if tableView.tag == 999 {
-            return 4
+            return texts.count
+        }
+        else if tableView.tag == 888 {
+            return actionOptions.count
         }
         else {
             return Descriptions.count
@@ -428,26 +501,20 @@ extension ShowReviewViewController:UITableViewDelegate, UITableViewDataSource {
             cell.textLabel?.text = self.texts[indexPath.row]
             return cell
         }
+        else if tableView.tag == 888 {
+            let cell = UITableViewCell(style: .Default, reuseIdentifier: nil)
+            cell.textLabel?.text = self.actionOptions[indexPath.row]
+            return cell
+        }
         else {
             
         let myCell:RateCustomCell = rateTableView.dequeueReusableCellWithIdentifier("CustomCell") as! RateCustomCell
-        
-        myCell.lblQuestion1.text = pin?.Question1
-        
-        if pin?.Question2 != nil && pin?.Question2 != "" {
-            myCell.lblQuestion2.text = pin?.Question2
-        }
-        else
-        {
-            myCell.lblQuestion2.hidden = true
+            
+        if pin?.Question2 == nil || pin?.Question2 == "" {
             myCell.starRatingQuestion2.hidden = true
         }
         
-        if pin?.Question3 != nil && pin?.Question3 != "" {
-            myCell.lblQuestion3.text = pin?.Question3
-        }
-        else {
-            myCell.lblQuestion3.hidden = true
+        if pin?.Question3 == nil || pin?.Question3 == "" {
             myCell.starRatingQuestion3.hidden = true
         }
         
@@ -460,12 +527,7 @@ extension ShowReviewViewController:UITableViewDelegate, UITableViewDataSource {
         myCell.starRatingQuestion1.setRating(Rates1.objectAtIndex(indexPath.row) as! Int)
         myCell.starRatingQuestion2.setRating(Rates2.objectAtIndex(indexPath.row) as! Int)
         myCell.starRatingQuestion3.setRating(Rates3.objectAtIndex(indexPath.row) as! Int)
-        
-      /*  myCell.starRatingQuestion1.initUI(Rates1.objectAtIndex(indexPath.row) as! Int, spacing: 22, imageSize: 20, withOpacity: false)
-        myCell.starRatingQuestion2.initUI(Rates2.objectAtIndex(indexPath.row) as! Int, spacing: 22, imageSize: 20, withOpacity: false)
-        myCell.starRatingQuestion3.initUI(Rates3.objectAtIndex(indexPath.row) as! Int, spacing: 22, imageSize: 20, withOpacity: false)
-    */
-        
+            
         myCell.starRatingQuestion1.userInteractionEnabled = false
         myCell.starRatingQuestion2.userInteractionEnabled = false
         myCell.starRatingQuestion3.userInteractionEnabled = false

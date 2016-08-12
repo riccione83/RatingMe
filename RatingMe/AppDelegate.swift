@@ -31,7 +31,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             .stringByTrimmingCharactersInSet( characterSet )
             .stringByReplacingOccurrencesOfString( " ", withString: "" ) as String
         
-        print( deviceTokenString )
+        print("Registered with: \(deviceTokenString)" )
         self.deviceToken = deviceTokenString
         
     }

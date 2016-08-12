@@ -23,7 +23,7 @@ class PinAnnotationView: MKAnnotationView,MKMapViewDelegate {
     }
     
     var coordinate:CLLocationCoordinate2D = CLLocationCoordinate2D()
-    var imageView:UIImageView = UIImageView()
+    var imageView:CustomImageView! //=  UIImageView()
     var titleLabel:UILabel = UILabel()
     var subtitleLabel:UILabel = UILabel()
     var disclosureBlock: (() -> ())?
@@ -40,18 +40,25 @@ class PinAnnotationView: MKAnnotationView,MKMapViewDelegate {
     var state: JPSThumbnailAnnotationViewState = JPSThumbnailAnnotationViewState.JPSThumbnailAnnotationViewStateCollapsed
     
     required init?(coder aDecoder: NSCoder) {
+        
+        imageView = CustomImageView(frame: CGRectMake(12.5, 12.5, 50.0, 47.0))
+        
         super.init(coder: aDecoder)
     }
     
     override init(frame: CGRect) {
+        
+        imageView = CustomImageView(frame: frame)
+        
         super.init(frame: frame)
     }
     
     func setupImageView() {
-        imageView = UIImageView(frame: CGRectMake(12.5, 12.5, 50.0, 47.0));
+        imageView = CustomImageView(frame: CGRectMake(12.5, 12.5, 50.0, 47.0));
         imageView.layer.cornerRadius = 4.0;
         imageView.layer.masksToBounds = true;
         imageView.layer.borderColor = UIColor.lightGrayColor().CGColor
+        imageView.layer.backgroundColor = UIColor(red: 0.96, green: 0.90, blue: 0.22, alpha: 1.0).CGColor //UIColor.yellowColor().CGColor   //This for image background
         imageView.layer.borderWidth = 0.5
         self.addSubview(imageView)
     }
@@ -77,9 +84,7 @@ class PinAnnotationView: MKAnnotationView,MKMapViewDelegate {
         let path:CGPathRef = newBubbleWithRect(self.bounds)
         bgLayer.path = path
 
-        //CFRelease(path);
         bgLayer.fillColor = UIColor.whiteColor().CGColor
-    
         bgLayer.shadowColor = UIColor.blackColor().CGColor
         bgLayer.shadowOffset = CGSizeMake(0.0, 3.0)
         bgLayer.shadowRadius = 2.0
@@ -149,6 +154,8 @@ class PinAnnotationView: MKAnnotationView,MKMapViewDelegate {
         var image:UIImage = UIImage()
         
         if !thumbnail.isAdvertisement {
+            
+            if thumbnail.category == nil {
                 switch(thumbnail.Rating)
                 {
                     case 0:
@@ -173,11 +180,19 @@ class PinAnnotationView: MKAnnotationView,MKMapViewDelegate {
                         image = UIImage(named: "baloon_no_star")!
                         break
                 }
+                self.imageView.progressIndicatorView.drawCustom(0.2)
+                self.imageView.revealImage()
                 self.imageView.image = image
+            }
+            else {
+                let categoryController = CategoriesController()
+                categoryController.getImageForCategory(thumbnail.category!, frame: self.imageView)
+            }
+            
+            
         }
         else {
             if let checkedUrl = NSURL(string:thumbnail.advertisementImageLink) {
-
                 downloadImage(checkedUrl,frame: self.imageView)
             }
 
@@ -191,11 +206,8 @@ class PinAnnotationView: MKAnnotationView,MKMapViewDelegate {
     }
     
     func downloadImage(url:NSURL, frame:UIImageView){
-       // print("Started downloading \"\(url.lastPathComponent.stringByDeletingPathExtension)\".")
         getDataFromUrl(url) { data in
             dispatch_async(dispatch_get_main_queue()) {
-         //       print("Finished downloading \"\(url.lastPathComponent!.stringByDeletingPathExtension)\".")
-               // let img = self.imageResize(UIImage(data: data!)!, sizeChange: CGSizeMake(50, 47)) as! UIImage
                 if data != nil {
                     frame.image = UIImage(data: data!)
                 }
@@ -300,6 +312,8 @@ class PinAnnotationView: MKAnnotationView,MKMapViewDelegate {
     
     override init(annotation: MKAnnotation?, reuseIdentifier: String?) {
         
+        imageView = CustomImageView(frame: CGRectMake(0, 0, kJPSThumbnailAnnotationViewStandardWidth, kJPSThumbnailAnnotationViewStandardHeight))
+    
         super.init(annotation: annotation, reuseIdentifier: reuseIdentifier)
         
         if annotation is PinAnnotation {

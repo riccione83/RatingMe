@@ -9,11 +9,7 @@
 import UIKit
 
 class RateCustomCell: UITableViewCell {
-    
-    @IBOutlet var lblQuestion1: UILabel!
-    @IBOutlet var lblQuestion2: UILabel!
-    @IBOutlet var lblQuestion3: UILabel!
-    
+        
     @IBOutlet var labelNote: UILabel!
     @IBOutlet var labelNoteTitle: UILabel!
     

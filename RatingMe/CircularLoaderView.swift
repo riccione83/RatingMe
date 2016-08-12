@@ -11,7 +11,8 @@ import UIKit
 class CircularLoaderView: UIView {
     
     let circlePathLayer = CAShapeLayer()
-    let circleRadius : CGFloat = 20.0
+    var circleRadius : CGFloat = 20.0
+    var lineWidht: CGFloat = 2
     
     var progress: CGFloat {
         get {
@@ -39,10 +40,21 @@ class CircularLoaderView: UIView {
         configure()
     }
     
+    func drawCustom(lineWidht:CGFloat) {
+        circlePathLayer.removeFromSuperlayer()
+        progress = 0
+        circlePathLayer.frame = bounds
+        circlePathLayer.lineWidth = lineWidht
+        circlePathLayer.fillColor = UIColor.clearColor().CGColor
+        circlePathLayer.strokeColor = UIColor.redColor().CGColor
+        layer.addSublayer(circlePathLayer)
+        backgroundColor = UIColor.whiteColor()
+    }
+    
     func configure() {
         progress = 0
         circlePathLayer.frame = bounds
-        circlePathLayer.lineWidth = 2
+        circlePathLayer.lineWidth = self.lineWidht
         circlePathLayer.fillColor = UIColor.clearColor().CGColor
         circlePathLayer.strokeColor = UIColor.redColor().CGColor
         layer.addSublayer(circlePathLayer)
@@ -109,7 +121,7 @@ class CircularLoaderView: UIView {
         
         // 5
         let groupAnimation = CAAnimationGroup()
-        groupAnimation.duration = 1
+        groupAnimation.duration = 0.5
         groupAnimation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
         groupAnimation.animations = [pathAnimation, lineWidthAnimation]
         groupAnimation.delegate = self

@@ -30,7 +30,10 @@ public class JSonHelper {
     let API_setMessageReaded = "api/set_message_read"
     let API_setMessageUnread = "api/set_message_unread"
     let API_getNumberOfMessages = "api/get_num_of_messages"
+    let API_sendNewMessage = "api/new_message_to_user"
     
+    let API_getCategories = "api/get_categories"
+    let API_getCategoryImage = "api/get_category_image"
     
     /*
      * This function is used when we need to pass parameters for example in a PHP page

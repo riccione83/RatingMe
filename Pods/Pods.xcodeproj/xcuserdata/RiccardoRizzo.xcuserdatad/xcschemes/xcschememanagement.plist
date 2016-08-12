@@ -19,7 +19,17 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>Pods-RatingMeTests.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Popover.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>RZViewActions.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -52,47 +62,57 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>432ECC54282C84882B482CCB4CF227FC</key>
+		<key>3ED768A249E97A3FA33936B2E729DD49</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>6969C8751B77788062C5BC81888DA4F7</key>
+		<key>3EE9E7B774A6FB90F358EB1924A1353D</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>92A4B1623D90786E2D1A8700BE906A15</key>
+		<key>760F1D3BFF3557DF8074D73DBF0111DE</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>A99C1B16C2CF79CC52EBC897B838D294</key>
+		<key>79C040AFDDCE1BCBF6D8B5EB0B85887F</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>CC0E5B7AAB57226FA9E85E3E16B94CE6</key>
+		<key>9E18DAE3ADD4C1BF6001E0FE4E702ACB</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>CDC7E1FD842508591F91E6C0F6C2E659</key>
+		<key>A285469716FE6B98DCF7F4EE3B60B013</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>D6E611B0844E6E0F39F7F9B3D2CBCCB6</key>
+		<key>BE2E7FBE6891AFE0FF5E5368FE40046C</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>D3DA657DD89ADC241CAA59D5CBB6670F</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>DC02B69EF327D6F4D78938F5A7CA3FC5</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>E21E197728888BAA8480603694AB61B2</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
 		<key>E61CE3B6DFA1FE6B3E296965C76C0E10</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>E6DAA9EFA4B0AF4146AAD737A765718C</key>
 		<dict>
 			<key>primary</key>
 			<true/>

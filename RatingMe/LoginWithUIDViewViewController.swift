@@ -111,6 +111,7 @@ class LoginWithUIDViewViewController: UIViewController {
                                 self.messageForUser(infoMessage)
                             }
                             else {
+                                self.userData.user.userLoginType = .Login
                                 self.mainController?.delegate?.userInfos = self.userData.user
                                 self.dismissViewControllerAnimated(true, completion: nil)
                             }

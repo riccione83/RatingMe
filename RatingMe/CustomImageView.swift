@@ -10,24 +10,39 @@ import UIKit
 
 class CustomImageView: UIImageView {
     
+    var _imageLoaded:Bool = false
+    
     let progressIndicatorView = CircularLoaderView(frame: CGRectZero)
     
-
+    var imageLoaded:Bool {
+        return _imageLoaded
+    }
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        
+        addSubview(self.progressIndicatorView)
+        progressIndicatorView.frame = bounds
+        progressIndicatorView.autoresizingMask = [UIViewAutoresizing.FlexibleWidth, UIViewAutoresizing.FlexibleHeight]
+    }
+    
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         
         addSubview(self.progressIndicatorView)
         progressIndicatorView.frame = bounds
         progressIndicatorView.autoresizingMask = [UIViewAutoresizing.FlexibleWidth, UIViewAutoresizing.FlexibleHeight]
-        
     }
     
-     func updateProgress(receivedSize:CGFloat, expectedSize:CGFloat) {
-        self.progressIndicatorView.progress = CGFloat(receivedSize)/CGFloat(expectedSize)
+    func updateProgress(receivedSize:CGFloat, expectedSize:CGFloat) {
+        if expectedSize > 0 {
+            self.progressIndicatorView.progress = CGFloat(receivedSize)/CGFloat(expectedSize)
+        }
     }
     
     func revealImage() {
         self.progressIndicatorView.reveal()
+        self._imageLoaded = true
     }
-
+    
 }

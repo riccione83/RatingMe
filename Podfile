@@ -12,6 +12,7 @@ target 'RatingMe' do
     pod 'UIActivityIndicator-for-SDWebImage'
     pod 'Popover', '~> 0.8'
     pod 'SWTableViewCell', '~> 0.3.7'
+    pod 'RZViewActions'
 end
 
 target 'RatingMeTests' do

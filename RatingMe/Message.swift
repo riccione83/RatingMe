@@ -17,6 +17,7 @@ class Message: NSObject {
 
     var Message:NSString?
     var longText:NSString?
+    var messageFrom:NSString?
     var Status:MessageStatus
     var Id:NSInteger!
     
@@ -24,13 +25,15 @@ class Message: NSObject {
         self.Id = 0
         self.Message = ""
         self.longText = ""
+        self.messageFrom = ""
         self.Status = .Unread
     }
     
-    init(id:NSInteger,message:String,longMessage:String,status:NSInteger) {
+    init(id:NSInteger,message:String,longMessage:String,status:NSInteger, userId:NSString) {
         self.Id = id
         self.Message = message
         self.longText = longMessage
+        self.messageFrom = userId
         self.Status = status == 0 ? .Unread : .Read
     }
     

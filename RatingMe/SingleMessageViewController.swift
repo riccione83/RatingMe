@@ -14,6 +14,7 @@ class SingleMessageViewController: UIViewController {
     
     var userInfos:User?
     var messageID:String?
+    var messageFrom:String?
     var titleString:NSString?
     var bodyString:NSString?
     var messageStatus:MessageStatus?
@@ -40,13 +41,27 @@ class SingleMessageViewController: UIViewController {
     
     
     @IBAction func setMessageAsUnreadedClick(sender: AnyObject) {
-        let messageUtil = MessageController()
+        
+        
+        let uN = txtTitle.text?.componentsSeparatedByString(":")
+        let userName = uN![1].stringByTrimmingCharactersInSet(
+            NSCharacterSet.whitespaceAndNewlineCharacterSet()
+        )
+        
+        let vc = self.storyboard?.instantiateViewControllerWithIdentifier("newMesageViewController") as! NewMessageViewController
+        vc.UserInfos = userInfos!
+        vc.ToUser = userName
+        self.presentViewController(vc, animated: true, completion: nil)
+        
+        
+      /*  let messageUtil = MessageController()
         if self.messageStatus == MessageStatus.Read {
             self.notificationController.newNotification()
         }
         messageUtil.setMessageAsUnreaded(userInfos!.userID, message_id: messageID!) { (result, errorMessage) -> () in
             self.dismissViewControllerAnimated(true, completion: nil)
         }
+        */
     }
     
     override func viewDidLoad() {

@@ -27,6 +27,7 @@ class PinAnnotation: NSObject, MKAnnotation {
     var coordinate: CLLocationCoordinate2D
     var title: String?
     var subtitle: String?
+    var userName: String?
     var Tag: NSNumber
     var Rating: Int
     var ImageLink: String
@@ -36,12 +37,14 @@ class PinAnnotation: NSObject, MKAnnotation {
     var Question3:String
     var isAdvertisement:Bool
     var advertisementImageLink:String
+    var category:Category?
     
-    init(coordinate: CLLocationCoordinate2D, title:String, subtitle: String, tag: NSNumber, rating:Int, link:String, ID:String, Q1:String, Q2:String, Q3:String, isAdv:String, advImgLink:String) {
+    init(coordinate: CLLocationCoordinate2D, title:String, subtitle: String, tag: NSNumber, rating:Int, link:String, ID:String, Q1:String, Q2:String, Q3:String, isAdv:String, advImgLink:String, category:Category?, user_name:String) {
         
         self.coordinate = coordinate
         self.title = title
         self.subtitle = subtitle
+        self.userName = user_name
         self.Tag = tag
         self.Rating = rating
         self.ImageLink = link
@@ -51,5 +54,6 @@ class PinAnnotation: NSObject, MKAnnotation {
         self.Question3 = Q3
         self.isAdvertisement = isAdv.toBool()!
         self.advertisementImageLink = advImgLink
+        self.category = category
     }    
 }

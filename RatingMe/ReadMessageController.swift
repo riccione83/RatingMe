@@ -37,7 +37,7 @@ class MessageController: NSObject {
             
             for (_,subJson):(String, JSON) in json {
                 print(subJson)
-                let message = Message(id: subJson["id"].int!,message: subJson["message"].string!,longMessage: subJson["long_text"].string!,status: subJson["status"].int!)
+                let message = Message(id: subJson["id"].int!,message: subJson["message"].string!,longMessage: subJson["long_text"].string!,status: subJson["status"].int!,userId: "\(subJson["user_id"].int!)")
                 messages.addObject(message)
             }
             completitionHandler(result:messages, errorMessage: "")
@@ -64,7 +64,7 @@ class MessageController: NSObject {
             
             for (_,subJson):(String, JSON) in json {
                 print(subJson)
-                let message = Message(id: subJson["id"].int!,message: subJson["message"].string!,longMessage: subJson["long_text"].string!,status: subJson["status"].int!)
+                let message = Message(id: subJson["id"].int!,message: subJson["message"].string!,longMessage: subJson["long_text"].string!,status: subJson["status"].int!,userId: "\(subJson["user_id"].int!)")
                 messages.addObject(message)
             }
             completitionHandler(result:messages, errorMessage: "")
@@ -91,7 +91,7 @@ class MessageController: NSObject {
             
             for (_,subJson):(String, JSON) in json {
                 print(subJson)
-                let message = Message(id: subJson["id"].int!,message: subJson["message"].string!,longMessage: subJson["long_text"].string!,status: subJson["status"].int!)
+                let message = Message(id: subJson["id"].int!,message: subJson["message"].string!,longMessage: subJson["long_text"].string!,status: subJson["status"].int!,userId: "\(subJson["user_id"].int!)")
                 messages.addObject(message)
             }
             completitionHandler(result:messages, errorMessage: "")
@@ -144,7 +144,30 @@ class MessageController: NSObject {
             
             for (_,subJson):(String, JSON) in json {
                 print(subJson)
-                let message = Message(id: subJson["id"].int!,message: subJson["message"].string!,longMessage: subJson["long_text"].string!,status: subJson["status"].int!)
+                let message = Message(id: subJson["id"].int!,message: subJson["message"].string!,longMessage: subJson["long_text"].string!,status: subJson["status"].int!,userId: "\(subJson["user_id"].int!)")
+                messages.addObject(message)
+            }
+            completitionHandler(result:messages, errorMessage: "")
+        }
+
+        
+        jsonRequest.getJson("GET", apiUrl: jsonRequest.API_getMessages, parameters: params) { (jsonData) -> () in
+            
+            let messages = NSMutableArray()
+            
+            if jsonData == nil {
+                completitionHandler(result: NSMutableArray(),errorMessage: "No connection")
+            }
+            let json = JSON(jsonData!)
+            
+            if let message = json[0]["error"].string {
+                print(message)
+                completitionHandler(result: NSMutableArray(),errorMessage: message)
+            }
+            
+            for (_,subJson):(String, JSON) in json {
+                print(subJson)
+                let message = Message(id: subJson["id"].int!,message: subJson["message"].string!,longMessage: subJson["long_text"].string!,status: subJson["status"].int!,userId: "\(subJson["user_id"].int!)")
                 messages.addObject(message)
             }
             completitionHandler(result:messages, errorMessage: "")

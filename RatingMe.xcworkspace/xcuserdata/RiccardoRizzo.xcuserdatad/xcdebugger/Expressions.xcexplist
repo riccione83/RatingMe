@@ -3,107 +3,10 @@
    version = "1.0">
    <ContextStates>
       <ContextState
-         contextName = "ViewController.tableView(UITableView, cellForRowAtIndexPath : NSIndexPath) -&gt; UITableViewCell:MainViewController.swift">
+         contextName = "CircularLoaderView.drawCustom(CGFloat) -&gt; ():CircularLoaderView.swift">
          <PersistentStrings>
             <PersistentString
-               value = "(self.searchedItems![indexPath.row] as? PinAnnotation)?.title">
-            </PersistentString>
-            <PersistentString
-               value = "(self.searchedItems![indexPath.row] as? PinAnnotation)?.subtitle">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "ShowReviewViewController.viewDidLoad() -&gt; ():ShowReviewViewController.swift">
-         <PersistentStrings>
-            <PersistentString
-               value = "pin">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "ViewController.(searchForLocation(ViewController) -&gt; (String, withRadius : Double, latitude_ : Double, longitude_ : Double, center : Bool) -&gt; ()).(closure #1):ViewController.swift">
-      </ContextState>
-      <ContextState
-         contextName = "ViewController.makeSignUpRequest(String, lon : String, radius : String) -&gt; ():ViewController.swift">
-         <PersistentStrings>
-            <PersistentString
-               value = "httpRequest.HTTPBody">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "HTTPHelper.(sendRequest(HTTPHelper) -&gt; (NSURLRequest, completion : (NSData!, NSError!) -&gt; ()) -&gt; ()).(closure #1).(closure #2):HTTPHelper.swift">
-         <PersistentStrings>
-            <PersistentString
-               value = "httpResponse.statusCode">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "ShowReviewViewController.tableView(UITableView, numberOfRowsInSection : Int) -&gt; Int:ShowReviewViewController.swift">
-         <PersistentStrings>
-            <PersistentString
-               value = "Descriptions">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "ShowReviewViewController.loadData() -&gt; ():ShowReviewViewController.swift">
-         <PersistentStrings>
-            <PersistentString
-               value = "pin">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "ViewController.(searchForLocation(ViewController) -&gt; (String, withRadius : Double, latitude_ : Double, longitude_ : Double, center : Bool) -&gt; ()).(closure #1):MainViewController.swift">
-         <PersistentStrings>
-            <PersistentString
-               value = "olderPins">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "ViewController.viewDidAppear(Bool) -&gt; ():MainViewController.swift">
-         <PersistentStrings>
-            <PersistentString
-               value = "numOfUnreadedMessage">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "ViewController.newNotification() -&gt; ():MainViewController.swift">
-         <PersistentStrings>
-            <PersistentString
-               value = "numOfUnreadedMessage">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "ShowReviewViewController.tableView(UITableView, cellForRowAtIndexPath : NSIndexPath) -&gt; UITableViewCell:ShowReviewViewController.swift">
-         <PersistentStrings>
-            <PersistentString
-               value = "Rates1">
-            </PersistentString>
-            <PersistentString
-               value = "starRatingQuestion1">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "RateViewController.feedbackClick(AnyObject) -&gt; ():NewRateViewController.swift">
-         <PersistentStrings>
-            <PersistentString
-               value = "txtRateDescription.text">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
-         contextName = "UserController.(signInWithFacebook(UserController) -&gt; ((Bool, String) -&gt; ()) -&gt; ()).(closure #1).(closure #1):UserController.swift">
-         <PersistentStrings>
-            <PersistentString
-               value = "self.user.userSocialID">
+               value = "">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -121,6 +24,183 @@
             </PersistentString>
             <PersistentString
                value = "Rates2">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "CustomImageView.init(frame : CGRect) -&gt; CustomImageView:CustomImageView.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "bounds">
+            </PersistentString>
+            <PersistentString
+               value = "self.image">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "ShowReviewViewController.loadData() -&gt; ():ShowReviewViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "pin">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "HTTPHelper.(sendRequest(HTTPHelper) -&gt; (NSURLRequest, completion : (NSData!, NSError!) -&gt; ()) -&gt; ()).(closure #1).(closure #2):HTTPHelper.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "httpResponse.statusCode">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "NewMessageViewController.(sendNewMessageClick(NewMessageViewController) -&gt; (AnyObject) -&gt; ()).(closure #1):NewMessageViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "result">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "ShowReviewViewController.viewDidLoad() -&gt; ():ShowReviewViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "pin">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "ViewController.makeSignUpRequest(String, lon : String, radius : String) -&gt; ():ViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "httpRequest.HTTPBody">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "ShowReviewViewController.tableView(UITableView, cellForRowAtIndexPath : NSIndexPath) -&gt; UITableViewCell:ShowReviewViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "Rates1">
+            </PersistentString>
+            <PersistentString
+               value = "starRatingQuestion1">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "UserController.(signInWithFacebook(UserController) -&gt; ((Bool, String) -&gt; ()) -&gt; ()).(closure #1).(closure #1):UserController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.user.userSocialID">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "ViewController.(searchForLocation(ViewController) -&gt; (String, withRadius : Double, latitude_ : Double, longitude_ : Double, center : Bool) -&gt; ()).(closure #1):MainViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "Pins.count">
+            </PersistentString>
+            <PersistentString
+               value = "i">
+            </PersistentString>
+            <PersistentString
+               value = "self.olderPins[i].ReviewID">
+            </PersistentString>
+            <PersistentString
+               value = "Pins[i].ReviewID">
+            </PersistentString>
+            <PersistentString
+               value = "self.olderPins.count">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "RateViewController.feedbackClick(AnyObject) -&gt; ():NewRateViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "txtRateDescription.text">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "ShowReviewViewController.showImage() -&gt; ():ShowReviewViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "imageThumb.image">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "ViewController.newNotification() -&gt; ():MainViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "numOfUnreadedMessage">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "ViewController.(searchForLocation(ViewController) -&gt; (String, withRadius : Double, latitude_ : Double, longitude_ : Double, center : Bool) -&gt; ()).(closure #1):ViewController.swift">
+      </ContextState>
+      <ContextState
+         contextName = "NewMessageViewController.sendNewMessageClick(AnyObject) -&gt; ():NewMessageViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "ToUser">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "ViewController.showInfoPanel(PinAnnotation) -&gt; ():MainViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "userInfos">
+            </PersistentString>
+            <PersistentString
+               value = "vc.pin">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "ViewController.viewDidAppear(Bool) -&gt; ():MainViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "userInfos">
+            </PersistentString>
+            <PersistentString
+               value = "numOfUnreadedMessage">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "ViewController.tableView(UITableView, cellForRowAtIndexPath : NSIndexPath) -&gt; UITableViewCell:MainViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "(self.searchedItems![indexPath.row] as? PinAnnotation)?.title">
+            </PersistentString>
+            <PersistentString
+               value = "(self.searchedItems![indexPath.row] as? PinAnnotation)?.subtitle">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "ShowReviewViewController.tableView(UITableView, numberOfRowsInSection : Int) -&gt; Int:ShowReviewViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "Descriptions">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "CircularLoaderView.configure() -&gt; ():CircularLoaderView.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "bounds">
+            </PersistentString>
+            <PersistentString
+               value = "self.lineWidht">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
