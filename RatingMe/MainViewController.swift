@@ -348,7 +348,10 @@ class ViewController: UIViewController, ReviewControllerProtocol,RateControllerP
                 data.userEmail = NSUserDefaults.standardUserDefaults().objectForKey("loginData.UserEmail") as! String
                 data.userPasswordHash = NSUserDefaults.standardUserDefaults().objectForKey("loginData.UserPasswordHash") as! String
                 data.userSocialID = NSUserDefaults.standardUserDefaults().objectForKey("loginData.UserSocialID") as! String
-                data.userLoginType = UserLoginType(rawValue: NSUserDefaults.standardUserDefaults().objectForKey("loginData.userLoginType") as! String)
+                guard let _userLoginType =  NSUserDefaults.standardUserDefaults().objectForKey("loginData.userLoginType") else {
+                    return nil
+                }
+                data.userLoginType = UserLoginType(rawValue: _userLoginType as! String)
                 if data.userLoginType == nil {
                     data.userLoginType = UserLoginType.Unknow
                 }
@@ -690,6 +693,8 @@ extension ViewController:MKMapViewDelegate {
         
         for annView in views
         {
+            
+            if !annView.isKindOfClass(MKUserLocation) {
             annView.alpha = 0.0
             //annView.transform = CGAffineTransformMakeScale(0.5, 0.5)
             
@@ -701,10 +706,16 @@ extension ViewController:MKMapViewDelegate {
                     annView.alpha = 1.0
             })
             
+            }
         }
     }
     
     func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
+        
+       // if ([annotation isKindOfClass:[MKUserLocation class]]) {
+        if annotation.isKindOfClass(MKUserLocation) {
+            return nil
+        }
         
         let pinAnnotationView = PinAnnotationView(annotation: annotation, reuseIdentifier: "Points")
         pinAnnotationView.canShowCallout = false
@@ -713,10 +724,10 @@ extension ViewController:MKMapViewDelegate {
             let currAnnotation:PinAnnotation = pinAnnotationView.annotation as! PinAnnotation
             pinAnnotationView.disclosureBlock = { NSLog("selected Pin"); self.showInfoPanel(currAnnotation) }
         }
-        else if annotation as! MKUserLocation == mapView.userLocation {
+     /*   else if annotation as! MKUserLocation == mapView.userLocation {
             return nil  //return the default to blue dot
             
-        }
+        }*/
         return pinAnnotationView
     }
     
