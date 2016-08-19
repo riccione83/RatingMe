@@ -37,7 +37,7 @@ class MessageController: NSObject {
             
             for (_,subJson):(String, JSON) in json {
                 print(subJson)
-                let message = Message(id: subJson["id"].int!,message: subJson["message"].string!,longMessage: subJson["long_text"].string!,status: subJson["status"].int!,userId: "\(subJson["user_id"].int!)")
+                let message = Message(id: subJson["id"].int!,message: subJson["message"].string!,longMessage: subJson["long_text"].string!,status: subJson["status"].int!,userId: "\(subJson["user_id"].int!)", createAt: subJson["created_at"].string!)
                 messages.addObject(message)
             }
             completitionHandler(result:messages, errorMessage: "")
@@ -64,7 +64,7 @@ class MessageController: NSObject {
             
             for (_,subJson):(String, JSON) in json {
                 print(subJson)
-                let message = Message(id: subJson["id"].int!,message: subJson["message"].string!,longMessage: subJson["long_text"].string!,status: subJson["status"].int!,userId: "\(subJson["user_id"].int!)")
+                let message = Message(id: subJson["id"].int!,message: subJson["message"].string!,longMessage: subJson["long_text"].string!,status: subJson["status"].int!,userId: "\(subJson["user_id"].int!)", createAt: subJson["created_at"].string!)
                 messages.addObject(message)
             }
             completitionHandler(result:messages, errorMessage: "")
@@ -91,7 +91,7 @@ class MessageController: NSObject {
             
             for (_,subJson):(String, JSON) in json {
                 print(subJson)
-                let message = Message(id: subJson["id"].int!,message: subJson["message"].string!,longMessage: subJson["long_text"].string!,status: subJson["status"].int!,userId: "\(subJson["user_id"].int!)")
+                let message = Message(id: subJson["id"].int!,message: subJson["message"].string!,longMessage: subJson["long_text"].string!,status: subJson["status"].int!,userId: "\(subJson["user_id"].int!)", createAt: subJson["created_at"].string!)
                 messages.addObject(message)
             }
             completitionHandler(result:messages, errorMessage: "")
@@ -144,7 +144,7 @@ class MessageController: NSObject {
             
             for (_,subJson):(String, JSON) in json {
                 print(subJson)
-                let message = Message(id: subJson["id"].int!,message: subJson["message"].string!,longMessage: subJson["long_text"].string!,status: subJson["status"].int!,userId: "\(subJson["user_id"].int!)")
+                let message = Message(id: subJson["id"].int!,message: subJson["message"].string!,longMessage: subJson["long_text"].string!,status: subJson["status"].int!,userId: "\(subJson["user_id"].int!)", createAt: subJson["created_at"].string!)
                 messages.addObject(message)
             }
             completitionHandler(result:messages, errorMessage: "")
@@ -167,7 +167,7 @@ class MessageController: NSObject {
             
             for (_,subJson):(String, JSON) in json {
                 print(subJson)
-                let message = Message(id: subJson["id"].int!,message: subJson["message"].string!,longMessage: subJson["long_text"].string!,status: subJson["status"].int!,userId: "\(subJson["user_id"].int!)")
+                let message = Message(id: subJson["id"].int!,message: subJson["message"].string!,longMessage: subJson["long_text"].string!,status: subJson["status"].int!,userId: "\(subJson["user_id"].int!)", createAt: subJson["created_at"].string!)
                 messages.addObject(message)
             }
             completitionHandler(result:messages, errorMessage: "")

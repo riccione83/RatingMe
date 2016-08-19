@@ -99,13 +99,16 @@ class MessagesViewController: UIViewController, UITableViewDataSource, UITableVi
         cell.messageStatus = (messages[indexPath.row] as! Message).Status
         cell.longMessageText.text = deleteHTMLFromString((messages[indexPath.row] as! Message).longText! as String)
         
+        cell.lblDateTime.text = (messages[indexPath.row] as! Message).createAt! as String
+        
+        
         cell.unreadedIcon.clipsToBounds = true
         cell.unreadedIcon.layer.cornerRadius = cell.unreadedIcon.bounds.size.width/2;
         cell.unreadedIcon.layer.borderColor = UIColor.whiteColor().CGColor
         cell.unreadedIcon.layer.borderWidth = 5.0
 
         if cell.messageStatus == MessageStatus.Unread {
-            numOfUnreadedMessages++
+            numOfUnreadedMessages += 1
             notificationController.setNotification(numOfUnreadedMessages)
         }
 
@@ -144,8 +147,6 @@ class MessagesViewController: UIViewController, UITableViewDataSource, UITableVi
             self.messageTable.reloadData()
         }
     }
-    
-    
     
     func swipeableTableViewCell(cell: SWTableViewCell!, didTriggerRightUtilityButtonWithIndex index: Int) {
         let c = cell as! MessageTableViewCell

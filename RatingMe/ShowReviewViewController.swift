@@ -45,7 +45,7 @@ class ShowReviewViewController: UIViewController, NSURLConnectionDataDelegate {
     let jsonRequest = JSonHelper()
 
     private var texts = ["Report this Review","Block this user"]
-    private var actionOptions = ["Add a Rate","Share","Send a message"]
+    private var actionOptions = ["Add a Rate","Share","Send a Message to this User"]
     
     
     private var popover: Popover!
@@ -199,7 +199,7 @@ class ShowReviewViewController: UIViewController, NSURLConnectionDataDelegate {
             return
         }
         
-        let startPoint = CGPoint(x: self.view.frame.width - 25, y: 55)
+        let startPoint = CGPoint(x: self.view.frame.width - 30, y: 55)
         let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: 90))
         
         tableView.delegate = self
@@ -219,7 +219,7 @@ class ShowReviewViewController: UIViewController, NSURLConnectionDataDelegate {
             return
         }
         
-        let startPoint = CGPoint(x: self.view.frame.width - 80, y: 55)
+        let startPoint = CGPoint(x: self.view.frame.width - 90, y: 55)
         let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: 135))
         
         tableView.delegate = self

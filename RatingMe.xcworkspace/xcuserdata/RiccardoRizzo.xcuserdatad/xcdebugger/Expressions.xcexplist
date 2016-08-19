@@ -3,14 +3,6 @@
    version = "1.0">
    <ContextStates>
       <ContextState
-         contextName = "CircularLoaderView.drawCustom(CGFloat) -&gt; ():CircularLoaderView.swift">
-         <PersistentStrings>
-            <PersistentString
-               value = "">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
          contextName = "ShowReviewViewController.(loadData(ShowReviewViewController) -&gt; () -&gt; ()).(closure #1):ShowReviewViewController.swift">
          <PersistentStrings>
             <PersistentString
@@ -24,6 +16,17 @@
             </PersistentString>
             <PersistentString
                value = "Rates2">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "CircularLoaderView.configure() -&gt; ():CircularLoaderView.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "bounds">
+            </PersistentString>
+            <PersistentString
+               value = "self.lineWidht">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -71,6 +74,9 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
+         contextName = "ViewController.saveLoginData(User) -&gt; ():MainViewController.swift">
+      </ContextState>
+      <ContextState
          contextName = "ViewController.makeSignUpRequest(String, lon : String, radius : String) -&gt; ():ViewController.swift">
          <PersistentStrings>
             <PersistentString
@@ -90,6 +96,14 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
+         contextName = "LoginWithUIDViewViewController.(loginBtnClick(AnyObject) -&gt; ()).(closure #1):LoginWithUIDViewViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.userData">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "UserController.(signInWithFacebook(UserController) -&gt; ((Bool, String) -&gt; ()) -&gt; ()).(closure #1).(closure #1):UserController.swift">
          <PersistentStrings>
             <PersistentString
@@ -101,7 +115,7 @@
          contextName = "ViewController.(searchForLocation(ViewController) -&gt; (String, withRadius : Double, latitude_ : Double, longitude_ : Double, center : Bool) -&gt; ()).(closure #1):MainViewController.swift">
          <PersistentStrings>
             <PersistentString
-               value = "Pins.count">
+               value = "self.olderPins.count">
             </PersistentString>
             <PersistentString
                value = "i">
@@ -113,7 +127,7 @@
                value = "Pins[i].ReviewID">
             </PersistentString>
             <PersistentString
-               value = "self.olderPins.count">
+               value = "Pins.count">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -134,10 +148,13 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "ViewController.newNotification() -&gt; ():MainViewController.swift">
+         contextName = "ViewController.showInfoPanel(PinAnnotation) -&gt; ():MainViewController.swift">
          <PersistentStrings>
             <PersistentString
-               value = "numOfUnreadedMessage">
+               value = "userInfos">
+            </PersistentString>
+            <PersistentString
+               value = "vc.pin">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -153,13 +170,10 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "ViewController.showInfoPanel(PinAnnotation) -&gt; ():MainViewController.swift">
+         contextName = "ViewController.newNotification() -&gt; ():MainViewController.swift">
          <PersistentStrings>
             <PersistentString
-               value = "userInfos">
-            </PersistentString>
-            <PersistentString
-               value = "vc.pin">
+               value = "numOfUnreadedMessage">
             </PersistentString>
          </PersistentStrings>
       </ContextState>
@@ -194,13 +208,10 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "CircularLoaderView.configure() -&gt; ():CircularLoaderView.swift">
+         contextName = "CircularLoaderView.drawCustom(CGFloat) -&gt; ():CircularLoaderView.swift">
          <PersistentStrings>
             <PersistentString
-               value = "bounds">
-            </PersistentString>
-            <PersistentString
-               value = "self.lineWidht">
+               value = "">
             </PersistentString>
          </PersistentStrings>
       </ContextState>

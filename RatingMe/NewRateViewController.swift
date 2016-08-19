@@ -57,11 +57,11 @@ class RateViewController: UIViewController {
                 var divisor = 1
             
                 if starRatingView2 != nil && !starRatingView2.hidden {
-                    divisor++
+                    divisor += 1
                 }
             
                 if starRatingView3 != nil && !starRatingView3.hidden {
-                    divisor++
+                    divisor += 1
                 }
             
                 rating = (starRatingView1.currentRating + starRatingView2.currentRating + starRatingView3.currentRating) / divisor
@@ -159,7 +159,7 @@ class RateViewController: UIViewController {
             else {
                 new_Link += temp[0] + "=\(incrementValue)&"
             }
-            i++
+            i += 1
         }
         NSLog("\(new_Link)")
         

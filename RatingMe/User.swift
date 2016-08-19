@@ -8,12 +8,12 @@
 
 import UIKit
 
-enum UserLoginType {
-    case Facebook
-    case Twitter
-    case Login
-    case Anonimous
-    case Unknow
+enum UserLoginType:String {
+    case Facebook = "Facebook"
+    case Twitter = "Twitter"
+    case Login = "Login"
+    case Anonimous = "Anonimous"
+    case Unknow = "Unknow"
 }
 
 public class User {
@@ -24,7 +24,7 @@ public class User {
     var userEmail: String
     var userCity: String
     var userSocialID:String
-    var userLoginType:UserLoginType
+    var userLoginType:UserLoginType?
     
     
     required public init() {

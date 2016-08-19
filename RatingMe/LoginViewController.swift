@@ -59,6 +59,7 @@ class LoginViewController: UIViewController {
             if loggedIn {
                 print("Perfetto!! Effettuato login con Twitter: \(self.user.user.userName)  \(self.user.user.userID)")
                 self.user.user.userLoginType = .Twitter
+                 self.delegate?.saveLoginData(self.user.user)
                 self.showMainView()
             }
             else
@@ -80,6 +81,7 @@ class LoginViewController: UIViewController {
             if loggedIn {
                 print("Perfetto!! Effettuato login con Facebook: \(self.user.user.userName)  \(self.user.user.userID)")
                 self.user.user.userLoginType = .Facebook
+                self.delegate?.saveLoginData(self.user.user)
                 self.showMainView()
             }
             else

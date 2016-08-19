@@ -55,6 +55,7 @@ class ViewController: UIViewController, ReviewControllerProtocol,RateControllerP
         NSUserDefaults.standardUserDefaults().synchronize()
         
         userInfos = nil
+        loginHappened = false
         
         let vc = self.storyboard?.instantiateViewControllerWithIdentifier("loginViewController") as! LoginViewController
         vc.delegate = self
@@ -274,7 +275,7 @@ class ViewController: UIViewController, ReviewControllerProtocol,RateControllerP
     override func viewDidAppear(animated: Bool) {
         
         self.closeLeft()
-    
+
         userInfos = loadLoginData()
         
         if userInfos == nil {
@@ -332,6 +333,7 @@ class ViewController: UIViewController, ReviewControllerProtocol,RateControllerP
         NSUserDefaults.standardUserDefaults().setObject(userData.userEmail, forKey: "loginData.UserEmail")
         NSUserDefaults.standardUserDefaults().setObject(userData.userPasswordHash, forKey: "loginData.UserPasswordHash")
         NSUserDefaults.standardUserDefaults().setObject(userData.userSocialID, forKey: "loginData.UserSocialID")
+        NSUserDefaults.standardUserDefaults().setObject(userData.userLoginType!.rawValue, forKey: "loginData.userLoginType")
         NSUserDefaults.standardUserDefaults().synchronize()
     }
     
@@ -346,6 +348,10 @@ class ViewController: UIViewController, ReviewControllerProtocol,RateControllerP
                 data.userEmail = NSUserDefaults.standardUserDefaults().objectForKey("loginData.UserEmail") as! String
                 data.userPasswordHash = NSUserDefaults.standardUserDefaults().objectForKey("loginData.UserPasswordHash") as! String
                 data.userSocialID = NSUserDefaults.standardUserDefaults().objectForKey("loginData.UserSocialID") as! String
+                data.userLoginType = UserLoginType(rawValue: NSUserDefaults.standardUserDefaults().objectForKey("loginData.userLoginType") as! String)
+                if data.userLoginType == nil {
+                    data.userLoginType = UserLoginType.Unknow
+                }
                 
                 return data
             }

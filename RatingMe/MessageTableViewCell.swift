@@ -16,6 +16,7 @@ class MessageTableViewCell: SWTableViewCell {
     var messageID: String!
     var messageStatus: MessageStatus!
     @IBOutlet var longMessageText: UILabel!
+    @IBOutlet var lblDateTime: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()

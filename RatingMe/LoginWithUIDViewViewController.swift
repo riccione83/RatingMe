@@ -113,6 +113,7 @@ class LoginWithUIDViewViewController: UIViewController {
                             else {
                                 self.userData.user.userLoginType = .Login
                                 self.mainController?.delegate?.userInfos = self.userData.user
+                                self.mainController?.delegate?.saveLoginData(self.userData.user)
                                 self.dismissViewControllerAnimated(true, completion: nil)
                             }
                         }
