@@ -13,24 +13,28 @@ import SDWebImage
 class CategoriesController: NSObject {
     let jsonRequest:JSonHelper = JSonHelper()
     
-    
     func downloadImage(url:NSURL, frame:CustomImageView) {
         
         let downloader:SDWebImageDownloader = SDWebImageDownloader.sharedDownloader()
-        frame.progressIndicatorView.drawCustom(1)
+        //frame.progressIndicatorView.drawCustom(1)
         
-        downloader.downloadImageWithURL(url, options: SDWebImageDownloaderOptions.AllowInvalidSSLCertificates, progress: { (receivedSize, expectedSize) -> Void in
+        downloader.downloadImageWithURL(url, options: SDWebImageDownloaderOptions.HighPriority, progress: { (receivedSize, expectedSize) -> Void in
             if receivedSize > 0 && expectedSize > 0 {
                 let received:Float = ((Float(receivedSize)*100.0)/Float(expectedSize))/100.0
                 frame.updateProgress(CGFloat(receivedSize), expectedSize: CGFloat(expectedSize))
                 print("=>",received,expectedSize)
             }
             })
-            { (image, data, error, finished) -> Void in  //Download finished
-                if ((image != nil) && finished == true) {
-                    frame.image = image
+        { (image, data, error, finished) -> Void in  //Download finished
+            if ((image != nil) && finished == true) {
+                
+                dispatch_async(dispatch_get_main_queue(), {
                     frame.revealImage()
-                }
+                    frame.image = image
+                    frame.setNeedsDisplay()
+                    frame.layoutIfNeeded()
+                })
+            }
         }
     }
     
@@ -55,7 +59,7 @@ class CategoriesController: NSObject {
             let json = JSON(jsonData!)
             
             if let message = json[0]["error"].string {
-              //  print(message)
+                //  print(message)
                 completitionHandler(result: NSMutableArray(),errorMessage: message)
             }
             
@@ -66,7 +70,7 @@ class CategoriesController: NSObject {
             }
             completitionHandler(result:categories, errorMessage: "")
         }
-
+        
     }
-
+    
 }

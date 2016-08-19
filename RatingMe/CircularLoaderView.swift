@@ -128,4 +128,8 @@ class CircularLoaderView: UIView {
         circlePathLayer.addAnimation(groupAnimation, forKey: "strokeWidth")
     }
     
+   /* override func animationDidStop(anim: CAAnimation, finished flag: Bool) {
+        superview?.layer.mask = nil
+    }*/
+    
 }

@@ -180,9 +180,10 @@ class PinAnnotationView: MKAnnotationView,MKMapViewDelegate {
                         image = UIImage(named: "baloon_no_star")!
                         break
                 }
-                self.imageView.progressIndicatorView.drawCustom(0.2)
+                //self.imageView.progressIndicatorView.drawCustom(0.2)
                 self.imageView.revealImage()
                 self.imageView.image = image
+
             }
             else {
                 let categoryController = CategoriesController()

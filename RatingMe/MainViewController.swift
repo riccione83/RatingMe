@@ -680,20 +680,21 @@ extension ViewController:MKMapViewDelegate {
         if lastRegion?.center.latitude != mainMap.region.center.latitude {
             preventRefreshBanner = true
             lastRegion = mainMap.region
+            
             if let popupView = self.view.viewWithTag(999) {
                 popupView.removeFromSuperview()
             }
+            
             let region:MKCoordinateRegion = mainMap.region  // get the current region
             searchByUserLocation(region.center.latitude, lon: region.center.longitude, center: false)
         }
       }
     }
-    
+ 
     func mapView(mapView: MKMapView, didAddAnnotationViews views: [MKAnnotationView]) {
         
         for annView in views
         {
-            
             if !annView.isKindOfClass(MKUserLocation) {
             annView.alpha = 0.0
             //annView.transform = CGAffineTransformMakeScale(0.5, 0.5)
@@ -707,15 +708,18 @@ extension ViewController:MKMapViewDelegate {
             })
             
             }
+ 
         }
     }
     
     func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
         
-       // if ([annotation isKindOfClass:[MKUserLocation class]]) {
-        if annotation.isKindOfClass(MKUserLocation) {
+     /*   if annotation.isKindOfClass(MKUserLocation) {
             return nil
         }
+       */
+        
+        mapView.showsUserLocation = true
         
         let pinAnnotationView = PinAnnotationView(annotation: annotation, reuseIdentifier: "Points")
         pinAnnotationView.canShowCallout = false
@@ -723,12 +727,10 @@ extension ViewController:MKMapViewDelegate {
         {
             let currAnnotation:PinAnnotation = pinAnnotationView.annotation as! PinAnnotation
             pinAnnotationView.disclosureBlock = { NSLog("selected Pin"); self.showInfoPanel(currAnnotation) }
+            return pinAnnotationView
         }
-     /*   else if annotation as! MKUserLocation == mapView.userLocation {
-            return nil  //return the default to blue dot
-            
-        }*/
-        return pinAnnotationView
+        
+        return nil
     }
     
 

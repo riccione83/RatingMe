@@ -583,7 +583,7 @@
                                     <constraint firstAttribute="height" constant="50" id="7Vl-vl-FBe"/>
                                 </constraints>
                                 <items>
-                                    <barButtonItem systemItem="flexibleSpace" id="WZQ-ts-EiS"/>
+                                    <barButtonItem width="30" systemItem="fixedSpace" id="09c-Jp-vCo"/>
                                     <barButtonItem image="findUser" style="plain" id="hgE-PB-nKV">
                                         <connections>
                                             <action selector="searchByUserLocationButton:" destination="BYZ-38-t0r" id="mlf-uL-aR0"/>
@@ -601,7 +601,7 @@
                                             <action selector="logoutClick:" destination="BYZ-38-t0r" id="21q-Va-PgC"/>
                                         </connections>
                                     </barButtonItem>
-                                    <barButtonItem systemItem="flexibleSpace" id="yK7-99-n0q"/>
+                                    <barButtonItem width="30" systemItem="fixedSpace" id="SqA-XQ-77k"/>
                                 </items>
                             </toolbar>
                             <tableView hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="zf9-vq-g9r">
@@ -988,40 +988,37 @@
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="113.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Note" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gXV-ZH-xpr">
-                                                    <rect key="frame" x="8" y="47" width="367" height="18"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This is my notes" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gXV-ZH-xpr">
+                                                    <rect key="frame" x="8" y="43" width="398" height="40"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="18" id="1My-dW-gbT"/>
-                                                    </constraints>
-                                                    <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="13"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Tcn-d4-jfp" customClass="StarRating" customModule="RatingMe" customModuleProvider="target">
-                                                    <rect key="frame" x="137" y="10" width="110" height="22"/>
-                                                    <color key="backgroundColor" red="1" green="0.92108567429999999" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="22" id="gcZ-ph-bts"/>
-                                                    </constraints>
-                                                </view>
-                                                <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3rh-j4-Yre" customClass="StarRating" customModule="RatingMe" customModuleProvider="target">
-                                                    <rect key="frame" x="8" y="10" width="110" height="22"/>
-                                                    <color key="backgroundColor" red="1" green="0.92108567429999999" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="22" id="jVf-Xp-4lH"/>
-                                                    </constraints>
-                                                </view>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="3" baselineAdjustment="alignBaselines" minimumFontSize="6" translatesAutoresizingMaskIntoConstraints="NO" id="eoz-aD-UOE">
-                                                    <rect key="frame" x="8" y="65" width="367" height="40"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="40" id="EPV-IJ-r63"/>
+                                                        <constraint firstAttribute="height" constant="40" id="W6h-gX-ajS"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="15"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wI4-mY-WWc" customClass="StarRating" customModule="RatingMe" customModuleProvider="target">
-                                                    <rect key="frame" x="265" y="10" width="110" height="22"/>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Tcn-d4-jfp" customClass="StarRating" customModule="RatingMe" customModuleProvider="target">
+                                                    <rect key="frame" x="148" y="6" width="119" height="22"/>
+                                                    <color key="backgroundColor" red="1" green="0.92108567429999999" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="22" id="gcZ-ph-bts"/>
+                                                    </constraints>
+                                                </view>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3rh-j4-Yre" customClass="StarRating" customModule="RatingMe" customModuleProvider="target">
+                                                    <rect key="frame" x="8" y="6" width="119.5" height="22"/>
+                                                    <color key="backgroundColor" red="1" green="0.92108567429999999" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="22" id="jVf-Xp-4lH"/>
+                                                    </constraints>
+                                                </view>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Note by User" textAlignment="center" lineBreakMode="wordWrap" baselineAdjustment="alignBaselines" minimumFontSize="6" translatesAutoresizingMaskIntoConstraints="NO" id="eoz-aD-UOE">
+                                                    <rect key="frame" x="8" y="91" width="398" height="14"/>
+                                                    <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="10"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wI4-mY-WWc" customClass="StarRating" customModule="RatingMe" customModuleProvider="target">
+                                                    <rect key="frame" x="286" y="6" width="119.5" height="22"/>
                                                     <color key="backgroundColor" red="1" green="0.92108567429999999" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="22" id="dxm-3g-z7e"/>
@@ -1036,7 +1033,7 @@
                                                 <constraint firstItem="gXV-ZH-xpr" firstAttribute="top" secondItem="Tcn-d4-jfp" secondAttribute="bottom" constant="15" id="QR6-Ca-Efx"/>
                                                 <constraint firstItem="gXV-ZH-xpr" firstAttribute="top" secondItem="3rh-j4-Yre" secondAttribute="bottom" constant="15" id="UJq-TI-tOq"/>
                                                 <constraint firstItem="3rh-j4-Yre" firstAttribute="width" secondItem="gXV-ZH-xpr" secondAttribute="width" multiplier="0.3" id="V2g-9e-WJX"/>
-                                                <constraint firstItem="eoz-aD-UOE" firstAttribute="top" secondItem="gXV-ZH-xpr" secondAttribute="bottom" constant="0.5" id="Vcs-5y-IIO"/>
+                                                <constraint firstItem="eoz-aD-UOE" firstAttribute="top" secondItem="gXV-ZH-xpr" secondAttribute="bottom" constant="8" id="Vcs-5y-IIO"/>
                                                 <constraint firstAttribute="leadingMargin" secondItem="3rh-j4-Yre" secondAttribute="leading" id="cRP-VM-pfT"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="wI4-mY-WWc" secondAttribute="trailing" id="cd9-RX-W6u"/>
                                                 <constraint firstItem="eoz-aD-UOE" firstAttribute="leading" secondItem="yZD-Xt-d1K" secondAttribute="leadingMargin" id="flE-Ai-GKC"/>
@@ -1047,8 +1044,8 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <outlet property="labelNote" destination="eoz-aD-UOE" id="Ou8-ou-JPe"/>
-                                            <outlet property="labelNoteTitle" destination="gXV-ZH-xpr" id="ygc-ag-GX1"/>
+                                            <outlet property="labelNote" destination="gXV-ZH-xpr" id="bfT-Lt-B1N"/>
+                                            <outlet property="labelNoteTitle" destination="eoz-aD-UOE" id="yfD-YJ-MwW"/>
                                             <outlet property="starRatingQuestion1" destination="3rh-j4-Yre" id="gaq-SO-sQJ"/>
                                             <outlet property="starRatingQuestion2" destination="Tcn-d4-jfp" id="Riu-KO-MpE"/>
                                             <outlet property="starRatingQuestion3" destination="wI4-mY-WWc" id="fQ2-Ml-JuN"/>
@@ -1113,7 +1110,7 @@
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="D5v-YO-RBb">
                                 <rect key="frame" x="0.0" y="165" width="414" height="60"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No rating. Send one you! Tap on +." textAlignment="center" lineBreakMode="characterWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cas-l3-cqm">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No rating. Send one you! Tap on the star." textAlignment="center" lineBreakMode="characterWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cas-l3-cqm">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="60"/>
                                         <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="17"/>
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -1189,12 +1186,10 @@
                             <constraint firstItem="T1y-QM-Zo4" firstAttribute="top" secondItem="tmv-qB-mHL" secondAttribute="top" id="5xu-P6-q3E"/>
                             <constraint firstAttribute="trailing" secondItem="D5v-YO-RBb" secondAttribute="trailing" id="8NV-Pn-wAG"/>
                             <constraint firstItem="bEA-o8-lWH" firstAttribute="top" secondItem="4hH-Gm-Liq" secondAttribute="bottom" constant="66" id="AHc-DA-fTV"/>
-                            <constraint firstItem="T1y-QM-Zo4" firstAttribute="leading" secondItem="tmv-qB-mHL" secondAttribute="leadingMargin" constant="-16" id="AyV-mA-8Hn"/>
                             <constraint firstAttribute="trailingMargin" secondItem="EYI-cQ-Zo6" secondAttribute="trailing" constant="-20" id="CjA-YR-4Pn"/>
                             <constraint firstItem="PIY-RL-iOE" firstAttribute="top" secondItem="4hH-Gm-Liq" secondAttribute="top" constant="10" id="F7i-qa-Ta4"/>
                             <constraint firstItem="T1y-QM-Zo4" firstAttribute="leading" secondItem="tmv-qB-mHL" secondAttribute="leading" id="JWa-qt-Ml3"/>
                             <constraint firstItem="T1y-QM-Zo4" firstAttribute="top" secondItem="tmv-qB-mHL" secondAttribute="topMargin" id="Jxi-L3-xbE"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="T1y-QM-Zo4" secondAttribute="trailing" constant="-16" id="NFO-4R-5Ld"/>
                             <constraint firstItem="D5v-YO-RBb" firstAttribute="leading" secondItem="tmv-qB-mHL" secondAttribute="leading" id="RmP-KE-lkQ"/>
                             <constraint firstItem="4hH-Gm-Liq" firstAttribute="top" secondItem="T1y-QM-Zo4" secondAttribute="bottom" id="Vh6-R7-JYD"/>
                             <constraint firstItem="bEA-o8-lWH" firstAttribute="leading" secondItem="tmv-qB-mHL" secondAttribute="leadingMargin" constant="-20" id="YHf-3Z-yK0"/>
@@ -1346,7 +1341,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="c9h-jC-ZfS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1457" y="324"/>
+            <point key="canvasLocation" x="1451" y="408"/>
         </scene>
         <!--Single Message View Controller-->
         <scene sceneID="nl4-CG-bRZ">

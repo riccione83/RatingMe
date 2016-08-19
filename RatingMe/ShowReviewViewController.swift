@@ -43,7 +43,7 @@ class ShowReviewViewController: UIViewController, NSURLConnectionDataDelegate {
     var currentRandomGeneratedCode = ""
     
     let jsonRequest = JSonHelper()
-
+    
     private var texts = ["Report this Review","Block this user"]
     private var actionOptions = ["Add a Rate","Share","Send a Message to this User"]
     
@@ -65,8 +65,6 @@ class ShowReviewViewController: UIViewController, NSURLConnectionDataDelegate {
     
     func showImage() {
         if (!imageShowedInBig) {
-            if imageThumb.imageLoaded {
-            
             UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveLinear, animations: { () -> Void in
                 self.darkBackgroundView.hidden = false
                 self.darkBackgroundView.alpha = 1.0
@@ -77,27 +75,26 @@ class ShowReviewViewController: UIViewController, NSURLConnectionDataDelegate {
                 }, completion: { (finished) -> Void in
                     self.imageShowedInBig = true
             })
-            }
         }
         else {
             UIView.animateWithDuration(0.5, delay: 0, options: UIViewAnimationOptions.CurveLinear, animations: { () -> Void in
                 self.imageThumb.frame = self.prevFrame
-                                    self.imageThumb.layer.borderColor = UIColor(red: 13/255, green: 70/255, blue: 131/255, alpha: 1.0).CGColor
+                self.imageThumb.layer.borderColor = UIColor(red: 13/255, green: 70/255, blue: 131/255, alpha: 1.0).CGColor
                 self.darkBackgroundView.alpha = 0.0
                 }, completion: { (finished) -> Void in
                     self.imageThumb.contentMode = UIViewContentMode.ScaleAspectFill
-
+                    
                     self.imageShowedInBig = false
                     self.darkBackgroundView.hidden = true
             })
         }
         
     }
-
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
         let touchImage: UITapGestureRecognizer = UITapGestureRecognizer()
         touchImage.addTarget(self, action: #selector(ShowReviewViewController.showImage))
@@ -134,15 +131,15 @@ class ShowReviewViewController: UIViewController, NSURLConnectionDataDelegate {
         if ((pin?.ImageLink.containsString("http")) != nil) {
             imagePath = pin!.ImageLink
         }
-            else {
-                imagePath = jsonRequest.url + pin!.ImageLink
-            }
+        else {
+            imagePath = jsonRequest.url + pin!.ImageLink
+        }
         
-            if let checkedUrl = NSURL(string: imagePath) {
-                downloadImage(checkedUrl,frame: imageThumb)
-            }
+        if let checkedUrl = NSURL(string: imagePath) {
+            downloadImage(checkedUrl,frame: imageThumb)
+        }
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -171,21 +168,27 @@ class ShowReviewViewController: UIViewController, NSURLConnectionDataDelegate {
         
         let downloader:SDWebImageDownloader = SDWebImageDownloader.sharedDownloader()
         
-        downloader.downloadImageWithURL(url, options: SDWebImageDownloaderOptions.AllowInvalidSSLCertificates, progress: { (receivedSize, expectedSize) -> Void in
-                if receivedSize > 0 {
-                    let received:Float = ((Float(receivedSize)*100.0)/Float(expectedSize))/100.0
-                    self.imageThumb.updateProgress(CGFloat(receivedSize), expectedSize: CGFloat(expectedSize))
-                    print("=>",received,expectedSize)
-                }
+        downloader.downloadImageWithURL(url, options: SDWebImageDownloaderOptions.HighPriority, progress: { (receivedSize, expectedSize) -> Void in
+            if receivedSize > 0 {
+                let received:Float = ((Float(receivedSize)*100.0)/Float(expectedSize))/100.0
+                self.imageThumb.updateProgress(CGFloat(receivedSize), expectedSize: CGFloat(expectedSize))
+                print("=>",received,expectedSize)
+            }
             })
-            { (image, data, error, finished) -> Void in  //Download finished
-                if ((image != nil) && finished == true) {
+        { (image, data, error, finished) -> Void in  //Download finished
+            if ((image != nil) && finished == true) {
+                
+                dispatch_async(dispatch_get_main_queue(), {
                     frame.image = image
+                    self.imageThumb.image = image
                     self.imageThumb.revealImage()
+                    self.imageThumb.setNeedsDisplay()
+                    self.imageThumb.layoutIfNeeded() //update immediate
+                })
             }
         }
     }
-
+    
     
     @IBAction func returnButtonClick(sender: UIBarButtonItem) {
         self.dismissViewControllerAnimated(true, completion: nil)
@@ -250,36 +253,36 @@ class ShowReviewViewController: UIViewController, NSURLConnectionDataDelegate {
     
     func askForSureWhenReportIsSelected()
     {
-            self.currentRandomGeneratedCode = self.randomStringWithLength(6) as String
+        self.currentRandomGeneratedCode = self.randomStringWithLength(6) as String
         
-            //Create the AlertController
-            let actionSheetController: UIAlertController = UIAlertController(title: "Report abuse", message: "This make the reported Review hidden to all User. Please insert this code below to verify your choose: " + self.currentRandomGeneratedCode, preferredStyle: .Alert)
-            
-            //Create and add the Cancel action
-            let cancelAction: UIAlertAction = UIAlertAction(title: "Cancel", style: .Cancel) { action -> Void in
-                //Do nothing
+        //Create the AlertController
+        let actionSheetController: UIAlertController = UIAlertController(title: "Report abuse", message: "This make the reported Review hidden to all User. Please insert this code below to verify your choose: " + self.currentRandomGeneratedCode, preferredStyle: .Alert)
+        
+        //Create and add the Cancel action
+        let cancelAction: UIAlertAction = UIAlertAction(title: "Cancel", style: .Cancel) { action -> Void in
+            //Do nothing
+        }
+        actionSheetController.addAction(cancelAction)
+        //Create and an option action
+        let nextAction: UIAlertAction = UIAlertAction(title: "Report", style: .Default) { action -> Void in
+            print(actionSheetController.textFields?.first?.text)
+            if self.currentRandomGeneratedCode == actionSheetController.textFields?.first?.text?.uppercaseString {
+                self.reportAbuseForSelectedReview()
             }
-            actionSheetController.addAction(cancelAction)
-            //Create and an option action
-            let nextAction: UIAlertAction = UIAlertAction(title: "Report", style: .Default) { action -> Void in
-                print(actionSheetController.textFields?.first?.text)
-                if self.currentRandomGeneratedCode == actionSheetController.textFields?.first?.text?.uppercaseString {
-                    self.reportAbuseForSelectedReview()
-                }
-                else
-                {
-                    self.showMessage("", detail: "The verify code doesn't match. Please try again")
-                    
-                }
+            else
+            {
+                self.showMessage("", detail: "The verify code doesn't match. Please try again")
+                
             }
-            actionSheetController.addAction(nextAction)
-            //Add a text field
-            actionSheetController.addTextFieldWithConfigurationHandler { textField -> Void in
-                //TextField configuration
-                textField.textColor = UIColor.blueColor()
-            }
-            //Present the AlertController
-            self.presentViewController(actionSheetController, animated: true, completion: nil)
+        }
+        actionSheetController.addAction(nextAction)
+        //Add a text field
+        actionSheetController.addTextFieldWithConfigurationHandler { textField -> Void in
+            //TextField configuration
+            textField.textColor = UIColor.blueColor()
+        }
+        //Present the AlertController
+        self.presentViewController(actionSheetController, animated: true, completion: nil)
     }
     
     func askForSureWhenReportUserIsSelected()
@@ -325,7 +328,7 @@ class ShowReviewViewController: UIViewController, NSURLConnectionDataDelegate {
         hud.dimBackground = true
         hud.hide(true, afterDelay: 5.0)
     }
-
+    
     
     func reportAbuseForSelectedUser()
     {
@@ -335,11 +338,11 @@ class ShowReviewViewController: UIViewController, NSURLConnectionDataDelegate {
         let params = [
             "review_id": currentReviewID!
         ]
-       showLoadingHUD()
+        showLoadingHUD()
         
-       loginHelper.getJson("GET",apiUrl: loginHelper.API_reportUser, parameters: params) { (jsonData) -> () in
-        
-        self.hideLoadingHUD()
+        loginHelper.getJson("GET",apiUrl: loginHelper.API_reportUser, parameters: params) { (jsonData) -> () in
+            
+            self.hideLoadingHUD()
             if jsonData == nil {
                 self.showMessage("", detail: "Error on report the User. Please check your connection")
             }
@@ -388,12 +391,12 @@ class ShowReviewViewController: UIViewController, NSURLConnectionDataDelegate {
                     self.showMessage("", detail: "Great! " + message)
                 }
                 else {
-                     self.showMessage("", detail: "Sorry, unknow error. Try again.")
+                    self.showMessage("", detail: "Sorry, unknow error. Try again.")
                 }
             }
         }
     }
-
+    
     func showNewRatingView() {
         let vc = self.storyboard?.instantiateViewControllerWithIdentifier("rateViewController") as! RateViewController
         let index = pin?.Tag
@@ -420,18 +423,18 @@ class ShowReviewViewController: UIViewController, NSURLConnectionDataDelegate {
     }
     
     func shareButtonTapped() {
-            let title:String = self.pin!.title!
-            let Description:String = self.pin!.subtitle!
-            let reviewImage:UIImage = self.imageThumb.image!
-            let review =  title + " - " + Description
-            let welcome = "Hey! Please give a look at this Review! "
-            let link = "http://www.ratingme.eu/reviews/" + currentReviewID!
-            let shareItems:Array = [reviewImage, welcome, review, link]
-            let activityVC = UIActivityViewController(activityItems: shareItems, applicationActivities: nil)
-            
-            self.presentViewController(activityVC, animated: true, completion: nil)
+        let title:String = self.pin!.title!
+        let Description:String = self.pin!.subtitle!
+        let reviewImage:UIImage = self.imageThumb.image!
+        let review =  title + " - " + Description
+        let welcome = "Hey! Please give a look at this Review! "
+        let link = "http://www.ratingme.eu/reviews/" + currentReviewID!
+        let shareItems:Array = [reviewImage, welcome, review, link]
+        let activityVC = UIActivityViewController(activityItems: shareItems, applicationActivities: nil)
+        
+        self.presentViewController(activityVC, animated: true, completion: nil)
     }
-
+    
     func loadData() {
         
         let rc = RatingsController()
@@ -454,8 +457,8 @@ class ShowReviewViewController: UIViewController, NSURLConnectionDataDelegate {
     }
     
 }//End
-        
-        
+
+
 extension ShowReviewViewController:UITableViewDelegate, UITableViewDataSource {
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
@@ -469,17 +472,17 @@ extension ShowReviewViewController:UITableViewDelegate, UITableViewDataSource {
             }
         }
         else if tableView.tag == 888 {
-                self.popover.dismiss()
-                if indexPath.row == 0 {
-                    showNewRatingView()
-                }
-                if indexPath.row == 1 {
-                    shareButtonTapped()
-                }
-                if indexPath.row == 2 {
-                    showNewMessageView()
-                }
+            self.popover.dismiss()
+            if indexPath.row == 0 {
+                showNewRatingView()
             }
+            if indexPath.row == 1 {
+                shareButtonTapped()
+            }
+            if indexPath.row == 2 {
+                showNewMessageView()
+            }
+        }
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -508,31 +511,31 @@ extension ShowReviewViewController:UITableViewDelegate, UITableViewDataSource {
         }
         else {
             
-        let myCell:RateCustomCell = rateTableView.dequeueReusableCellWithIdentifier("CustomCell") as! RateCustomCell
+            let myCell:RateCustomCell = rateTableView.dequeueReusableCellWithIdentifier("CustomCell") as! RateCustomCell
             
-        if pin?.Question2 == nil || pin?.Question2 == "" {
-            myCell.starRatingQuestion2.hidden = true
-        }
-        
-        if pin?.Question3 == nil || pin?.Question3 == "" {
-            myCell.starRatingQuestion3.hidden = true
-        }
-        
-        let userName = Users.objectAtIndex(indexPath.row) as! String
-        
-        myCell.labelNoteTitle.text = String(format: "Note by \(userName)")
-        
-        myCell.labelNote.text = Descriptions.objectAtIndex(indexPath.row) as? String
-    
-        myCell.starRatingQuestion1.setRating(Rates1.objectAtIndex(indexPath.row) as! Int)
-        myCell.starRatingQuestion2.setRating(Rates2.objectAtIndex(indexPath.row) as! Int)
-        myCell.starRatingQuestion3.setRating(Rates3.objectAtIndex(indexPath.row) as! Int)
+            if pin?.Question2 == nil || pin?.Question2 == "" {
+                myCell.starRatingQuestion2.hidden = true
+            }
             
-        myCell.starRatingQuestion1.userInteractionEnabled = false
-        myCell.starRatingQuestion2.userInteractionEnabled = false
-        myCell.starRatingQuestion3.userInteractionEnabled = false
-        
-        return myCell
+            if pin?.Question3 == nil || pin?.Question3 == "" {
+                myCell.starRatingQuestion3.hidden = true
+            }
+            
+            let userName = Users.objectAtIndex(indexPath.row) as! String
+            
+            myCell.labelNoteTitle.text = String(format: "Note by \(userName)")
+            
+            myCell.labelNote.text = Descriptions.objectAtIndex(indexPath.row) as? String
+            
+            myCell.starRatingQuestion1.setRating(Rates1.objectAtIndex(indexPath.row) as! Int)
+            myCell.starRatingQuestion2.setRating(Rates2.objectAtIndex(indexPath.row) as! Int)
+            myCell.starRatingQuestion3.setRating(Rates3.objectAtIndex(indexPath.row) as! Int)
+            
+            myCell.starRatingQuestion1.userInteractionEnabled = false
+            myCell.starRatingQuestion2.userInteractionEnabled = false
+            myCell.starRatingQuestion3.userInteractionEnabled = false
+            
+            return myCell
         }
     }
     
