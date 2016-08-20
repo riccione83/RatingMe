@@ -87,7 +87,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // create viewController code...
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         
-        mainViewController = storyboard.instantiateViewControllerWithIdentifier("MainViewController") as! ViewController
+        mainViewController = storyboard.instantiateViewControllerWithIdentifier("MainViewController") as? ViewController
         let leftViewController = storyboard.instantiateViewControllerWithIdentifier("LeftViewController") as! LeftMenuViewController
 
         leftViewController.delegate = mainViewController

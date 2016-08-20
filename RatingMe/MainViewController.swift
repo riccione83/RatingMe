@@ -46,6 +46,7 @@ class ViewController: UIViewController, ReviewControllerProtocol,RateControllerP
     @IBOutlet var resultTableView: UITableView!
     
     @IBAction func logoutClick(sender: AnyObject) {
+        
         NSUserDefaults.standardUserDefaults().setObject(nil, forKey: "loginData.UserID")
         NSUserDefaults.standardUserDefaults().setObject(nil, forKey: "loginData.UserName")
         NSUserDefaults.standardUserDefaults().setObject(nil, forKey: "loginData.UserCity")
@@ -325,49 +326,19 @@ class ViewController: UIViewController, ReviewControllerProtocol,RateControllerP
         // Dispose of any resources that can be recreated.
     }
     
-    // TODO - Sistemare qui
     func saveLoginData(userData: User) {
-        NSUserDefaults.standardUserDefaults().setObject(userData.userID, forKey: "loginData.UserID")
-        NSUserDefaults.standardUserDefaults().setObject(userData.userName, forKey: "loginData.UserName")
-        NSUserDefaults.standardUserDefaults().setObject(userData.userCity, forKey: "loginData.UserCity")
-        NSUserDefaults.standardUserDefaults().setObject(userData.userEmail, forKey: "loginData.UserEmail")
-        NSUserDefaults.standardUserDefaults().setObject(userData.userPasswordHash, forKey: "loginData.UserPasswordHash")
-        NSUserDefaults.standardUserDefaults().setObject(userData.userSocialID, forKey: "loginData.UserSocialID")
-        NSUserDefaults.standardUserDefaults().setObject(userData.userLoginType!.rawValue, forKey: "loginData.userLoginType")
-        NSUserDefaults.standardUserDefaults().synchronize()
+        
+            UserController.saveLoginData(userData)
     }
     
     func loadLoginData() -> User? {
-        if userInfos == nil {
-            if let _ =  NSUserDefaults.standardUserDefaults().objectForKey("loginData.UserID") as? String {
-                let data:User = User()
-                
-                data.userID = NSUserDefaults.standardUserDefaults().objectForKey("loginData.UserID") as! String
-                data.userName = NSUserDefaults.standardUserDefaults().objectForKey("loginData.UserName") as! String
-                data.userCity = NSUserDefaults.standardUserDefaults().objectForKey("loginData.UserCity") as! String
-                data.userEmail = NSUserDefaults.standardUserDefaults().objectForKey("loginData.UserEmail") as! String
-                data.userPasswordHash = NSUserDefaults.standardUserDefaults().objectForKey("loginData.UserPasswordHash") as! String
-                data.userSocialID = NSUserDefaults.standardUserDefaults().objectForKey("loginData.UserSocialID") as! String
-                guard let _userLoginType =  NSUserDefaults.standardUserDefaults().objectForKey("loginData.userLoginType") else {
-                    return nil
-                }
-                data.userLoginType = UserLoginType(rawValue: _userLoginType as! String)
-                if data.userLoginType == nil {
-                    data.userLoginType = UserLoginType.Unknow
-                }
-                
-                return data
-            }
-            else {
-                return nil
-            }
-        }
-        return userInfos
+        
+        return UserController.loadLoginData()
     }
     
     func setupUI(){
         let tapMapRecognizer:UITapGestureRecognizer = UITapGestureRecognizer()
-        tapMapRecognizer.addTarget(self, action: "mapTap:")
+        tapMapRecognizer.addTarget(self, action: #selector(ViewController.mapTap(_:)))
         tapMapRecognizer.numberOfTapsRequired = 1
         mainMap.addGestureRecognizer(tapMapRecognizer)
         
@@ -382,7 +353,7 @@ class ViewController: UIViewController, ReviewControllerProtocol,RateControllerP
         
         
         let rightScroll:UISwipeGestureRecognizer = UISwipeGestureRecognizer()
-        rightScroll.addTarget(self, action: "swipeMap:")
+        rightScroll.addTarget(self, action: #selector(ViewController.swipeMap(_:)))
         rightScroll.direction =  UISwipeGestureRecognizerDirection.Right
         mainMap.addGestureRecognizer(rightScroll)
         

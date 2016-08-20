@@ -122,7 +122,7 @@ class PinAnnotationView: MKAnnotationView,MKMapViewDelegate {
         xx = xx + Double(self.frame.size.width/2.0) + 8.0
         disclosureButton.frame = CGRectMake(CGFloat(xx), 26.5, disclosureIndicatorImage.size.width,disclosureIndicatorImage.size.height);
         
-        disclosureButton.addTarget(self, action: "didTapDisclosureButton", forControlEvents: UIControlEvents.TouchDown)
+        disclosureButton.addTarget(self, action: #selector(PinAnnotationView.didTapDisclosureButton), forControlEvents: UIControlEvents.TouchDown)
         self.addSubview(disclosureButton)
     }
     

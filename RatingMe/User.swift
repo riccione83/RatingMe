@@ -18,13 +18,14 @@ enum UserLoginType:String {
 
 public class User {
     
-    var userID: String
-    var userName: String
-    var userPasswordHash: String
-    var userEmail: String
-    var userCity: String
-    var userSocialID:String
-    var userLoginType:UserLoginType?
+    var userID: String = ""
+    var userName: String = ""
+    var userPasswordHash: String = ""
+    var userEmail: String = ""
+    var userCity: String = ""
+    var userSocialID:String = ""
+    var userLoginType:UserLoginType? = .Unknow
+    
     
     
     required public init() {

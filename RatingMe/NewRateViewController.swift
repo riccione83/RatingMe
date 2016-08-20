@@ -251,17 +251,17 @@ class RateViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillShow:"), name:UIKeyboardWillShowNotification, object: nil);
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillHide:"), name:UIKeyboardWillHideNotification, object: nil);
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(RateViewController.keyboardWillShow(_:)), name:UIKeyboardWillShowNotification, object: nil);
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(RateViewController.keyboardWillHide(_:)), name:UIKeyboardWillHideNotification, object: nil);
         
         
         let tapSelect:UITapGestureRecognizer = UITapGestureRecognizer()
-        tapSelect.addTarget(self, action: "selectThumb:")
+        tapSelect.addTarget(self, action: #selector(RateViewController.selectThumb(_:)))
         tapSelect.numberOfTapsRequired = 1
         thumbImage.addGestureRecognizer(tapSelect)
 
         let touchImage: UITapGestureRecognizer = UITapGestureRecognizer()
-        touchImage.addTarget(self, action: "closeKeyboard:")
+        touchImage.addTarget(self, action: #selector(RateViewController.closeKeyboard(_:)))
         touchImage.numberOfTapsRequired = 1
         scrollView.addGestureRecognizer(touchImage)
         

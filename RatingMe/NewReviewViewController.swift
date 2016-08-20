@@ -237,12 +237,12 @@ class ReviewViewController: UIViewController, UITableViewDelegate, UITableViewDa
     override func viewDidAppear(animated: Bool) {
         
         let touchImage: UITapGestureRecognizer = UITapGestureRecognizer()
-        touchImage.addTarget(self, action: "closeKeyboard:")
+        touchImage.addTarget(self, action: #selector(ReviewViewController.closeKeyboard(_:)))
         touchImage.numberOfTapsRequired = 1
         backgroundImage.addGestureRecognizer(touchImage)
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillShow:"), name:UIKeyboardWillShowNotification, object: nil);
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillHide:"), name:UIKeyboardWillHideNotification, object: nil);
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ReviewViewController.keyboardWillShow(_:)), name:UIKeyboardWillShowNotification, object: nil);
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ReviewViewController.keyboardWillHide(_:)), name:UIKeyboardWillHideNotification, object: nil);
     }
     
     func keyboardWillShow(sender: NSNotification) {

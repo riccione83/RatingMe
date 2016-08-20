@@ -20,6 +20,45 @@ public class UserController{
             self.user = User()
     }
     
+    // TODO - Sistemare qui
+    class func saveLoginData(userData: User) {
+        
+        NSUserDefaults.standardUserDefaults().setObject(userData.userID, forKey: "loginData.UserID")
+        NSUserDefaults.standardUserDefaults().setObject(userData.userName, forKey: "loginData.UserName")
+        NSUserDefaults.standardUserDefaults().setObject(userData.userCity, forKey: "loginData.UserCity")
+        NSUserDefaults.standardUserDefaults().setObject(userData.userEmail, forKey: "loginData.UserEmail")
+        NSUserDefaults.standardUserDefaults().setObject(userData.userPasswordHash, forKey: "loginData.UserPasswordHash")
+        NSUserDefaults.standardUserDefaults().setObject(userData.userSocialID, forKey: "loginData.UserSocialID")
+        NSUserDefaults.standardUserDefaults().setObject(userData.userLoginType!.rawValue, forKey: "loginData.userLoginType")
+        
+        NSUserDefaults.standardUserDefaults().synchronize()
+    }
+    
+    class func loadLoginData() -> User? {
+        
+        let data:User = User()
+        
+        if let userID = NSUserDefaults.standardUserDefaults().objectForKey("loginData.UserID") as? String {
+            data.userID = userID
+            data.userName = NSUserDefaults.standardUserDefaults().objectForKey("loginData.UserName") as! String
+            data.userCity = NSUserDefaults.standardUserDefaults().objectForKey("loginData.UserCity") as! String
+            data.userEmail = NSUserDefaults.standardUserDefaults().objectForKey("loginData.UserEmail") as! String
+            data.userPasswordHash = NSUserDefaults.standardUserDefaults().objectForKey("loginData.UserPasswordHash") as! String
+            data.userSocialID = NSUserDefaults.standardUserDefaults().objectForKey("loginData.UserSocialID") as! String
+            guard let _userLoginType =  NSUserDefaults.standardUserDefaults().objectForKey("loginData.userLoginType") else {
+                return nil
+            }
+            data.userLoginType = UserLoginType(rawValue: _userLoginType as! String)
+            
+            return data
+        }
+        else {
+            return nil
+        }
+        
+    }
+    
+    
     func getDeviceToken() -> String {
         let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         let deviceToken = appDelegate.deviceToken

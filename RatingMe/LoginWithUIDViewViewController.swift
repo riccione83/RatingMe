@@ -79,12 +79,12 @@ class LoginWithUIDViewViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         let touchImage: UITapGestureRecognizer = UITapGestureRecognizer()
-        touchImage.addTarget(self, action: "closeKeyboard:")
+        touchImage.addTarget(self, action: #selector(LoginWithUIDViewViewController.closeKeyboard(_:)))
         touchImage.numberOfTapsRequired = 1
         mainScrollView.addGestureRecognizer(touchImage)
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillShow:"), name:UIKeyboardWillShowNotification, object: nil);
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillHide:"), name:UIKeyboardWillHideNotification, object: nil);
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(LoginWithUIDViewViewController.keyboardWillShow(_:)), name:UIKeyboardWillShowNotification, object: nil);
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(LoginWithUIDViewViewController.keyboardWillHide(_:)), name:UIKeyboardWillHideNotification, object: nil);
 
     }
 
