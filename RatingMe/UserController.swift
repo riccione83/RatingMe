@@ -17,7 +17,7 @@ public class UserController{
     let loginHelper = JSonHelper()
     
     required public init() {
-            self.user = User()
+        self.user = User()
     }
     
     // TODO - Sistemare qui
@@ -57,7 +57,6 @@ public class UserController{
         }
         
     }
-    
     
     func getDeviceToken() -> String {
         let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
@@ -99,13 +98,13 @@ public class UserController{
     
     
     public func signInWithCredentials(userName:String,email:String, password:String, completitionHandler:(messages:String,success:Bool) -> ()) {
-    
+        
         let params = [
             "user_name": userName,
             "user_password_hash": password,
             "user_email": email,
             "device_token": getDeviceToken()
-                     ]
+        ]
         
         loginHelper.getJson("GET", apiUrl: loginHelper.API_newUser, parameters: params) { (jsonData) -> () in
             if jsonData == nil {
@@ -232,7 +231,7 @@ public class UserController{
                             print(returnedData["error"]["message"])
                             onComplete(false,String(returnedData["error"]["message"]))
                         }
-
+                        
                     })
                 }
                 else
@@ -252,8 +251,8 @@ public class UserController{
         let meUrl = NSURL(string: "https://graph.facebook.com/me")
         
         let slRequest = SLRequest(forServiceType: SLServiceTypeFacebook,
-            requestMethod: SLRequestMethod.GET,
-            URL: meUrl, parameters: nil)
+                                  requestMethod: SLRequestMethod.GET,
+                                  URL: meUrl, parameters: nil)
         
         slRequest.account = account
         

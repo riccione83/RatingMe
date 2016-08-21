@@ -16,7 +16,7 @@ class CategoriesController: NSObject {
     func downloadImage(url:NSURL, frame:CustomImageView) {
         
         let downloader:SDWebImageDownloader = SDWebImageDownloader.sharedDownloader()
-        //frame.progressIndicatorView.drawCustom(1)
+        frame.progressIndicatorView.drawCustom(1)
         
         downloader.downloadImageWithURL(url, options: SDWebImageDownloaderOptions.HighPriority, progress: { (receivedSize, expectedSize) -> Void in
             if receivedSize > 0 && expectedSize > 0 {

@@ -44,15 +44,19 @@ class Message: NSObject {
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss"
         //dateFormatter.timeZone = NSTimeZone(name: "UTC")
-        let date = dateFormatter.dateFromString(_createAt[0])// create   date from string
-        
-        // change to a readable time format and change to local time zone
-        dateFormatter.dateFormat = "dd/MM/yyyy"
-        dateFormatter.timeZone = NSTimeZone.localTimeZone()
-        let timeStamp = dateFormatter.stringFromDate(date!)
-        
-        
-        self.createAt = timeStamp
+        if _createAt.count > 1  {
+            let date = dateFormatter.dateFromString(_createAt[0])// create   date from string
+            
+            // change to a readable time format and change to local time zone
+            dateFormatter.dateFormat = "dd/MM/yyyy"
+            dateFormatter.timeZone = NSTimeZone.localTimeZone()
+            let timeStamp = dateFormatter.stringFromDate(date!)
+            
+            self.createAt = timeStamp
+        }
+        else {
+            self.createAt = ""
+        }
         
     }
     

@@ -2262,7 +2262,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "RatingMe/ReviewsController.swift"
@@ -2400,22 +2400,6 @@
             startingLineNumber = "52"
             endingLineNumber = "52"
             landmarkName = "application(_:didReceiveRemoteNotification:)"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "RatingMe/AppDelegate.swift"
-            timestampString = "477844378.160537"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "84"
-            endingLineNumber = "84"
-            landmarkName = "application(_:didFinishLaunchingWithOptions:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -3192,22 +3176,6 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "RatingMe/AppDelegate.swift"
-            timestampString = "477844378.160537"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "59"
-            endingLineNumber = "59"
-            landmarkName = "application(_:didReceiveRemoteNotification:)"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "RatingMe/AppDelegate.swift"
             timestampString = "477844364.663944"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
@@ -3533,8 +3501,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "40"
             endingLineNumber = "40"
-            landmarkName = "getImageForCategory(_:frame:)"
-            landmarkType = "5">
+            landmarkName = "CategoriesController"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -3565,7 +3533,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "39"
             endingLineNumber = "39"
-            landmarkName = "updateProgress(_:expectedSize:)"
+            landmarkName = "revealImage()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -3581,7 +3549,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "32"
             endingLineNumber = "32"
-            landmarkName = "init(coder:)"
+            landmarkName = "updateProgress(_:expectedSize:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -3933,8 +3901,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "33"
             endingLineNumber = "33"
-            landmarkName = "init(id:message:longMessage:status:userId:)"
-            landmarkType = "5">
+            landmarkName = "Message"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -4462,6 +4430,22 @@
             startingLineNumber = "125"
             endingLineNumber = "125"
             landmarkName = "setupDisclosureButton()"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "RatingMe/RemoteNotificationController.swift"
+            timestampString = "493490283.886114"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "40"
+            endingLineNumber = "40"
+            landmarkName = "deleteOneNotification()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

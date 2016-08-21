@@ -26,7 +26,7 @@ class RemoteNotificationController: NSObject {
         var notificationCount = getNotificationCount()
         
         notificationCount = notificationCount! + 1
-        numOfNotification++
+        numOfNotification += 1
         NSUserDefaults.standardUserDefaults().setObject(notificationCount, forKey: "count")
         
         //NSUserDefaults.standardUserDefaults().synchronize()
@@ -37,7 +37,7 @@ class RemoteNotificationController: NSObject {
         
         if notificationCount > 0 {
             notificationCount = notificationCount! - 1
-            numOfNotification--
+            numOfNotification -= 1
             NSUserDefaults.standardUserDefaults().setObject(notificationCount, forKey: "count")
            // NSUserDefaults.standardUserDefaults().synchronize()
         }

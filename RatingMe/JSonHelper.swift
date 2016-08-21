@@ -40,7 +40,7 @@ public class JSonHelper {
      * you can pass those parameters via the 'parameters as [String:AnyObject]' use key for data name and value for the object
      */
     func getJson(method:String, apiUrl:String,parameters:[String:AnyObject], completitionHandler: (jsonData: AnyObject?) -> ()) {
-
+        
         var typeOfRequest = Method.GET
         
         if method == "POST" {
@@ -58,7 +58,7 @@ public class JSonHelper {
                 }
         }
     }
-        
+    
     func uploadWithParameters(apiUrl:String, parameters:[String:AnyObject],image:UIImage?, completitionHandler: (jsonData: Response<AnyObject, NSError>?,error: ErrorType?) -> ()) {
         
         Alamofire.upload(
@@ -89,9 +89,9 @@ public class JSonHelper {
                     error = encodingError
                     completitionHandler(jsonData: result, error: error)
                 }
-            
+                
             }
         )
     }
-
+    
 }

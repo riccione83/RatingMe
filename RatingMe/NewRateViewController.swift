@@ -13,6 +13,11 @@ protocol RateControllerProtocol {
     func searchByUserLocation(lat:Double,lon:Double, center: Bool)
 }
 
+struct starRatingDimension {
+    static let imageSize:CGFloat = 40.0
+    static let imageSpacing:CGFloat = 45.0
+}
+
 class RateViewController: UIViewController {
     
     var delegate:RateControllerProtocol? = nil
@@ -276,11 +281,11 @@ class RateViewController: UIViewController {
         
         
         labelQuestion1.text = Q1
-        starRatingView1.initUI(0,spacing: 45.0,imageSize: 40.0, withOpacity: false)
+        starRatingView1.initUI(0,spacing: starRatingDimension.imageSpacing, imageSize: starRatingDimension.imageSize, withOpacity: false)
         
         if  Q2 != "" {
             labelQuestion2.text = Q2
-            starRatingView2.initUI(0,spacing: 45.0,imageSize: 40.0, withOpacity: false)
+            starRatingView2.initUI(0,spacing: starRatingDimension.imageSpacing, imageSize: starRatingDimension.imageSize, withOpacity: false)
         }
         else
         {
@@ -291,7 +296,7 @@ class RateViewController: UIViewController {
         
         if Q3 != "" {
             labelQuestion3.text = Q3
-            starRatingView3.initUI(0,spacing: 45.0,imageSize: 40.0, withOpacity: false)
+            starRatingView3.initUI(0,spacing: starRatingDimension.imageSpacing, imageSize: starRatingDimension.imageSize, withOpacity: false)
         }
         else
         {

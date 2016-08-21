@@ -150,11 +150,11 @@
 		934BE18A1BF4B0D8007225D8 /* Class */ = {
 			isa = PBXGroup;
 			children = (
-				9341579F1C7DAD72001DAD6C /* MailCanvasStyleKit.swift */,
-				93012E791C7B1D0700063D65 /* LeftMenuButton.swift */,
+				937B6BE71D6A111200DE72A7 /* Cells */,
+				937B6BE61D6A0EB200DE72A7 /* UI */,
 				934BE18B1BF4B0F0007225D8 /* CircularLoaderView.swift */,
+				937FCCC11B4577CF00DC141C /* StarRating.swift */,
 				934BE18D1BF4B2B5007225D8 /* CustomImageView.swift */,
-				934157A11C7DAE07001DAD6C /* NewMailView.swift */,
 			);
 			name = Class;
 			sourceTree = "<group>";
@@ -167,11 +167,38 @@
 			name = Fonts;
 			sourceTree = "<group>";
 		};
+		937B6BE61D6A0EB200DE72A7 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				934157A11C7DAE07001DAD6C /* NewMailView.swift */,
+				9341579F1C7DAD72001DAD6C /* MailCanvasStyleKit.swift */,
+				93FC5C071B3C4CD70010A94D /* PinAnnotationView.swift */,
+				93012E791C7B1D0700063D65 /* LeftMenuButton.swift */,
+			);
+			name = UI;
+			sourceTree = "<group>";
+		};
+		937B6BE71D6A111200DE72A7 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				93B1C6BA1B628F7D002044A3 /* RateCustomCell.swift */,
+				936AE7101C70A57700039BAD /* MessageTableViewCell.swift */,
+			);
+			name = Cells;
+			sourceTree = "<group>";
+		};
+		937B6BE81D6A119100DE72A7 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				9368A8FB1C3ABD9C0016481E /* Splash.tiff */,
+			);
+			name = Images;
+			sourceTree = "<group>";
+		};
 		938EC0F81BDA308F00177356 /* Model */ = {
 			isa = PBXGroup;
 			children = (
 				93790BE61C819DEB004989C7 /* Category.swift */,
-				93B1C6BA1B628F7D002044A3 /* RateCustomCell.swift */,
 				93FC5C061B3C4CD70010A94D /* PinAnnotation.swift */,
 				938EC0FB1BDA778700177356 /* User.swift */,
 				937B92821C5FAFBE0014530E /* Review.swift */,
@@ -184,11 +211,9 @@
 		938EC0F91BDA309700177356 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				936AE7101C70A57700039BAD /* MessageTableViewCell.swift */,
 				93F5F8F81BC2B01700582D58 /* LeftMenuViewController.swift */,
 				93AB02151B45305900358705 /* NewRateViewController.swift */,
 				93E06C341B85DD8300DAEA51 /* LoginViewController.swift */,
-				93FC5C071B3C4CD70010A94D /* PinAnnotationView.swift */,
 				9341480F1B84CD0B00F768BD /* ShowReviewViewController.swift */,
 				93D95BEA1B442B73002D5C53 /* NewReviewViewController.swift */,
 				93FC5BE61B3C4CB00010A94D /* MainViewController.swift */,
@@ -205,7 +230,6 @@
 		938EC0FA1BDA309C00177356 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				937FCCC11B4577CF00DC141C /* StarRating.swift */,
 				93FC5BE41B3C4CB00010A94D /* AppDelegate.swift */,
 				93E06C321B85C7BD00DAEA51 /* UserController.swift */,
 				93FC5C041B3C4CC80010A94D /* JSonHelper.swift */,
@@ -265,7 +289,7 @@
 		93FC5BE21B3C4CB00010A94D /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				9368A8FB1C3ABD9C0016481E /* Splash.tiff */,
+				937B6BE81D6A119100DE72A7 /* Images */,
 				9368A8F81C3ABA100016481E /* Fonts */,
 				93FC5BE31B3C4CB00010A94D /* Info.plist */,
 			);

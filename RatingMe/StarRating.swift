@@ -8,6 +8,7 @@
 
 import UIKit
 
+@IBDesignable
 class StarRating: UIView {
     
     var currentRating = 0
@@ -23,7 +24,6 @@ class StarRating: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-
     }
     
     func initUI(rating: Int, spacing: CGFloat, imageSize:CGFloat, withOpacity:Bool) {
@@ -36,9 +36,9 @@ class StarRating: UIView {
         }
         currentRating = rating
         
-        for var i=0; i<5; i++ {
+        for i in 0..<5 {
             let imageView:UIImageView = UIImageView(image: UIImage(named: "deselect_star"))
-            //let imageFrame = CGRectMake(CGFloat(i*45), 1, 40, 40)
+         
             let imageFrame = CGRectMake( (CGFloat(i)*spacing), 1, imageSize, imageSize)
             imageView.frame = imageFrame
             imageView.tag = i+300
@@ -49,7 +49,7 @@ class StarRating: UIView {
     }
     
     func refreshStars(animate:Bool) {
-        for var i=0; i < starRating.count; i++ {
+        for i in 0 ..< starRating.count {
             let imageView:UIImageView = starRating.objectAtIndex(i) as! UIImageView
             if (currentRating >= i+1) {
                 imageView.image = UIImage(named: "selected_star")
@@ -78,7 +78,7 @@ class StarRating: UIView {
     }
 
     func handleTouchAtLocation(touchLocation:CGPoint, animate:Bool) {
-        for var i=4; i>=0; i-- {
+        for var i=4; i>=0; i -= 1 {
             let imageView:UIImageView = starRating.objectAtIndex(i) as! UIImageView
             if( touchLocation.x > imageView.frame.origin.x) {
                 currentRating = i+1
