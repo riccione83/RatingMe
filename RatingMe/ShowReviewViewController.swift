@@ -197,7 +197,7 @@ class ShowReviewViewController: UIViewController, NSURLConnectionDataDelegate {
     @IBAction func newReviewButtonClick(sender: UIBarButtonItem) {
         
         if userInfos?.userLoginType == UserLoginType.Unknow ||
-            userInfos?.userLoginType == UserLoginType.Anonimous {
+            userInfos?.userLoginType == UserLoginType.Anonymous {
             self.showMessage("Login", detail: "Sorry login first to perform an action")
             return
         }
@@ -217,7 +217,7 @@ class ShowReviewViewController: UIViewController, NSURLConnectionDataDelegate {
     @IBAction func newButtonReviewClicked(sender: AnyObject) {
         
         if userInfos?.userLoginType == UserLoginType.Unknow ||
-            userInfos?.userLoginType == UserLoginType.Anonimous {
+            userInfos?.userLoginType == UserLoginType.Anonymous {
             self.showMessage("Login", detail: "Sorry login first to perform an action")
             return
         }

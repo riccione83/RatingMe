@@ -96,7 +96,7 @@ class LoginViewController: UIViewController {
     
     @IBAction func btnAnonimousLogin(sender: AnyObject) {
         
-        user.user.userLoginType = UserLoginType.Anonimous
+        user.user.userLoginType = UserLoginType.Anonymous
         self.showMainView();
         
     }

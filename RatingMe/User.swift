@@ -12,7 +12,7 @@ enum UserLoginType:String {
     case Facebook = "Facebook"
     case Twitter = "Twitter"
     case Login = "Login"
-    case Anonimous = "Anonimous"
+    case Anonymous = "Anonymous"
     case Unknow = "Unknow"
 }
 

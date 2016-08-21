@@ -170,7 +170,7 @@ class ReviewViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 currentSelectedCategory = ""
             }
             
-            if userInfo.userLoginType == UserLoginType.Anonimous ||
+            if userInfo.userLoginType == UserLoginType.Anonymous ||
                 userInfo.userLoginType == UserLoginType.Unknow {
                 self.showMessage("Sorry login first to create a new Review")
                 return
