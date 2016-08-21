@@ -277,8 +277,9 @@ class ViewController: UIViewController, ReviewControllerProtocol,RateControllerP
         
         self.closeLeft()
 
-        userInfos = loadLoginData()
-        
+        if(userInfos == nil) {
+            userInfos = loadLoginData()
+        }
         if userInfos == nil {
             let vc = self.storyboard?.instantiateViewControllerWithIdentifier("loginViewController") as! LoginViewController
             vc.delegate = self
