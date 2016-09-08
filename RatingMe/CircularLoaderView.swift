@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CircularLoaderView: UIView {
+class CircularLoaderView: UIView , CAAnimationDelegate  {
     
     let circlePathLayer = CAShapeLayer()
     var circleRadius : CGFloat = 20.0
@@ -78,10 +78,10 @@ class CircularLoaderView: UIView {
         circlePathLayer.path = circlePath().CGPath
     }
     
-    override func animationDidStop(anim: CAAnimation, finished flag: Bool) {
-        superview?.layer.mask = nil
-    }
-    
+//    override func animationDidStop(anim: CAAnimation, finished flag: Bool) {
+//        superview?.layer.mask = nil
+//    }
+//    
     func reveal() {
         
         // 1
@@ -128,8 +128,10 @@ class CircularLoaderView: UIView {
         circlePathLayer.addAnimation(groupAnimation, forKey: "strokeWidth")
     }
     
-   /* override func animationDidStop(anim: CAAnimation, finished flag: Bool) {
+
+    
+    func animationDidStop(anim: CAAnimation, finished flag: Bool) {
         superview?.layer.mask = nil
-    }*/
+    }
     
 }

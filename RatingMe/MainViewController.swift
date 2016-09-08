@@ -163,7 +163,7 @@ class ViewController: UIViewController, ReviewControllerProtocol,RateControllerP
         let imageSize:CGSize = CGSizeMake(self.view.bounds.size.width, self.view.bounds.size.height)
         UIGraphicsBeginImageContextWithOptions(imageSize, false, 0.0)
         self.view.layer.renderInContext(UIGraphicsGetCurrentContext()!)
-        let viewImage:UIImage = UIGraphicsGetImageFromCurrentImageContext()
+        let viewImage:UIImage = UIGraphicsGetImageFromCurrentImageContext()!
         UIGraphicsEndImageContext()
         
         return viewImage
@@ -173,7 +173,7 @@ class ViewController: UIViewController, ReviewControllerProtocol,RateControllerP
         
         let animation = CATransition()
         //CATransition *animation=[CATransition animation];
-        animation.delegate = self
+       // animation.delegate = self
         animation.duration = 4.75
        // animation.timingFunction = kCAMediaTimingFunctionEaseInEaseOut
         animation.type = "rippleEffect"

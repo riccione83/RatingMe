@@ -131,7 +131,7 @@ public class UserController{
     }
     
     
-    public func loginWithCredentials(userNameorEmail:String, password:String, completitionHandler:(success:Bool, message:String) -> ()) {
+    public func loginWithCredentials(userNameorEmail:String, password:String, completitionHandler:(success:Bool,message:String) -> ()) {
         
         let params = [
             "user_id":userNameorEmail,
@@ -177,7 +177,7 @@ public class UserController{
                     
                     let twitterAccount = allAccounts.last as? ACAccount
                     
-                    if let properties = twitterAccount!.valueForKey("properties") as? [String:String], user_id = properties["user_id"] {
+                    if let properties = twitterAccount!.valueForKey("properties") as? [String:String], let user_id = properties["user_id"] {
                         self.user.userSocialID = user_id
                         self.user.userName = twitterAccount!.username as String
                         self.loginWithSocial(self.user.userName + " via Twitter",uid: self.user.userSocialID, provider: "twitter", completitionHandler: { (success) -> () in

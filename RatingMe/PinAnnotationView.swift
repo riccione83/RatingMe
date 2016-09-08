@@ -46,11 +46,14 @@ class PinAnnotationView: MKAnnotationView,MKMapViewDelegate {
         super.init(coder: aDecoder)
     }
     
-    override init(frame: CGRect) {
+    convenience init(frame: CGRect) {
+        
+        self.init(frame: frame)
+        
         
         imageView = CustomImageView(frame: frame)
         
-        super.init(frame: frame)
+    //    self.init(frame: frame)
     }
     
     func setupImageView() {
@@ -105,7 +108,7 @@ class PinAnnotationView: MKAnnotationView,MKMapViewDelegate {
         bezierPath.lineWidth = 3.0
         bezierPath.stroke()
     
-        let image:UIImage = UIGraphicsGetImageFromCurrentImageContext()
+        let image:UIImage = UIGraphicsGetImageFromCurrentImageContext()!
         UIGraphicsEndImageContext()
         return image;
     }
@@ -228,7 +231,7 @@ class PinAnnotationView: MKAnnotationView,MKMapViewDelegate {
         imageObj.drawInRect(CGRect(origin: CGPointZero, size: sizeChange))
         
         let scaledImage = UIGraphicsGetImageFromCurrentImageContext()
-        return scaledImage
+        return scaledImage!
     }
     
     func didSelectAnnotationViewInMap(mapView:MKMapView) {

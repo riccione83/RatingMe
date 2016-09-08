@@ -44,10 +44,10 @@ public class MailCanvasStyleKit : NSObject {
         let textFontAttributes = [NSFontAttributeName: UIFont(name: "AvenirNext-DemiBoldItalic", size: 32)!, NSForegroundColorAttributeName: color2, NSParagraphStyleAttributeName: textStyle]
 
         let textTextHeight: CGFloat = textTextContent.boundingRectWithSize(CGSizeMake(textRect.width, CGFloat.infinity), options: NSStringDrawingOptions.UsesLineFragmentOrigin, attributes: textFontAttributes, context: nil).size.height
-        CGContextSaveGState(context)
-        CGContextClipToRect(context, textRect);
+        CGContextSaveGState(context!)
+        CGContextClipToRect(context!, textRect);
         textTextContent.drawInRect(CGRectMake(textRect.minX, textRect.minY + (textRect.height - textTextHeight) / 2, textRect.width, textTextHeight), withAttributes: textFontAttributes)
-        CGContextRestoreGState(context)
+        CGContextRestoreGState(context!)
 
 
         //// Bezier 2 Drawing
@@ -61,10 +61,10 @@ public class MailCanvasStyleKit : NSObject {
         bezier2Path.moveToPoint(CGPointMake(16.5, 61.5))
         bezier2Path.addCurveToPoint(CGPointMake(134.5, 117.5), controlPoint1: CGPointMake(16.5, 61.5), controlPoint2: CGPointMake(132.5, 117.5))
         bezier2Path.addCurveToPoint(CGPointMake(252.5, 66.02), controlPoint1: CGPointMake(136.5, 117.5), controlPoint2: CGPointMake(252.5, 66.02))
-        CGContextSaveGState(context)
+        CGContextSaveGState(context!)
         bezier2Path.addClip()
-        CGContextDrawLinearGradient(context, gradient, CGPointMake(134.77, 56.12), CGPointMake(134.77, 215.13), CGGradientDrawingOptions())
-        CGContextRestoreGState(context)
+        CGContextDrawLinearGradient(context!, gradient, CGPointMake(134.77, 56.12), CGPointMake(134.77, 215.13), CGGradientDrawingOptions())
+        CGContextRestoreGState(context!)
         color.setStroke()
         bezier2Path.lineWidth = 7
         bezier2Path.stroke()
@@ -80,7 +80,7 @@ public class MailCanvasStyleKit : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSizeMake(270, 270), false, 0)
             MailCanvasStyleKit.drawMail()
 
-        Cache.imageOfMail = UIGraphicsGetImageFromCurrentImageContext().imageWithRenderingMode(.AlwaysOriginal)
+        Cache.imageOfMail = UIGraphicsGetImageFromCurrentImageContext()!.imageWithRenderingMode(.AlwaysOriginal)
         UIGraphicsEndImageContext()
 
         return Cache.imageOfMail!
@@ -93,7 +93,11 @@ public class MailCanvasStyleKit : NSObject {
         set {
             Cache.mailTargets = newValue
             for target: AnyObject in newValue {
-                target.performSelector("setImage:", withObject: MailCanvasStyleKit.imageOfMail)
+                if #available(iOS 9.0, *) {
+                    target.performSelector(#selector(CIImageAccumulator.setImage(_:)), withObject: MailCanvasStyleKit.imageOfMail)
+                } else {
+                    // Fallback on earlier versions
+                }
             }
         }
     }

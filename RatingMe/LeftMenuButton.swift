@@ -82,10 +82,10 @@ public class LeftMenuButton : NSObject {
         if (messageBoxVisible) {
             //// Oval Drawing
             let ovalPath = UIBezierPath(ovalInRect: CGRectMake(2, 3.24, 26, 25.26))
-            CGContextSaveGState(context)
+            CGContextSaveGState(context!)
             ovalPath.addClip()
-            CGContextDrawLinearGradient(context, gradient, CGPointMake(15, 3.24), CGPointMake(15, 28.5), CGGradientDrawingOptions())
-            CGContextRestoreGState(context)
+            CGContextDrawLinearGradient(context!, gradient, CGPointMake(15, 3.24), CGPointMake(15, 28.5), CGGradientDrawingOptions())
+            CGContextRestoreGState(context!)
             color2.setStroke()
             ovalPath.lineWidth = 1
             ovalPath.stroke()
@@ -110,10 +110,10 @@ public class LeftMenuButton : NSObject {
             let textFontAttributes = [NSFontAttributeName: UIFont.systemFontOfSize(UIFont.labelFontSize()), NSForegroundColorAttributeName: UIColor.blackColor(), NSParagraphStyleAttributeName: textStyle]
 
             let textTextHeight: CGFloat = NSString(string: numberOfMessages).boundingRectWithSize(CGSizeMake(textRect.width, CGFloat.infinity), options: NSStringDrawingOptions.UsesLineFragmentOrigin, attributes: textFontAttributes, context: nil).size.height
-            CGContextSaveGState(context)
-            CGContextClipToRect(context, textRect);
+            CGContextSaveGState(context!)
+            CGContextClipToRect(context!, textRect);
             NSString(string: numberOfMessages).drawInRect(CGRectMake(textRect.minX, textRect.minY + (textRect.height - textTextHeight) / 2, textRect.width, textTextHeight), withAttributes: textFontAttributes)
-            CGContextRestoreGState(context)
+            CGContextRestoreGState(context!)
         }
     }
 
@@ -123,7 +123,7 @@ public class LeftMenuButton : NSObject {
         UIGraphicsBeginImageContextWithOptions(CGSizeMake(30, 30), false, 0)
             LeftMenuButton.drawButtonMenu(numOfMessage: numOfMessage, numberOfMessages: numberOfMessages)
 
-        let imageOfButtonMenu = UIGraphicsGetImageFromCurrentImageContext().imageWithRenderingMode(.AlwaysOriginal)
+        let imageOfButtonMenu = UIGraphicsGetImageFromCurrentImageContext()!.imageWithRenderingMode(.AlwaysOriginal)
         UIGraphicsEndImageContext()
 
         return imageOfButtonMenu

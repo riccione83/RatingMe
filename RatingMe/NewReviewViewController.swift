@@ -316,7 +316,7 @@ class ReviewViewController: UIViewController, UITableViewDelegate, UITableViewDa
         let newImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         
-        return newImage
+        return newImage!
     }
 }
 
